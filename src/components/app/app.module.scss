@@ -1,0 +1,12 @@
+.wrapper {
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.main {
+    display: flex;
+    gap: calc(var(--offset-base-size)  * 10);
+    > * {
+        flex: 1;
+    }
+}

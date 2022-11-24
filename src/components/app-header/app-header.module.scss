@@ -1,0 +1,53 @@
+.wrap {
+    composes: pt-4 pb-4 text text_type_main-default from global;
+    display: flex;
+    align-items: center;
+
+    >* {
+        flex: 1;
+    }
+}
+
+
+.navbar {
+    ul {
+        display: flex;
+        gap: calc(var(--offset-base-size) * 7);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--offset-base-size) * 2);
+    text-decoration: none;
+    color: var(--text-inactive-color);
+
+    &--active {
+        color: var(--text-primary-color);
+
+        svg {
+            fill: var(--text-primary-color);
+        }
+    }
+
+    &:hover:not(&--active) {
+        color: #fff;
+
+        svg {
+            fill: var(--colors-interface-accent);
+        }
+    }
+}
+
+.logo {
+    text-align: center;
+}
+
+.profile {
+    display: flex;
+    justify-content: flex-end;
+}
