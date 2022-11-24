@@ -7,11 +7,7 @@ import BurgerConstructor from '../burger-constructor/BurgerConstructor';
 import styles from './app.module.scss'; 
 
 
-App.propTypes = {
-  
-};
-
-function App(props) {
+const App = (props) => {
   return (
     <div className={styles.wrapper}>
       <AppHeader />
@@ -22,5 +18,11 @@ function App(props) {
     </div>
   );
 }
+
+
+App.propTypes = {
+  
+};
+
 
 export default App;

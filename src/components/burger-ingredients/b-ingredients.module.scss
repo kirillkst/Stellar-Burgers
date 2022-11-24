@@ -1,0 +1,24 @@
+.wrap {
+    composes: pt-10 pb-10 from global;
+}
+
+.components {
+    composes: custom-scroll from global;
+    position: relative;
+    max-width: 100%;
+    overflow-y: scroll;
+    overflow-x: unset;
+    min-height: 500px;
+    height: calc(100vh - 350px);
+}
+
+.list {
+    composes: pl-4 pr-4 from global;
+    margin: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-gap: (calc(var(--offset-base-size) * 8)) (calc(var(--offset-base-size) * 6));
+}

@@ -3,13 +3,9 @@ import { Logo, Button, ListIcon, BurgerIcon, ProfileIcon } from '@ya.praktikum/r
 
 
 import styles from './app-header.module.scss'; 
-import cx from 'classnames'
+import cx from 'classnames';
 
-AppHeader.propTypes = {
-    
-};
-
-function AppHeader(props) {
+const AppHeader = (props) => {
     return (
         <header className={styles.wrap}>
             <nav className={styles.navbar}>
@@ -54,5 +50,9 @@ function AppHeader(props) {
         </header>
     );
 }
+
+AppHeader.propTypes = {
+    
+};
 
 export default AppHeader;
