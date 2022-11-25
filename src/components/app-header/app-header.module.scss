@@ -8,7 +8,6 @@
     }
 }
 
-
 .navbar {
     ul {
         display: flex;
@@ -36,7 +35,7 @@
 
     &:hover:not(&--active) {
         color: #fff;
-
+     
         svg {
             fill: var(--colors-interface-accent);
         }

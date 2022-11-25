@@ -1,37 +1,10 @@
 .wrap {
-    composes: pt-25 pl-4 from global;
-}
-
-.list {
-    composes: custom-scroll from global;
-    margin: calc(var(--offset-base-size) * 4) 0;
-    padding: 0;
-    list-style: none;
-    position: relative;
-    max-width: 100%;
-    overflow-y: scroll;
-    overflow-x: unset;
-    max-height: calc(100vh - 445px);
-
-
-    >li {
-        margin-right: var(--offset-base-size);
-
-        +li {
-            margin-top: calc(var(--offset-base-size) * 4);
-        }
-    }
-}
-
-.item {
+    composes: pt-15 pl-4 from global;
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-left: auto;
-    margin-right: calc(var(--offset-base-size) * 4);
+    flex-direction: column;
 
-    >svg {
-        margin-right: auto;
+    >* {
+        margin-right: calc(var(--offset-base-size) * 4);
     }
 }
 
@@ -44,11 +17,43 @@
     :global(.text) {
         display: flex;
         align-items: center;
-        
+
         svg {
             width: 36px;
             height: 36px;
             margin-left: var(--offset-base-size);
         }
     }
+}
+
+.list {
+    composes: custom-scroll from global;
+    margin: calc(var(--offset-base-size) * 4) 0;
+    padding: 0;
+    list-style: none;
+    position: relative;
+    max-width: 100%;
+    overflow-y: auto;
+    overflow-x: unset;
+
+    >li {
+        margin-left: 0;
+
+
+        +li {
+            margin-top: calc(var(--offset-base-size) * 4);
+        }
+    }
+}
+
+.item {
+    composes: ml-8 from global;
+    display: flex;
+    flex: 0;
+    align-items: center;
+    margin-left: calc(var(--offset-base-size) * 8);
+}
+
+.itemOrder {
+    composes: mr-2 from global;
 }

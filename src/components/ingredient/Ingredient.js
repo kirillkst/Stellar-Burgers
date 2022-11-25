@@ -16,13 +16,17 @@ const Ingredient = (props) => {
                 <CurrencyIcon type="primary" />
             </div>
             <div className={styles.name}>{name}</div>
-            <Counter count={1} size="default" extraClass="m-1" />
+            {counter && <Counter count={counter} size="default" extraClass="m-1" />}
         </div>
     );
 }
 
+
 Ingredient.propTypes = {
-    
+    name: PropTypes.string, 
+    price: PropTypes.number, 
+    image: PropTypes.string, 
+    counter: PropTypes.number
 };
 
 export default Ingredient;

@@ -3,22 +3,8 @@ import { ConstructorElement, Button, DragIcon, CurrencyIcon } from '@ya.praktiku
 
 import styles from './b-constructor.module.scss'; 
 
-import data from '../../utils/data';
-
-
 const BurgerConstructor = (props) => {
-    const bun = data.find(el => el.name == 'Краторная булка N-200i' );
-
-    const ingredients = [
-        'Говяжий метеорит (отбивная)',
-        'Соус Spicy-X',
-        'Биокотлета из марсианской Магнолии',
-        'Соус традиционный галактический',
-        'Хрустящие минеральные кольца',
-        'Хрустящие минеральные кольца',
-        'Соус фирменный Space Sauce'
-    ];
-
+    const {bun, ingredients} = props;
 
     return (
         <section className={styles.wrap}>
@@ -30,24 +16,21 @@ const BurgerConstructor = (props) => {
                 thumbnail={bun.image}
                 extraClass={styles.item}
             />
-
             <ul className={styles.list}>
-                {ingredients.map((ingredient, index) => {        
-                    const item = data.find(el => el.name == ingredient );  
+                {ingredients.map((ingredient, index) => {                           
                     return (
                         <li className={styles.item} key={index}>    
-                            <DragIcon type="primary" />
+                            <span className={styles.itemOrder}><DragIcon type="primary" /></span>
                             <ConstructorElement
                                 type="top"
-                                text={item.name}
-                                price={item.price}
-                                thumbnail={item.image}
+                                text={ingredient.name}
+                                price={ingredient.price}
+                                thumbnail={ingredient.image}
                             />
                         </li>
                     )
                 })}
             </ul>
-
             <ConstructorElement
                 type="bottom"
                 isLocked={true}
@@ -56,23 +39,35 @@ const BurgerConstructor = (props) => {
                 thumbnail={bun.image}
                 extraClass={styles.item}
             />
-
             <div className={styles.checkout}>
                  <div className="text text_type_digits-medium">
-                    610 
+                    {ingredients.reduce((acc, el) => acc + el.price, 0)}
                     <CurrencyIcon type="primary" />
                  </div>
                  <Button htmlType="button" type="primary" size="large" extraClass="ml-10">
                     Оформить заказ
                  </Button>
             </div>
-
         </section>
     );
 }
 
-BurgerConstructor.propTypes = {
-    
+const propTypesTmpl = PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.string,
+    type: PropTypes.string,
+    proteins: PropTypes.number,
+    fat: PropTypes.number,
+    carbohydrates: PropTypes.number,
+    calories: PropTypes.number,
+    price: PropTypes.number,
+    image: PropTypes.string,
+    image_large: PropTypes.string
+});
+
+BurgerConstructor.propTypes = {     
+    bun: propTypesTmpl,
+    ingredients: PropTypes.arrayOf(propTypesTmpl)
 };
 
 
