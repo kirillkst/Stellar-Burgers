@@ -6,48 +6,48 @@ import cx from 'classnames';
 const AppHeader = () => {
     return (
         <header className={styles.wrap}>
-            <nav className={styles.navbar}>
-                <ul>
-                    <li>
-                        <a 
-                            href="/" 
-                            className={cx(
-                                styles.link, 
-                                {[styles['link--active']]: true}
-                            )}>
-                            <BurgerIcon type="secondary"/>
-                             Конструктор
-                        </a>
-                    </li>
-                    <li>
-                        <a 
-                            href="/"
-                            className={cx(
-                                styles.link, 
-                                {[styles['link--active']]: false}
-                            )}>
-                            <ListIcon type="secondary" />
-                            Лента заказов
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-
-            <a href="/" className={styles.logo}>
-                <Logo />
-            </a>
-
-            <div className={styles.profile}>
-                <a 
-                    href="/" 
-                    className={cx(
-                        styles.link, 
-                        {[styles['link--active']]: false}
-                    )}>                        
-                    <ProfileIcon type="secondary" />
-                    Личный кабинет
+           <div className={styles.inner}>
+                <nav className={styles.navbar}>
+                    <ul>
+                        <li>
+                            <a 
+                                href="/" 
+                                className={cx(
+                                    styles.link, 
+                                    {[styles['link--active']]: true}
+                                )}>
+                                <BurgerIcon type="secondary"/>
+                                Конструктор
+                            </a>
+                        </li>
+                        <li>
+                            <a 
+                                href="/"
+                                className={cx(
+                                    styles.link, 
+                                    {[styles['link--active']]: false}
+                                )}>
+                                <ListIcon type="secondary" />
+                                Лента заказов
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <a href="/" className={styles.logo}>
+                    <Logo />
                 </a>
-            </div>            
+                <div className={styles.profile}>
+                    <a 
+                        href="/" 
+                        className={cx(
+                            styles.link, 
+                            {[styles['link--active']]: false}
+                        )}>                        
+                        <ProfileIcon type="secondary" />
+                        Личный кабинет
+                    </a>
+                </div>                   
+            </div>                  
         </header>
     );
 }

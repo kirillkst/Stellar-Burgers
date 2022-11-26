@@ -1,5 +1,10 @@
 .wrap {
     composes: pt-4 pb-4 text text_type_main-default from global;
+    background: var(--background);
+}
+
+.inner {
+    composes: container from global;
     display: flex;
     align-items: center;
 
@@ -35,7 +40,7 @@
 
     &:hover:not(&--active) {
         color: #fff;
-     
+
         svg {
             fill: var(--colors-interface-accent);
         }

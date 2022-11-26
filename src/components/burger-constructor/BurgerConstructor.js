@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
+import { ingredientPropTypes } from '../../utils/constants';
+
 import { ConstructorElement, Button, DragIcon, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './b-constructor.module.scss'; 
 
-const BurgerConstructor = (props) => {
-    const {bun, ingredients} = props;
-
+const BurgerConstructor = ({bun, ingredients}) => {
     return (
         <section className={styles.wrap}>
            <ConstructorElement
@@ -22,7 +22,6 @@ const BurgerConstructor = (props) => {
                         <li className={styles.item} key={index}>    
                             <span className={styles.itemOrder}><DragIcon type="primary" /></span>
                             <ConstructorElement
-                                type="top"
                                 text={ingredient.name}
                                 price={ingredient.price}
                                 thumbnail={ingredient.image}
@@ -41,7 +40,7 @@ const BurgerConstructor = (props) => {
             />
             <div className={styles.checkout}>
                  <div className="text text_type_digits-medium">
-                    {ingredients.reduce((acc, el) => acc + el.price, 0)}
+                    {ingredients.reduce((acc, el) => acc + el.price, 2 * bun.price)}
                     <CurrencyIcon type="primary" />
                  </div>
                  <Button htmlType="button" type="primary" size="large" extraClass="ml-10">
@@ -52,22 +51,9 @@ const BurgerConstructor = (props) => {
     );
 }
 
-const propTypesTmpl = PropTypes.shape({
-    _id: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    calories: PropTypes.number,
-    price: PropTypes.number,
-    image: PropTypes.string,
-    image_large: PropTypes.string
-});
-
 BurgerConstructor.propTypes = {     
-    bun: propTypesTmpl,
-    ingredients: PropTypes.arrayOf(propTypesTmpl)
+    bun: ingredientPropTypes.isRequired,
+    ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired)
 };
 
 

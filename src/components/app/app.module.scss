@@ -1,5 +1,4 @@
 .wrapper {
-    width: 1240px;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -7,7 +6,7 @@
 }
 
 .main {
-    composes: pt-10 mb-10 from global;
+    composes: pt-10 mb-10 container from global;
     display: flex;
     height: calc(100vh - 88px);
     min-height: 600px;

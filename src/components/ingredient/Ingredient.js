@@ -3,9 +3,7 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 
 import styles from './ingredient.module.scss';
 
-const Ingredient = (props) => {
-   const {name, price, image, counter} = props;
-
+const Ingredient = ({name, price, image, counter}) => {
     return (
         <div className={styles.wrap}>
             <div className={styles.image}>
@@ -23,9 +21,9 @@ const Ingredient = (props) => {
 
 
 Ingredient.propTypes = {
-    name: PropTypes.string, 
-    price: PropTypes.number, 
-    image: PropTypes.string, 
+    name: PropTypes.string.isRequired, 
+    price: PropTypes.number.isRequired, 
+    image: PropTypes.string.isRequired, 
     counter: PropTypes.number
 };
 

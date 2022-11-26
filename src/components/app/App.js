@@ -26,7 +26,7 @@ const App = () => {
 	});
 
 	const selected = {
-		bun: data.find(el => el.name == 'Краторная булка N-200i' ),
+		bun: data.find(el => el.name === 'Краторная булка N-200i' ),
 		ingredients: data.filter(el => (			
 			[
 				'Говяжий метеорит (отбивная)',
