@@ -13,7 +13,7 @@ export const ingredientPropTypes = PropTypes.shape({
     image_large: PropTypes.string,
 });
   
-export const ingredientsTypes = [
+export const INGREDIENTS_TYPES = [
     {
         key: "bun",
         name: "Булки"

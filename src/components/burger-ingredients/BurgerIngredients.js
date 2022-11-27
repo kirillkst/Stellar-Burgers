@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { ingredientPropTypes, ingredientsTypes } from '../../utils/constants';
+import { ingredientPropTypes, INGREDIENTS_TYPES } from '../../utils/constants';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientCategory from "../ingredient-category/IngredientCategory";
@@ -11,7 +11,7 @@ const BurgerIngredients = ({ingredients}) => {
         <section className={styles.wrap}>
             <h1 className="pb-5 text text_type_main-large">Соберите бургер</h1>
             <div className={styles.tabs}>
-                {ingredientsTypes.map((type, index) => (
+                {INGREDIENTS_TYPES.map((type, index) => (
                     <Tab 
                         value={type.key} 
                         key={index}
@@ -22,9 +22,11 @@ const BurgerIngredients = ({ingredients}) => {
                 ))}
             </div>
             <div className={styles.components}>
-                {ingredientsTypes.map((type, index) => {
+                {INGREDIENTS_TYPES.map((type, index) => {
                     const data = ingredients.filter(item => item.type === type.key);
-                    return <IngredientCategory category={type} ingredients={data} key={index} />;                                    
+                    return (
+                        <IngredientCategory category={type} ingredients={data} key={index} />
+                    );                                
                 })}                 
             </div>
         </section>
