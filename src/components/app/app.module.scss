@@ -1,0 +1,19 @@
+.wrapper {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.main {
+    composes: pt-10 mb-10 container from global;
+    display: flex;
+    height: calc(100vh - 88px);
+    min-height: 600px;
+    overflow: hidden;
+    gap: calc(var(--offset-base-size)  * 10);
+    
+    > * {
+        flex: 1;
+    }
+}

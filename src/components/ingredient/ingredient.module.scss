@@ -1,0 +1,35 @@
+.wrap {
+    position: relative;
+    text-align: center;
+
+    .counter {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}
+
+.image {
+    composes: pl-4 pr-4 pb-1 from global;
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+.price {
+    composes: pb-1 text text_type_digits-default from global;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        margin-left: var(--offset-base-size);
+    }
+}
+
+.name {
+    composes: text text_type_main-default from global;
+    min-height: calc(var(--offset-base-size) * 10);
+}
