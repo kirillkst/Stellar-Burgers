@@ -1,12 +1,39 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { ingredientPropTypes, INGREDIENTS_TYPES } from '../../utils/constants';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientCategory from '../ingredient-category/IngredientCategory';
+import IngredientDetails from '../modals/IngredientDetails';
+import Modal from "../modals/Modal";
+
+import { ingredientPropTypes, INGREDIENTS_TYPES } from '../../utils/constants';
+import setContent from "../../utils/setContent";
 
 import styles from './b-ingredients.module.scss';
 
-const BurgerIngredients = ({ ingredients }) => {
+const BurgerIngredients = ({ ingredients }) => {	
+	const [ingredientModal, setIngredientModal] = useState(null);
+	
+	const handleOpenModal = (id) => {
+		const ingredient = ingredients.find(el => el._id === id);
+
+		const modalData = (
+			<Modal 
+				show={true} 
+				title="Детали ингредиента" 
+				onClose={() => setIngredientModal(null)}
+			> 
+				{ingredient
+					? setContent('confirmed', IngredientDetails, ingredient) 
+					: setContent('error')
+				}
+			</Modal>
+		)
+		
+		setIngredientModal(modalData);		
+	};
+	
+	
 	return (
 		<section className={styles.wrap}>
 			<h1 className="pb-5 text text_type_main-large">Соберите бургер</h1>
@@ -30,10 +57,12 @@ const BurgerIngredients = ({ ingredients }) => {
 							category={type}
 							ingredients={data}
 							key={index}
+							onClick={handleOpenModal}
 						/>
 					);
 				})}
-			</div>
+			</div>			
+			{ingredientModal}			
 		</section>
 	);
 };

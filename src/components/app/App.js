@@ -8,7 +8,6 @@ import { API_URL } from '../../utils/constants';
 
 import styles from './app.module.scss';
 
-
 const App = () => {	
 	const [data, setData] = useState([]);
 	const [process, setProcess] = useState('waiting');
@@ -43,7 +42,7 @@ const App = () => {
 			<AppHeader />
 			<main className={styles.main}>          
 				{content}
-			</main>					
+			</main>				
 		</div>
 	);
 };
