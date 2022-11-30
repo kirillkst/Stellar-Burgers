@@ -1,53 +1,49 @@
+import { useState, useEffect, useMemo } from 'react';
+
 import AppHeader from '../app-header/AppHeader';
-import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
-import BurgerConstructor from '../burger-constructor/BurgerConstructor';
+import AppMain from '../app-main/AppMain';
+
+import setContent from '../../utils/setContent';
+import { API_URL } from '../../utils/constants';
 
 import styles from './app.module.scss';
 
-import data from '../../utils/data';
 
-const App = () => {
-	const ingredients = data.map(el => {
-		if (
-			[
-				'Краторная булка N-200i',
-				'Говяжий метеорит (отбивная)',
-				'Соус Spicy-X',
-				'Биокотлета из марсианской Магнолии',
-				'Соус традиционный галактический',
-				'Хрустящие минеральные кольца',
-				'Хрустящие минеральные кольца',
-				'Соус фирменный Space Sauce',
-			].includes(el.name)
-		) {
-			el.counter = 1;
-		}
+const App = () => {	
+	const [data, setData] = useState([]);
+	const [process, setProcess] = useState('waiting');
 
-		return el;
-	});
+	useEffect(() => {		
+		setProcess('loading');
 
-	const selected = {
-		bun: data.find((el) => el.name === 'Краторная булка N-200i'),
-		ingredients: data.filter(el =>
-			[
-				'Говяжий метеорит (отбивная)',
-				'Соус Spicy-X',
-				'Биокотлета из марсианской Магнолии',
-				'Соус традиционный галактический',
-				'Хрустящие минеральные кольца',
-				'Хрустящие минеральные кольца',
-				'Соус фирменный Space Sauce',
-			].includes(el.name)
-		),
-	};
+		fetch(API_URL)
+			.then(r => r.json())
+			.then(res => {
+				if (res.success === true && Array.isArray(res.data)) {
+					setData(res.data);					
+					setProcess('confirmed');
+				} else {					
+  					throw new Error();
+				}
+			})
+			.catch(() => {
+				setProcess('error');
+			});
+
+	}, []);
+
+	const content = useMemo(() => {
+        return setContent(process, AppMain, {
+			ingredients: data
+		});
+    }, [process, data])
 
 	return (
 		<div className={styles.wrapper}>
 			<AppHeader />
-			<main className={styles.main}>
-				<BurgerIngredients ingredients={ingredients} />
-				<BurgerConstructor {...selected} />
-			</main>
+			<main className={styles.main}>          
+				{content}
+			</main>					
 		</div>
 	);
 };

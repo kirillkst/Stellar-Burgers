@@ -28,4 +28,4 @@ export const INGREDIENTS_TYPES = [
     }
 ];
 
-
+export const API_URL = 'https://norma.nomoreparties.space/api/ingredients';
