@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef} from 'react';
 import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -13,6 +13,8 @@ import styles from './b-ingredients.module.scss';
 
 const BurgerIngredients = ({ ingredients }) => {	
 	const [ingredientModal, setIngredientModal] = useState(null);
+	const [activeTab, setActiveTab] = useState(0);
+	const typeRefs = useRef([]);
 	
 	const handleOpenModal = (id) => {
 		const ingredient = ingredients.find(el => el._id === id);
@@ -32,6 +34,11 @@ const BurgerIngredients = ({ ingredients }) => {
 		
 		setIngredientModal(modalData);		
 	};
+
+	const onTabClick = (value) => {
+		typeRefs.current[value].scrollIntoView({ behavior: 'smooth' });
+		setActiveTab(Object.keys(typeRefs.current).findIndex(el => el === value));
+	}
 	
 	
 	return (
@@ -42,7 +49,8 @@ const BurgerIngredients = ({ ingredients }) => {
 					<Tab
 						value={type.key}
 						key={index}
-						active={index === 0}
+						active={index === activeTab}
+						onClick={onTabClick}
 					>
 						{type.name}
 					</Tab>
@@ -51,9 +59,9 @@ const BurgerIngredients = ({ ingredients }) => {
 			<div className={styles.components}>
 				{INGREDIENTS_TYPES.map((type, index) => {
 					const data = ingredients.filter(item => item.type === type.key);
-                    
 					return (
 						<IngredientCategory
+							innerRef={el => typeRefs.current[type.key] = el}
 							category={type}
 							ingredients={data}
 							key={index}

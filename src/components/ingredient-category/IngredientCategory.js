@@ -5,9 +5,9 @@ import Ingredient from '../ingredient/Ingredient';
 
 import styles from './ingredient-category.module.scss';
 
-const IngredientCategory = ({ category, ingredients, onClick }) => {
+const IngredientCategory = ({ innerRef, category, ingredients, onClick }) => {
 	return (
-		<section id={category.key}>
+		<section id={category.key} ref={innerRef}>
 			<h2 className="pt-10 pb-6 text text_type_main-medium">{category.name}</h2>
 			<ul className={styles.list}>
 				{ingredients.map(item => (
