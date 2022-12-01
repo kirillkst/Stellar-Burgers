@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import donePng from '../../img/done.png';
+import donePng from '../../images/done.png';
 import styles from './styles/order-details.module.scss';
 
 const OrderDetails = ({ orderNum }) => {
