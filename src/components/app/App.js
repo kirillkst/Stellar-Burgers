@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from 'react';
 import AppHeader from '../app-header/AppHeader';
 import AppMain from '../app-main/AppMain';
 
-import setContent from '../../utils/setContent';
+import renderContent from '../../utils/renderContent';
 import { API_URL } from '../../utils/constants';
 
 import styles from './app.module.scss';
@@ -32,7 +32,7 @@ const App = () => {
 	}, []);
 
 	const content = useMemo(() => {
-        return setContent(process, AppMain, {
+        return renderContent(process, AppMain, {
 			ingredients: data
 		});
     }, [process, data])

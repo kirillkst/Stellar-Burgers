@@ -1,7 +1,7 @@
 import Spinner from '../components/spinner/Spinner';
 import ErrorMessage from '../components/errors/ErrorMessage';
 
-const setContent = (process, Component, data) => {
+const renderContent = (process, Component, data) => {
 	switch (process) {
 		case 'waiting':
 			return <Spinner />;
@@ -16,4 +16,4 @@ const setContent = (process, Component, data) => {
 	}
 };
 
-export default setContent;
+export default renderContent;

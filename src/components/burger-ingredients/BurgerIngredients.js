@@ -5,9 +5,9 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientCategory from '../ingredient-category/IngredientCategory';
 import IngredientDetails from '../modals/IngredientDetails';
 import Modal from "../modals/Modal";
+import ErrorMessage from '../errors/ErrorMessage';
 
 import { ingredientPropTypes, INGREDIENTS_TYPES } from '../../utils/constants';
-import setContent from "../../utils/setContent";
 
 import styles from './b-ingredients.module.scss';
 
@@ -26,8 +26,8 @@ const BurgerIngredients = ({ ingredients }) => {
 				onClose={() => setIngredientModal(null)}
 			> 
 				{ingredient
-					? setContent('confirmed', IngredientDetails, ingredient) 
-					: setContent('error')
+					? <IngredientDetails {...ingredient}/>
+					: <ErrorMessage />
 				}
 			</Modal>
 		)
