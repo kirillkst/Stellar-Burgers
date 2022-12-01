@@ -4,7 +4,6 @@ import { ingredientPropTypes } from '../../utils/constants';
 
 import OrderDetails from '../modals/OrderDetails';
 import Modal from "../modals/Modal";
-import ErrorMessage from '../errors/ErrorMessage';
 
 import { ConstructorElement, Button, DragIcon, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -19,7 +18,7 @@ const BurgerConstructor = ({ bun, ingredients }) => {
 				show={true} 
 				onClose={() => setOrderModal(null)}
 			> 
-				<OrderDetails/>
+				<OrderDetails orderNum='034536'/>
 			</Modal>
 		)
 		

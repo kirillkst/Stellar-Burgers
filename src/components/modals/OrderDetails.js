@@ -1,10 +1,12 @@
+import PropTypes from 'prop-types';
+
 import donePng from '../../img/done.png';
 import styles from './styles/order-details.module.scss';
 
-const OrderDetails = () => {
+const OrderDetails = ({ orderNum }) => {
     return (
         <div className={styles.wrap}>
-            <div className="pt-15 mb-8 text text_type_digits-large">034536</div>
+            <div className="pt-15 mb-8 text text_type_digits-large">{orderNum}</div>
             <div className="text text_type_main-medium mb-15">идентификатор заказа</div>
             <img src={donePng} alt="" className="mb-15" />
             <div className="text text_type_main-default mb-2">Ваш заказ начали готовить</div>
@@ -12,5 +14,10 @@ const OrderDetails = () => {
         </div>
     );
 };
+
+OrderDetails.propTypes = {    
+	orderNum: PropTypes.string.isRequired
+};
+
 
 export default OrderDetails;

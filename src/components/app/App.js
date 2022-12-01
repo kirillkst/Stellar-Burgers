@@ -28,7 +28,6 @@ const App = () => {
 			.catch(() => {
 				setProcess('error');
 			});
-
 	}, []);
 
 	const content = useMemo(() => {
