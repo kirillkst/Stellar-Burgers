@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientCategory from '../ingredient-category/IngredientCategory';
-import IngredientDetails from '../modals/IngredientDetails';
+import IngredientDetails from '../ingredient-details/IngredientDetails';
 import Modal from "../modals/Modal";
 import ErrorMessage from '../errors/ErrorMessage';
 
@@ -18,28 +18,13 @@ const BurgerIngredients = ({ ingredients }) => {
 	
 	const handleOpenModal = (id) => {
 		const ingredient = ingredients.find(el => el._id === id);
-
-		const modalData = (
-			<Modal 
-				show={true} 
-				title="Детали ингредиента" 
-				onClose={() => setIngredientModal(null)}
-			> 
-				{ingredient
-					? <IngredientDetails {...ingredient}/>
-					: <ErrorMessage />
-				}
-			</Modal>
-		)
-		
-		setIngredientModal(modalData);		
+		setIngredientModal(ingredient);				
 	};
 
 	const onTabClick = (value) => {
 		typeRefs.current[value].scrollIntoView({ behavior: 'smooth' });
 		setActiveTab(Object.keys(typeRefs.current).findIndex(el => el === value));
-	}
-	
+	}	
 	
 	return (
 		<section className={styles.wrap}>
@@ -70,7 +55,11 @@ const BurgerIngredients = ({ ingredients }) => {
 					);
 				})}
 			</div>			
-			{ingredientModal}			
+			{ingredientModal && (
+				<Modal title="Детали ингредиента" onClose={() => setIngredientModal(null)}> 
+					<IngredientDetails ingredient={ingredientModal} />
+				</Modal>
+			)}			
 		</section>
 	);
 };

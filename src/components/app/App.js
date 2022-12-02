@@ -3,38 +3,37 @@ import { useState, useEffect, useMemo } from 'react';
 import AppHeader from '../app-header/AppHeader';
 import AppMain from '../app-main/AppMain';
 
-import renderContent from '../../utils/renderContent';
-import { API_URL } from '../../utils/constants';
+import { renderContent } from '../../utils/burger-services';
+import { getIngredients } from '../../utils/burger-api';
+
+import { PROCESS_STATE } from '../../utils/constants';
 
 import styles from './app.module.scss';
 
 const App = () => {	
 	const [data, setData] = useState([]);
-	const [process, setProcess] = useState('waiting');
+	const [process, setProcess] = useState(PROCESS_STATE.WAITING);
 
 	useEffect(() => {		
-		setProcess('loading');
-
-		fetch(API_URL)
-			.then(r => r.json())
+		setProcess(PROCESS_STATE.LOADING);
+		
+		getIngredients()
 			.then(res => {
 				if (res.success === true && Array.isArray(res.data)) {
 					setData(res.data);					
-					setProcess('confirmed');
+					setProcess(PROCESS_STATE.CONFIRMED);
 				} else {					
   					throw new Error();
 				}
 			})
 			.catch(() => {
-				setProcess('error');
+				setProcess(PROCESS_STATE.ERROR);
 			});
 	}, []);
 
-	const content = useMemo(() => {
-        return renderContent(process, AppMain, {
-			ingredients: data
-		});
-    }, [process, data])
+	const content = renderContent(process, AppMain, {
+		ingredients: data
+	});
 
 	return (
 		<div className={styles.wrapper}>

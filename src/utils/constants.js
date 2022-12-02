@@ -28,4 +28,15 @@ export const INGREDIENTS_TYPES = [
     }
 ];
 
-export const API_URL = 'https://norma.nomoreparties.space/api/ingredients';
+export const API_URL = 'https://norma.nomoreparties.space/api';
+
+export const PROCESS_STATE = Object.freeze({
+    WAITING: 'waiting',
+    LOADING: 'loading',
+    CONFIRMED: 'confirmed',
+    ERROR: 'error',
+})
+
+export const ESC_KEYCODE = 27
+
+export const MODAL_PLACEMENT = document.getElementById('react-modals');

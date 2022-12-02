@@ -2,28 +2,21 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/constants';
 
-import OrderDetails from '../modals/OrderDetails';
+import OrderDetails from '../order-details/OrderDetails';
 import Modal from "../modals/Modal";
 
 import { ConstructorElement, Button, DragIcon, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './b-constructor.module.scss';
 
-const BurgerConstructor = ({ bun, ingredients }) => {
-	const [orderModal, setOrderModal] = useState(null);
+const BurgerConstructor = ({ bun, ingredients }) => {	 
+	const [orderData, setOrderData] = useState(null);
 
-	const handleOpenModal = () => {
-		const modalData = (
-			<Modal 
-				show={true} 
-				onClose={() => setOrderModal(null)}
-			> 
-				<OrderDetails orderNum='034536'/>
-			</Modal>
-		)
-		
-		setOrderModal(modalData);		
-	};
+	const createOrder = () => {
+		setOrderData({
+			number: '034536'
+		})
+	}
 
 	return (
 		<section className={styles.wrap}>
@@ -69,12 +62,16 @@ const BurgerConstructor = ({ bun, ingredients }) => {
 					type="primary"
 					size="large"
 					extraClass="ml-10"
-					onClick={handleOpenModal}
+					onClick={createOrder}
 				>
 					Оформить заказ
 				</Button>
 			</div>
-			{orderModal}
+			{orderData && (
+				<Modal onClose={() => setOrderData(null)}> 
+					<OrderDetails {...orderData}/>
+				</Modal>
+			)}
 		</section>
 	);
 };

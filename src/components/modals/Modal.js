@@ -4,11 +4,13 @@ import ReactDOM from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from './ModalOverlay';
 
+import { MODAL_PLACEMENT, ESC_KEYCODE } from '../../utils/constants';
+
 import styles from './styles/modal.module.scss';
 
-const Modal = ({ show, children, title, onClose }) => {
+const Modal = ({ children, title, onClose }) => {
 	const closeOnEscapeKeyDown = useCallback((e) => {
-		if ((e.charCode || e.keyCode) === 27) {
+		if ((e.charCode || e.keyCode) === ESC_KEYCODE) {
 			onClose();
 		}
 	}, [onClose]);
@@ -21,10 +23,6 @@ const Modal = ({ show, children, title, onClose }) => {
 		};
 	}, [closeOnEscapeKeyDown]);
 
-	
-	if (!show) 
-    	return null;
-
 	return ReactDOM.createPortal(
 		<>
 			<div className={styles.modal}>
@@ -36,7 +34,7 @@ const Modal = ({ show, children, title, onClose }) => {
 			</div>
 			<ModalOverlay onClose={onClose} />
 		</>,
-		document.getElementById('react-modals')
+		MODAL_PLACEMENT
 	);
 };
 
