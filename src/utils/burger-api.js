@@ -9,7 +9,7 @@ const useBurgerApi = () => {
         return await request(`${API_URL}/ingredients`);
     };
 
-    return {getIngredients, process, setProcess}
+    return { getIngredients, process, setProcess }
 }
 
 export default useBurgerApi;

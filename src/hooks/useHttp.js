@@ -11,9 +11,7 @@ const useHttp = () => {
 
         try {            
             const res = await fetch(url);
-            const response = await checkResponse(res);          
-
-            return response;
+            return await checkResponse(res);   
         } catch(error) {
             setProcess(PROCESS_STATE.ERROR);
             throw error;

@@ -36,7 +36,7 @@ const App = () => {
 			<main className={styles.main}>          
 				{content}
 			</main>				
-		</div>
+		</div>		
 	);
 };
 
