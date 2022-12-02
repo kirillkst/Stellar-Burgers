@@ -1,34 +1,29 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
+import useBurgerApi from '../../utils/burger-api';
 
 import AppHeader from '../app-header/AppHeader';
 import AppMain from '../app-main/AppMain';
 
 import { renderContent } from '../../utils/burger-services';
-import { getIngredients } from '../../utils/burger-api';
 
 import { PROCESS_STATE } from '../../utils/constants';
 
 import styles from './app.module.scss';
 
 const App = () => {	
-	const [data, setData] = useState([]);
-	const [process, setProcess] = useState(PROCESS_STATE.WAITING);
+	const [data, setData] = useState([]);	
+	const { process, setProcess, getIngredients } = useBurgerApi();
 
-	useEffect(() => {		
-		setProcess(PROCESS_STATE.LOADING);
-		
+	useEffect(() => {				
 		getIngredients()
 			.then(res => {
 				if (res.success === true && Array.isArray(res.data)) {
 					setData(res.data);					
-					setProcess(PROCESS_STATE.CONFIRMED);
 				} else {					
   					throw new Error();
 				}
 			})
-			.catch(() => {
-				setProcess(PROCESS_STATE.ERROR);
-			});
+			.then(() => setProcess(PROCESS_STATE.CONFIRMED));
 	}, []);
 
 	const content = renderContent(process, AppMain, {

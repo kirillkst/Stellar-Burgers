@@ -1,7 +1,15 @@
-import { checkReponse } from './burger-services';
 import { API_URL } from './constants';
 
-export const getIngredients = () => {
-	return fetch(`${API_URL}/ingredients`)
-            .then(checkReponse);
-};
+import useHttp from '../hooks/useHttp';
+
+const useBurgerApi = () => {
+    const {request, process, setProcess} = useHttp();
+
+    const getIngredients = async () => {
+        return await request(`${API_URL}/ingredients`);
+    };
+
+    return {getIngredients, process, setProcess}
+}
+
+export default useBurgerApi;
