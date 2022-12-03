@@ -1,6 +1,6 @@
-import { API_URL } from './constants';
+import { API_URL } from '../utils/constants';
 
-import useHttp from '../hooks/useHttp';
+import useHttp from './useHttp';
 
 const useBurgerApi = () => {
     const {request, process, setProcess} = useHttp();

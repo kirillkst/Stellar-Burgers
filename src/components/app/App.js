@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import useBurgerApi from '../../utils/burger-api';
+import useBurgerApi from '../../hooks/useBurgerApi';
 
 import AppHeader from '../app-header/AppHeader';
 import AppMain from '../app-main/AppMain';
 
 import { renderContent } from '../../utils/burger-services';
-
 import { PROCESS_STATE } from '../../utils/constants';
 
 import styles from './app.module.scss';

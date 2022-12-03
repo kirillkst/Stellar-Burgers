@@ -5,7 +5,6 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientCategory from '../ingredient-category/IngredientCategory';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 import Modal from "../modals/Modal";
-import ErrorMessage from '../errors/ErrorMessage';
 
 import { ingredientPropTypes, INGREDIENTS_TYPES } from '../../utils/constants';
 
