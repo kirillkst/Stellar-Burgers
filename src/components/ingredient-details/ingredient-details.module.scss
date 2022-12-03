@@ -1,0 +1,27 @@
+.wrap {
+    text-align: center;
+	width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.image {
+    composes: pb-4 from global;
+}
+
+.name {
+    composes: pb-8 text text_type_main-medium from global;
+}
+
+.details {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    gap: calc(var(--offset-base-size) * 5);
+
+    span {
+        display: block;
+    }
+}

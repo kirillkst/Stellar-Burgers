@@ -1,56 +1,42 @@
+import { useState, useEffect } from 'react';
+import useBurgerApi from '../../hooks/useBurgerApi';
+
 import AppHeader from '../app-header/AppHeader';
-import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
-import BurgerConstructor from '../burger-constructor/BurgerConstructor';
+import AppMain from '../app-main/AppMain';
 
-import styles from './app.module.scss'; 
+import { renderContent } from '../../utils/burger-services';
+import { PROCESS_STATE } from '../../utils/constants';
 
-import data from '../../utils/data';
+import styles from './app.module.scss';
 
-const App = () => {
-	const ingredients = data.map(el => {
-		if ([
-				'Краторная булка N-200i',
-				'Говяжий метеорит (отбивная)',
-				'Соус Spicy-X',
-				'Биокотлета из марсианской Магнолии',
-				'Соус традиционный галактический',
-				'Хрустящие минеральные кольца',
-				'Хрустящие минеральные кольца',
-				'Соус фирменный Space Sauce'
-			].includes(el.name)
-		) {
-			el.counter = 1;
-		}
-			
-		return el;
+const App = () => {	
+	const [data, setData] = useState([]);	
+	const { process, setProcess, getIngredients } = useBurgerApi();
+
+	useEffect(() => {				
+		getIngredients()
+			.then(res => {
+				if (res.success === true && Array.isArray(res.data)) {
+					setData(res.data);					
+				} else {					
+  					throw new Error();
+				}
+			})
+			.then(() => setProcess(PROCESS_STATE.CONFIRMED));
+	}, []);
+
+	const content = renderContent(process, AppMain, {
+		ingredients: data
 	});
 
-	const selected = {
-		bun: data.find(el => el.name === 'Краторная булка N-200i' ),
-		ingredients: data.filter(el => (			
-			[
-				'Говяжий метеорит (отбивная)',
-				'Соус Spicy-X',
-				'Биокотлета из марсианской Магнолии',
-				'Соус традиционный галактический',
-				'Хрустящие минеральные кольца',
-				'Хрустящие минеральные кольца',
-				'Соус фирменный Space Sauce'
-			].includes(el.name)
-		) )			
-	}; 
-	
-  
 	return (
 		<div className={styles.wrapper}>
 			<AppHeader />
-			<main className={styles.main}>
-				<BurgerIngredients ingredients={ingredients}/>
-				<BurgerConstructor {...selected} />
-			</main>
-		</div>
+			<main className={styles.main}>          
+				{content}
+			</main>				
+		</div>		
 	);
-}
-
+};
 
 export default App;
