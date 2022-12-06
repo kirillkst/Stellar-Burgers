@@ -1,4 +1,4 @@
-import { useState, useRef} from 'react';
+import { useState, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,18 +6,30 @@ import IngredientCategory from '../ingredient-category/IngredientCategory';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 import Modal from "../modals/Modal";
 
+import { CartContext } from '../../services/appContext';
 import { ingredientPropTypes, INGREDIENTS_TYPES } from '../../utils/constants';
 
 import styles from './b-ingredients.module.scss';
 
 const BurgerIngredients = ({ ingredients }) => {	
+	
+	const { cartDispatch } = useContext(CartContext);
+
 	const [ingredientModal, setIngredientModal] = useState(null);
 	const [activeTab, setActiveTab] = useState(0);
 	const typeRefs = useRef([]);
 	
-	const handleOpenModal = (id) => {
+	const handleIngredientOpen = (id) => {
 		const ingredient = ingredients.find(el => el._id === id);
-		setIngredientModal(ingredient);				
+		setIngredientModal(ingredient);		
+		
+		cartDispatch({
+			type: 'add',
+			payload: {
+				type: ingredient.type,
+				data: ingredient
+			}
+		})
 	};
 
 	const onTabClick = (value) => {
@@ -49,7 +61,7 @@ const BurgerIngredients = ({ ingredients }) => {
 							category={type}
 							ingredients={data}
 							key={index}
-							onClick={handleOpenModal}
+							onClick={handleIngredientOpen}
 						/>
 					);
 				})}
