@@ -13,12 +13,10 @@ const BurgerConstructor = () => {
 	const { cart } = useContext(CartContext);
 	const { bun, ingredients, cartTotal } = cart;
 
-	const [orderData, setOrderData] = useState(null);
+	const [orderModal, setOrderModal] = useState(false);
 
 	const createOrder = () => {
-		setOrderData({
-			number: '034536'
-		})
+		setOrderModal(true)
 	}
 	
 	return (
@@ -91,9 +89,9 @@ const BurgerConstructor = () => {
 					</Button>
 				)}	
 			</div>
-			{orderData && (
-				<Modal onClose={() => setOrderData(null)}> 
-					<OrderDetails {...orderData}/>
+			{orderModal && (
+				<Modal onClose={() => setOrderModal(false)}> 
+					<OrderDetails />
 				</Modal>
 			)}
 		</section>

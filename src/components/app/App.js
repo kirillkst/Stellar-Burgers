@@ -22,11 +22,13 @@ function reducer(state, action) {
 			return (payload.type === 'bun')
 				? { ...state, bun: data }
 				: { ...state, ingredients: [...state.ingredients, data] } 
+
 		case 'total':
 			let total = state.bun?.price || 0;
 			total += (state.ingredients.length > 0) ? state.ingredients.reduce((acc, el) => acc + el.price, 2 * total) : 0;
 
 			return { ...state, cartTotal: total }
+			
 		default:
 			throw new Error();
 	}

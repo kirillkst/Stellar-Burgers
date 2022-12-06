@@ -8,7 +8,7 @@ import { CartContext } from '../../services/appContext';
 import { ingredientPropTypes } from '../../utils/constants';
 
 const AppMain = ({ ingredients }) => {
-	const { cart, cartDispatch } = useContext(CartContext);
+	const { cart } = useContext(CartContext);
 
 	const ingredientSelected = ingredients.map(el => {
 		const counter = (el.type === 'bun' && cart.bun?._id === el._id) 
