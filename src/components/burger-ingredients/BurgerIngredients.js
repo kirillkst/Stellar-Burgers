@@ -1,4 +1,4 @@
-import { useState, useRef, useContext } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -11,9 +11,8 @@ import { ingredientPropTypes, INGREDIENTS_TYPES } from '../../utils/constants';
 
 import styles from './b-ingredients.module.scss';
 
-const BurgerIngredients = ({ ingredients }) => {	
-	
-	const { cartDispatch } = useContext(CartContext);
+const BurgerIngredients = ({ ingredients }) => {		
+	const { cart, cartDispatch } = useContext(CartContext);
 
 	const [ingredientModal, setIngredientModal] = useState(null);
 	const [activeTab, setActiveTab] = useState(0);

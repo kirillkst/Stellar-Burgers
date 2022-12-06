@@ -36,6 +36,10 @@ const App = () => {
 	const [cart, cartDispatch] = useReducer(reducer, initialCart);
 	const [data, setData] = useState([]);	
 	const { process, setProcess, getIngredients } = useBurgerApi();
+	
+	const content = renderContent(process, AppMain, {
+		ingredients: data
+	});
 
 	useEffect(() => {				
 		getIngredients()
@@ -48,10 +52,10 @@ const App = () => {
 			})
 			.then(() => setProcess(PROCESS_STATE.CONFIRMED));
 	}, []);
-
-	const content = renderContent(process, AppMain, {
-		ingredients: data
-	});
+	
+	useEffect(() => {
+		cartDispatch({ type: 'total' })
+	}, [cart.bun, cart.ingredients])
 
 	return (
 		<div className={styles.wrapper}>

@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import OrderDetails from '../order-details/OrderDetails';
 import Modal from "../modals/Modal";
@@ -40,7 +41,7 @@ const BurgerConstructor = () => {
 				{ingredients.length > 0 ? (
 					ingredients.map((ingredient, index) => {
 						return (
-							<li className={styles.item} key={index}>
+							<li className={styles.item} key={uuidv4()}>
 								<span className={styles.itemOrder}>
 									<DragIcon type="primary" />
 								</span>
@@ -78,15 +79,17 @@ const BurgerConstructor = () => {
 					{cartTotal}
 					<CurrencyIcon type="primary" />
 				</div>
-				<Button
-					htmlType="button"
-					type="primary"
-					size="large"
-					extraClass="ml-10"
-					onClick={createOrder}
-				>
-					Оформить заказ
-				</Button>
+				{bun && ingredients.length > 0 && (
+					<Button
+						htmlType="button"
+						type="primary"
+						size="large"
+						extraClass="ml-10"
+						onClick={createOrder}
+					>
+						Оформить заказ
+					</Button>
+				)}	
 			</div>
 			{orderData && (
 				<Modal onClose={() => setOrderData(null)}> 
