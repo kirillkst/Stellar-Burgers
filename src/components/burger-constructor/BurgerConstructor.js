@@ -10,13 +10,18 @@ import { CartContext } from '../../services/appContext';
 import styles from './b-constructor.module.scss';
 
 const BurgerConstructor = () => {		
-	const { cart } = useContext(CartContext);
+	const { cart, cartDispatch } = useContext(CartContext);
 	const { bun, ingredients, cartTotal } = cart;
 
 	const [orderModal, setOrderModal] = useState(false);
 
 	const createOrder = () => {
 		setOrderModal(true)
+	}
+
+	const onCloseModal = () => {		
+		cartDispatch({ type: 'reset' });
+		setOrderModal(false)
 	}
 	
 	return (
@@ -90,7 +95,7 @@ const BurgerConstructor = () => {
 				)}	
 			</div>
 			{orderModal && (
-				<Modal onClose={() => setOrderModal(false)}> 
+				<Modal onClose={onCloseModal}> 
 					<OrderDetails />
 				</Modal>
 			)}

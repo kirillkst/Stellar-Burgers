@@ -20,7 +20,7 @@ const OrderDetails = () => {
         createOrder(ingredientsID)
 			.then(res => {
 				if (res.success === true) {
-					setNumber(res.order.number);					
+					setNumber(res.order.number);				
 				} else {					
   					throw new Error();
 				}

@@ -28,6 +28,9 @@ function reducer(state, action) {
 			total += (state.ingredients.length > 0) ? state.ingredients.reduce((acc, el) => acc + el.price, 2 * total) : 0;
 
 			return { ...state, cartTotal: total }
+		
+		case 'reset':
+			return initialCart;
 			
 		default:
 			throw new Error();
