@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useCallback} from 'react';
 
 import OrderDetails from '../order-details/OrderDetails';
 import Modal from "../modals/Modal";
@@ -22,23 +22,30 @@ const BurgerConstructor = () => {
 		cartDispatch({ type: 'reset' });
 		setOrderModal(false)
 	}
-	
-	return (
-		<section className={styles.wrap}>
-			{bun ? (
+
+	const renderBun = useCallback((type) => {	
+		const suffix = type === 'top' ? ' (верх)' : ' (низ)'
+		return (bun)
+			? (
 				<ConstructorElement
-					type="top"
+					type={`${type}`}
 					isLocked={true}
-					text={`${bun.name} (верх)`}
+					text={`${bun.name} ${suffix}`}
 					price={bun.price}
 					thumbnail={bun.image}
 					extraClass={styles.item}
 				/>
-			) : (
-				<div className={`constructor-element constructor-element_pos_top text_type_main-medium justify-content-center ${styles.item}`}>
+			)
+			: (
+				<div className={`constructor-element constructor-element_pos_${type} text_type_main-medium justify-content-center ${styles.item}`}>
 					Выберите булку
 				</div>
-			)}
+			)		
+	}, [bun]);
+	
+	return (
+		<section className={styles.wrap}>
+			{renderBun('top')}
 			<ul className={styles.list}>
 				{ingredients.length > 0 ? (
 					ingredients.map((ingredient, index) => {
@@ -61,20 +68,7 @@ const BurgerConstructor = () => {
 					</div>
 				)}
 			</ul>
-			{bun ? (
-				<ConstructorElement
-					type="bottom"
-					isLocked={true}
-					text={`${bun.name} (низ)`}
-					price={bun.price}
-					thumbnail={bun.image}
-					extraClass={styles.item}
-				/>
-			) : (
-				<div className={`constructor-element constructor-element_pos_bottom text_type_main-medium justify-content-center ${styles.item}`}>
-					Выберите булку
-				</div>
-			)}
+			{renderBun('bottom')}
 			
 			<div className={styles.checkout}>
 				<div className="text text_type_digits-medium">

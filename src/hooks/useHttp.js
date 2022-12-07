@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 
-import { checkResponse } from '../utils/burger-services';
+import { checkResponse } from '../utils/burger-utils';
 import { PROCESS_STATE } from '../utils/constants';
 
 const useHttp = () => {

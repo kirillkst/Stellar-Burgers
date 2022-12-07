@@ -7,7 +7,7 @@ const Ingredient = ({ _id, name, price, image, counter, onIngredientClick }) => 
 	return (
 		<div className={styles.wrap} onClick={() => onIngredientClick(_id)}>
 			<div className={styles.image}>
-				<img src={image} alt=""/>
+				<img src={image} alt={name}/>
 			</div>
 			<div className={styles.price}>
 				{price}

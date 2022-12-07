@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from 'react';
-import PropTypes from 'prop-types';
-import useBurgerApi from '../../hooks/useBurgerApi';
 
+import OrderDetailsView from '../order-details-view/OrderDetailsView';
+
+import useBurgerApi from '../../hooks/useBurgerApi';
 import { CartContext } from '../../services/appContext';
-import { renderContent } from '../../utils/burger-services';
+import { renderContent } from '../../utils/burger-utils';
 import { PROCESS_STATE } from '../../utils/constants';
 
-import donePng from '../../images/done.png';
 import styles from './order-details.module.scss';
 
 const OrderDetails = () => {    
@@ -25,10 +25,11 @@ const OrderDetails = () => {
   					throw new Error();
 				}
 			})
-			.then(() => setProcess(PROCESS_STATE.CONFIRMED));			
+			.then(() => setProcess(PROCESS_STATE.CONFIRMED))
+			.catch(); //Обработка ошибок в хуке useHttp			
 	}, []);
 
-    const content = renderContent(process, View, { number });
+    const content = renderContent(process, OrderDetailsView, { number });
 
     return (
         <div className={styles.wrap}>
@@ -37,20 +38,5 @@ const OrderDetails = () => {
     );
 };
 
-const View = ({ number }) => {
-    return (
-        <>
-            <div className="pt-15 mb-8 text text_type_digits-large">{number}</div>
-            <div className="text text_type_main-medium mb-15">идентификатор заказа</div>
-            <img src={donePng} alt="" className="mb-15" />
-            <div className="text text_type_main-default mb-2">Ваш заказ начали готовить</div>
-            <div className="text text_type_main-default text_color_inactive pb-15">Дождитесь готовности на орбитальной станции</div>       
-        </>
-    )
-}
-
-View.propTypes = {    
-	number: PropTypes.number.isRequired
-};
 
 export default OrderDetails;

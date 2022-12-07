@@ -8,7 +8,7 @@ const IngredientDetails = (props) => {
     return (
         <div className={styles.wrap}>
             <div className={styles.image}>
-                <img src={image_large} alt=""/>
+                <img src={image_large} alt={name}/>
             </div>
             <div className={styles.name}>
                 {name}
