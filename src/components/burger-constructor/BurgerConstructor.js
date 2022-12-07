@@ -1,5 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { useState, useContext } from 'react';
 
 import OrderDetails from '../order-details/OrderDetails';
 import Modal from "../modals/Modal";
@@ -44,7 +43,7 @@ const BurgerConstructor = () => {
 				{ingredients.length > 0 ? (
 					ingredients.map((ingredient, index) => {
 						return (
-							<li className={styles.item} key={uuidv4()}>
+							<li className={styles.item} key={ingredient.uuid}>
 								<span className={styles.itemOrder}>
 									<DragIcon type="primary" />
 								</span>

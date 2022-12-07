@@ -1,4 +1,5 @@
-import { useEffect, useState, useRef, useContext } from 'react';
+import { useState, useRef, useContext } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -7,12 +8,13 @@ import IngredientDetails from '../ingredient-details/IngredientDetails';
 import Modal from "../modals/Modal";
 
 import { CartContext } from '../../services/appContext';
-import { ingredientPropTypes, INGREDIENTS_TYPES } from '../../utils/constants';
+import { INGREDIENTS_TYPES } from '../../utils/constants';
+import { ingredientPropTypes } from '../../utils/prop-types';
 
 import styles from './b-ingredients.module.scss';
 
 const BurgerIngredients = ({ ingredients }) => {		
-	const { cart, cartDispatch } = useContext(CartContext);
+	const { cartDispatch } = useContext(CartContext);
 
 	const [ingredientModal, setIngredientModal] = useState(null);
 	const [activeTab, setActiveTab] = useState(0);
@@ -20,7 +22,7 @@ const BurgerIngredients = ({ ingredients }) => {
 	
 	const handleIngredientOpen = (id) => {
 		const ingredient = ingredients.find(el => el._id === id);
-		setIngredientModal(ingredient);		
+		ingredient.uuid = uuidv4();	
 		
 		cartDispatch({
 			type: 'add',
@@ -28,7 +30,9 @@ const BurgerIngredients = ({ ingredients }) => {
 				type: ingredient.type,
 				data: ingredient
 			}
-		})
+		})		
+		
+		setIngredientModal(ingredient);	
 	};
 
 	const onTabClick = (value) => {
@@ -60,7 +64,7 @@ const BurgerIngredients = ({ ingredients }) => {
 							category={type}
 							ingredients={data}
 							key={index}
-							onClick={handleIngredientOpen}
+							onIngredientClick={handleIngredientOpen}
 						/>
 					);
 				})}

@@ -1,11 +1,11 @@
-import { useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../burger-constructor/BurgerConstructor';
 
 import { CartContext } from '../../services/appContext';
-import { ingredientPropTypes } from '../../utils/constants';
+import { ingredientPropTypes } from '../../utils/prop-types';
 
 const AppMain = ({ ingredients }) => {
 	const { cart } = useContext(CartContext);

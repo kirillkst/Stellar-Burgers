@@ -1,6 +1,4 @@
-import PropTypes from 'prop-types';
-
-import { ingredientPropTypes } from '../../utils/constants';
+import { ingredientPropTypes } from '../../utils/prop-types';
 
 import styles from './ingredient-details.module.scss';
 

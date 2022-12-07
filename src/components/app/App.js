@@ -31,7 +31,7 @@ function reducer(state, action) {
 		
 		case 'reset':
 			return initialCart;
-			
+
 		default:
 			throw new Error();
 	}
@@ -42,10 +42,6 @@ const App = () => {
 	const [data, setData] = useState([]);	
 	const { process, setProcess, getIngredients } = useBurgerApi();
 	
-	const content = renderContent(process, AppMain, {
-		ingredients: data
-	});
-
 	useEffect(() => {				
 		getIngredients()
 			.then(res => {
@@ -61,6 +57,11 @@ const App = () => {
 	useEffect(() => {
 		cartDispatch({ type: 'total' })
 	}, [cart.bun, cart.ingredients])
+
+	
+	const content = renderContent(process, AppMain, {
+		ingredients: data
+	});
 
 	return (
 		<div className={styles.wrapper}>

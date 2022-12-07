@@ -3,9 +3,9 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 
 import styles from './ingredient.module.scss';
 
-const Ingredient = ({ _id, name, price, image, counter, onClick }) => {
+const Ingredient = ({ _id, name, price, image, counter, onIngredientClick }) => {
 	return (
-		<div className={styles.wrap} onClick={() => onClick(_id)}>
+		<div className={styles.wrap} onClick={() => onIngredientClick(_id)}>
 			<div className={styles.image}>
 				<img src={image} alt=""/>
 			</div>

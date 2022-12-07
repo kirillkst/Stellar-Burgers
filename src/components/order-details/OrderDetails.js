@@ -20,13 +20,12 @@ const OrderDetails = () => {
         createOrder(ingredientsID)
 			.then(res => {
 				if (res.success === true) {
-					setNumber(res.order.number);				
+					setNumber(res.order.number);       	
 				} else {					
   					throw new Error();
 				}
 			})
-			.then(() => setProcess(PROCESS_STATE.CONFIRMED));		
-		
+			.then(() => setProcess(PROCESS_STATE.CONFIRMED));			
 	}, []);
 
     const content = renderContent(process, View, { number });
@@ -49,5 +48,9 @@ const View = ({ number }) => {
         </>
     )
 }
+
+View.propTypes = {    
+	number: PropTypes.number.isRequired
+};
 
 export default OrderDetails;

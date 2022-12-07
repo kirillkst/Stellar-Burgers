@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from './ModalOverlay';
 
-import { MODAL_PLACEMENT, ESC_KEYCODE } from '../../utils/constants';
+import { MODAL_ROOT, ESC_KEYCODE } from '../../utils/constants';
 
 import styles from './styles/modal.module.scss';
 
@@ -34,7 +34,7 @@ const Modal = ({ children, title, onClose }) => {
 			</div>
 			<ModalOverlay onClose={onClose} />
 		</>,
-		MODAL_PLACEMENT
+		MODAL_ROOT
 	);
 };
 
