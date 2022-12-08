@@ -9,7 +9,13 @@ const useBurgerApi = () => {
         return await request(`${API_URL}/ingredients`);
     };
 
-    return { getIngredients, process, setProcess }
+    const createOrder = async (ingredientsID) => {
+        return await request(`${API_URL}/orders`, 'POST', JSON.stringify({ 
+            "ingredients": ingredientsID
+        }));
+    };    
+
+    return { getIngredients, createOrder, process, setProcess }
 }
 
 export default useBurgerApi;
