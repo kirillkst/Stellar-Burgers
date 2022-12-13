@@ -53,7 +53,7 @@ const ingredientsSlice = createSlice({
     }
 });
 
-const {actions, reducer} = ingredientsSlice;
+const { actions, reducer } = ingredientsSlice;
 
 export const ingredientsSelectors = ingredientsAdapter.getSelectors(store => store.ingredients);
 export const {

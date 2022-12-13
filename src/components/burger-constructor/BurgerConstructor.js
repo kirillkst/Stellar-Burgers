@@ -1,5 +1,10 @@
 import { useState, useContext, useCallback} from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
+import { addToCart, removeFromCart, cartIngredientsSelectors } from '../../store/cart/slice';
+
+import { reset } from '../../store/cart/slice';
+import store from "../../store";
 import OrderDetails from '../order-details/OrderDetails';
 import Modal from "../modals/Modal";
 import { ConstructorElement, Button, DragIcon, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -9,8 +14,16 @@ import { CartContext } from '../../services/appContext';
 import styles from './b-constructor.module.scss';
 
 const BurgerConstructor = () => {		
+	
+	const { bun, total } = useSelector(store => store.cart, shallowEqual);
+	const ingredients = useSelector(cartIngredientsSelectors.selectAll);
+
 	const { cart, cartDispatch } = useContext(CartContext);
-	const { bun, ingredients, cartTotal } = cart;
+	
+	
+    const dispatch = useDispatch();	
+	
+
 
 	const [orderModal, setOrderModal] = useState(false);
 
@@ -19,7 +32,7 @@ const BurgerConstructor = () => {
 	}
 
 	const onCloseModal = () => {		
-		cartDispatch({ type: 'reset' });
+		dispatch(reset());
 		setOrderModal(false)
 	}
 
@@ -50,7 +63,7 @@ const BurgerConstructor = () => {
 				{ingredients.length > 0 ? (
 					ingredients.map((ingredient, index) => {
 						return (
-							<li className={styles.item} key={ingredient.uuid}>
+							<li className={styles.item} key={ingredient.id}>
 								<span className={styles.itemOrder}>
 									<DragIcon type="primary" />
 								</span>
@@ -58,6 +71,10 @@ const BurgerConstructor = () => {
 									text={ingredient.name}
 									price={ingredient.price}
 									thumbnail={ingredient.image}
+									handleClose={() => { 
+										console.log(ingredient.id);
+										dispatch(removeFromCart(ingredient.id)) 
+									}}
 								/>
 							</li>
 						);
@@ -72,7 +89,7 @@ const BurgerConstructor = () => {
 			
 			<div className={styles.checkout}>
 				<div className="text text_type_digits-medium">
-					{cartTotal}
+					{total}
 					<CurrencyIcon type="primary" />
 				</div>
 				{bun && ingredients.length > 0 && (

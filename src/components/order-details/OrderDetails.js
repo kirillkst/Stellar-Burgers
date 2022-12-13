@@ -7,6 +7,9 @@ import { CartContext } from '../../services/appContext';
 import { renderContent } from '../../utils/burger-utils';
 import { PROCESS_STATE } from '../../utils/constants';
 
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { addToCart, cartIngredientsSelectors } from '../../store/cart/slice';
+
 import styles from './order-details.module.scss';
 
 const OrderDetails = () => {    
@@ -14,7 +17,11 @@ const OrderDetails = () => {
     const [number, setNumber] = useState(null);
 	const { process, setProcess, createOrder } = useBurgerApi();
 
-    const ingredientsID = [cart.bun._id, ...cart.ingredients.map(el => el._id)];
+    
+	const bun = useSelector(store => store.cart.bun);
+	const ingredients = useSelector(cartIngredientsSelectors.selectAll);
+
+    const ingredientsID = [bun._id, ...ingredients.map(el => el._id)];
 
     useEffect(() => {		
         createOrder(ingredientsID)

@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { nanoid } from '@reduxjs/toolkit'
 
 import { changeCounter, ingredientsSelectors } from '../../store/ingredients/slice';
+import { addToCart, cartSelectors } from '../../store/cart/slice';
+
 import { CartContext } from '../../services/appContext';
 import { INGREDIENTS_TYPES } from '../../utils/constants';
 import { ingredientPropTypes } from '../../utils/prop-types';
@@ -30,22 +32,24 @@ const BurgerIngredients = () => {
 	const ingredientCats = Object.values(INGREDIENTS_TYPES);
 	
 	const ingredients = useSelector(ingredientsSelectors.selectAll);
+
+	//console.log(store.getState().cart.total);
 	
-	const handleIngredientOpen = (id) => {
-		const ingredient = ingredientsSelectors.selectById(store.getState(), id);
+	const handleIngredientOpen = (id) => {		
+		const ingredient = {...ingredientsSelectors.selectById(store.getState(), id)};
 
-		dispatch(changeCounter(ingredient));
+		dispatch(addToCart(ingredient));
 
-		//const ingredient = {...};
+		//const ingredient = ;
 		//ingredient.id = nanoid();	
 		
-		cartDispatch({
-			type: 'add',
-			payload: {
-				type: ingredient.type,
-				data: ingredient
-			}
-		})		
+		// cartDispatch({
+		// 	type: 'add',
+		// 	payload: {
+		// 		type: ingredient.type,
+		// 		data: ingredient
+		// 	}
+		// })		
 		
 		setIngredientModal(ingredient);	
 	};
