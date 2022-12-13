@@ -1,4 +1,5 @@
 import { useState, useEffect, useReducer } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import AppHeader from '../app-header/AppHeader';
 import AppMain from '../app-main/AppMain';
@@ -9,34 +10,28 @@ import { cartReducer } from '../../utils/reducers';
 import { renderContent } from '../../utils/burger-utils';
 import { INITIAL_CART, PROCESS_STATE } from '../../utils/constants';
 
+import store from "../../store";
+
 import styles from './app.module.scss';
+
+import { ingredientsRequest, ingredientsSelectors } from '../../store/ingredients/slice';
 
 const App = () => {	
 	const [cart, cartDispatch] = useReducer(cartReducer, INITIAL_CART);
-	const [data, setData] = useState([]);	
-	const { process, setProcess, getIngredients } = useBurgerApi();
-	
-	useEffect(() => {				
-		getIngredients()
-			.then(res => {
-				if (res.success === true && Array.isArray(res.data)) {
-					setData(res.data);					
-				} else {					
-  					throw new Error();
-				}
-			})
-			.then(() => setProcess(PROCESS_STATE.CONFIRMED))
-			.catch(); //Обработка ошибок в хуке useHttp
-	}, []);
+    const process = useSelector(store => store.ingredients.process);
+    const dispatch = useDispatch();	
+
+	useEffect(() => {
+        dispatch(ingredientsRequest());      
+    }, []);
+
 	
 	useEffect(() => {
 		cartDispatch({ type: 'total' })
 	}, [cart.bun, cart.ingredients])
 
 	
-	const content = renderContent(process, AppMain, {
-		ingredients: data
-	});
+	const content = renderContent(process, AppMain);
 
 	return (
 		<div className={styles.wrapper}>

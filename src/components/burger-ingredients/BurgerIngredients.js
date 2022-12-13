@@ -1,20 +1,27 @@
 import { useState, useRef, useContext, useMemo } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+import { nanoid } from '@reduxjs/toolkit'
+
+import { changeCounter, ingredientsSelectors } from '../../store/ingredients/slice';
+import { CartContext } from '../../services/appContext';
+import { INGREDIENTS_TYPES } from '../../utils/constants';
+import { ingredientPropTypes } from '../../utils/prop-types';
+
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientCategory from '../ingredient-category/IngredientCategory';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 import Modal from "../modals/Modal";
 
-import { CartContext } from '../../services/appContext';
-import { INGREDIENTS_TYPES } from '../../utils/constants';
-import { ingredientPropTypes } from '../../utils/prop-types';
+import store from "../../store";
 
 import styles from './b-ingredients.module.scss';
 
-const BurgerIngredients = ({ ingredients }) => {	
+const BurgerIngredients = () => {	
 	const { cartDispatch } = useContext(CartContext);
+
+	const dispatch = useDispatch();	
 
 	const [ingredientModal, setIngredientModal] = useState(null);
 	const [activeTab, setActiveTab] = useState(0);
@@ -22,9 +29,15 @@ const BurgerIngredients = ({ ingredients }) => {
 
 	const ingredientCats = Object.values(INGREDIENTS_TYPES);
 	
+	const ingredients = useSelector(ingredientsSelectors.selectAll);
+	
 	const handleIngredientOpen = (id) => {
-		const ingredient = ingredients.find(el => el._id === id);
-		ingredient.uuid = uuidv4();	
+		const ingredient = ingredientsSelectors.selectById(store.getState(), id);
+
+		dispatch(changeCounter(ingredient));
+
+		//const ingredient = {...};
+		//ingredient.id = nanoid();	
 		
 		cartDispatch({
 			type: 'add',
@@ -87,10 +100,6 @@ const BurgerIngredients = ({ ingredients }) => {
 			)}			
 		</section>
 	);
-};
-
-BurgerIngredients.propTypes = {
-	ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired)
 };
 
 export default BurgerIngredients;
