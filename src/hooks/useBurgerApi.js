@@ -1,16 +1,16 @@
+import useHttpProcess from './useHttpProcess';
 import { API_URL } from '../utils/constants';
 
-import useHttp from './useHttp';
 
 const useBurgerApi = () => {
-    const {request, process, setProcess} = useHttp();
+    const { sendRequest, process, setProcess } = useHttpProcess();
 
     const getIngredients = async () => {
-        return await request(`${API_URL}/ingredients`);
+        return await sendRequest(`${API_URL}/ingredients`);
     };
 
     const createOrder = async (ingredientsID) => {
-        return await request(`${API_URL}/orders`, 'POST', JSON.stringify({ 
+        return await sendRequest(`${API_URL}/orders`, 'POST', JSON.stringify({ 
             "ingredients": ingredientsID
         }));
     };    
