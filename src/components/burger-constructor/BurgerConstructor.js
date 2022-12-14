@@ -6,12 +6,13 @@ import cx from 'classnames';
 
 import store from "../../store";
 import { ingredientsSelectors } from '../../store/ingredients/slice';
-import { addToCart, removeFromCart, reset } from '../../store/cart/slice';
+import { addToCart, moveIngredient, reset } from '../../store/cart/slice';
 import { ingredientPropTypes } from '../../utils/prop-types';
 
+import ConstructorItem from "../constructor-item/ConstructorItem";
 import OrderDetails from '../order-details/OrderDetails';
 import Modal from "../modals/Modal";
-import { ConstructorElement, Button, DragIcon, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './b-constructor.module.scss';
 
@@ -20,13 +21,12 @@ const BurgerConstructor = ({ bun, ingredients, total }) => {
     const dispatch = useDispatch();	
 	const [orderModal, setOrderModal] = useState(false);
 
-	const [{ dropTargetHover, dropType }, dropTarget] = useDrop({
+	const [{ dropType }, dropTarget] = useDrop({
         accept: ['bun', 'ingredient'],
         drop(itemId) {
             onDropHandler(itemId);
         },
 		collect: monitor => ({
-            dropTargetHover: monitor.isOver(),
 			dropType: monitor.getItemType()
         })
     });
@@ -63,8 +63,14 @@ const BurgerConstructor = ({ bun, ingredients, total }) => {
 			)			
 	}, [bun]);
 
-	
+	const moveCard = useCallback((dragIndex, hoverIndex) => {
+		dispatch(moveIngredient({
+			dragIndex,
+			hoverIndex
+		}));
+	  }, []);
 
+	
 	return (
 		<section className={cx({
 				[styles.wrap]: true,
@@ -78,19 +84,15 @@ const BurgerConstructor = ({ bun, ingredients, total }) => {
 				{ingredients.length > 0 ? (
 					ingredients.map((ingredient, index) => {
 						return (
-							<li className={styles.item} key={ingredient.id}>
-								<span className={styles.itemOrder}>
-									<DragIcon type="primary" />
-								</span>
-								<ConstructorElement
-									text={ingredient.name}
-									price={ingredient.price}
-									thumbnail={ingredient.image}
-									handleClose={() => { 
-										dispatch(removeFromCart(ingredient.id)) 
-									}}
-								/>
-							</li>
+							<ConstructorItem 
+								key={ingredient.id}
+								id={ingredient.id}
+								name={ingredient.name}
+								price={ingredient.price}
+								thumbnail={ingredient.image}
+								index={index}
+								moveCard={moveCard}
+							/>
 						);
 					})
 				) : (					

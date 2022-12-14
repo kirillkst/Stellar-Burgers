@@ -29,6 +29,16 @@ const cartSlice = createSlice({
         removeFromCart: (state, { payload }) => {
             cartIngredientsAdapter.removeOne(state.ingredients, payload);
         },
+        moveIngredient: (state, { payload }) => {
+            const ingredients = cartIngredientsAdapter.getSelectors(state => state.ingredients).selectAll(state);
+            const dragElement = ingredients[payload.dragIndex];
+            const hoverElement = ingredients[payload.hoverIndex];   
+
+            ingredients[payload.dragIndex] = hoverElement;
+            ingredients[payload.hoverIndex] = dragElement;
+
+            cartIngredientsAdapter.setAll(state.ingredients, ingredients);
+        },
         reset: () => initialState
     },
     extraReducers: (builder) => {
@@ -52,6 +62,7 @@ export const cartIngredientsSelectors = cartIngredientsAdapter.getSelectors(stor
 export const {
     addToCart,
     removeFromCart,
+    moveIngredient,
     reset
 } = actions;
 

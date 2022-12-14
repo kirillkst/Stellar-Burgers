@@ -24,7 +24,6 @@ const BurgerIngredients = ({ ingredients }) => {
 	
 	const handleIngredientOpen = (id) => {		
 		const ingredient = {...ingredientsSelectors.selectById(store.getState(), id)};
-		//dispatch(addToCart(ingredient));		
 		setIngredientModal(ingredient);	
 	};
 

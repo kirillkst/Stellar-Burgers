@@ -1,0 +1,7 @@
+.item {
+    composes: item from '../burger-constructor/b-constructor.module.scss';
+}
+
+.itemOrder {
+    composes: mr-2 from global;
+}
