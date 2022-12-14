@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import store from "../../store";
 import { ingredientsSelectors } from '../../store/ingredients/slice';
-import { addToCart } from '../../store/cart/slice';
 import { INGREDIENTS_TYPES } from '../../utils/constants';
 import { ingredientPropTypes } from '../../utils/prop-types';
 
@@ -25,7 +24,7 @@ const BurgerIngredients = ({ ingredients }) => {
 	
 	const handleIngredientOpen = (id) => {		
 		const ingredient = {...ingredientsSelectors.selectById(store.getState(), id)};
-		dispatch(addToCart(ingredient));		
+		//dispatch(addToCart(ingredient));		
 		setIngredientModal(ingredient);	
 	};
 

@@ -54,6 +54,22 @@
     margin-left: calc(var(--offset-base-size) * 8);
 }
 
+.bun, .ingredients {    
+    transition: transform 0.23s ease;
+}
+
+.dropBun {
+    .bun {
+        transform: scale(0.9);
+    }
+}
+
+.dropIngredient {
+    .ingredients {
+        transform: scale(0.9);
+    }
+}
+
 .itemOrder {
     composes: mr-2 from global;
 }

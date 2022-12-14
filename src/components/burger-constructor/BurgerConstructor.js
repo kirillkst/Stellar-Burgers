@@ -1,8 +1,12 @@
 import { useState, useCallback} from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useDrop } from "react-dnd";
+import cx from 'classnames';
 
-import { removeFromCart, reset } from '../../store/cart/slice';
+import store from "../../store";
+import { ingredientsSelectors } from '../../store/ingredients/slice';
+import { addToCart, removeFromCart, reset } from '../../store/cart/slice';
 import { ingredientPropTypes } from '../../utils/prop-types';
 
 import OrderDetails from '../order-details/OrderDetails';
@@ -16,6 +20,22 @@ const BurgerConstructor = ({ bun, ingredients, total }) => {
     const dispatch = useDispatch();	
 	const [orderModal, setOrderModal] = useState(false);
 
+	const [{ dropTargetHover, dropType }, dropTarget] = useDrop({
+        accept: ['bun', 'ingredient'],
+        drop(itemId) {
+            onDropHandler(itemId);
+        },
+		collect: monitor => ({
+            dropTargetHover: monitor.isOver(),
+			dropType: monitor.getItemType()
+        })
+    });
+
+	const onDropHandler = ({ _id }) => {	
+		const ingredient = ingredientsSelectors.selectById(store.getState(), _id);
+		dispatch(addToCart(ingredient));	
+	};
+
 	const createOrder = () => {
 		setOrderModal(true)
 	}
@@ -26,29 +46,35 @@ const BurgerConstructor = ({ bun, ingredients, total }) => {
 	}
 
 	const renderBun = useCallback((type) => {	
-		const suffix = type === 'top' ? ' (верх)' : ' (низ)'
-		return (bun)
-			? (
+		const suffix = type === 'top' ? ' (верх)' : ' (низ)';
+		return (bun) ? (
 				<ConstructorElement
 					type={`${type}`}
 					isLocked={true}
 					text={`${bun.name} ${suffix}`}
 					price={bun.price}
 					thumbnail={bun.image}
-					extraClass={styles.item}
+					extraClass={cx(styles.item, styles.bun)} 
 				/>
-			)
-			: (
-				<div className={`constructor-element constructor-element_pos_${type} text_type_main-medium justify-content-center ${styles.item}`}>
+			) : (
+				<div className={`constructor-element constructor-element_pos_${type} text_type_main-medium justify-content-center ${styles.item} ${styles.bun}`}>
 					Выберите булку
-				</div>
-			)		
+				</div>				
+			)			
 	}, [bun]);
+
 	
+
 	return (
-		<section className={styles.wrap}>
+		<section className={cx({
+				[styles.wrap]: true,
+				[styles.dropBun]: dropType === 'bun',
+				[styles.dropIngredient]: dropType === 'ingredient' 
+			})} 
+			ref={dropTarget}
+		>
 			{renderBun('top')}
-			<ul className={styles.list}>
+			<ul className={cx(styles.list, styles.ingredients)}>
 				{ingredients.length > 0 ? (
 					ingredients.map((ingredient, index) => {
 						return (

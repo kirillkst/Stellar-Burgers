@@ -1,11 +1,30 @@
 import PropTypes from 'prop-types';
+import { useDrag } from "react-dnd";
+import cx from 'classnames';
+
+import { INGREDIENTS_TYPES } from '../../utils/constants';
+
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './ingredient.module.scss';
 
-const Ingredient = ({ _id, name, price, image, counter, onIngredientClick }) => {
+
+const Ingredient = ({ _id, type, name, price, image, counter, onIngredientClick }) => {
+	const [{ isDrag }, dragRef] = useDrag({
+		type: type === INGREDIENTS_TYPES.BUN.key ? 'bun' : 'ingredient',
+        item: { _id },
+		collect: monitor => ({
+            isDrag: monitor.isDragging()
+        })
+	});
+
 	return (
-		<div className={styles.wrap} onClick={() => onIngredientClick(_id)}>
+		<div className={cx(styles.wrap, { 
+				[styles['is-dragging']]: isDrag 
+			})} 
+			onClick={() => onIngredientClick(_id)} 
+			ref={dragRef}
+		 >
 			<div className={styles.image}>
 				<img src={image} alt={name}/>
 			</div>
@@ -27,6 +46,7 @@ const Ingredient = ({ _id, name, price, image, counter, onIngredientClick }) => 
 
 Ingredient.propTypes = {
 	_id: PropTypes.string.isRequired,
+	type: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
 	price: PropTypes.number.isRequired,
 	image: PropTypes.string.isRequired,
