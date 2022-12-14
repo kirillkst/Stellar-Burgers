@@ -1,6 +1,4 @@
 import { createSlice, createEntityAdapter, nanoid } from '@reduxjs/toolkit';
-
-
 import { INGREDIENTS_TYPES } from '../../utils/constants';
 
 const cartIngredientsAdapter = createEntityAdapter();

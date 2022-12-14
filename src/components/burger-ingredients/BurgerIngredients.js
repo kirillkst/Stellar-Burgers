@@ -1,55 +1,31 @@
-import { useState, useRef, useContext, useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useState, useRef, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { nanoid } from '@reduxjs/toolkit'
 
-import { changeCounter, ingredientsSelectors } from '../../store/ingredients/slice';
-import { addToCart, cartSelectors } from '../../store/cart/slice';
-
-import { CartContext } from '../../services/appContext';
+import store from "../../store";
+import { ingredientsSelectors } from '../../store/ingredients/slice';
+import { addToCart } from '../../store/cart/slice';
 import { INGREDIENTS_TYPES } from '../../utils/constants';
 import { ingredientPropTypes } from '../../utils/prop-types';
-
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientCategory from '../ingredient-category/IngredientCategory';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 import Modal from "../modals/Modal";
 
-import store from "../../store";
-
 import styles from './b-ingredients.module.scss';
 
+
 const BurgerIngredients = ({ ingredients }) => {	
-	const { cartDispatch } = useContext(CartContext);
-
 	const dispatch = useDispatch();	
-
 	const [ingredientModal, setIngredientModal] = useState(null);
 	const [activeTab, setActiveTab] = useState(0);
 	const typeRefs = useRef([]);
-
 	const ingredientCats = Object.values(INGREDIENTS_TYPES);
-	
-
-	//console.log(store.getState().cart.total);
 	
 	const handleIngredientOpen = (id) => {		
 		const ingredient = {...ingredientsSelectors.selectById(store.getState(), id)};
-
-		dispatch(addToCart(ingredient));
-
-		//const ingredient = ;
-		//ingredient.id = nanoid();	
-		
-		// cartDispatch({
-		// 	type: 'add',
-		// 	payload: {
-		// 		type: ingredient.type,
-		// 		data: ingredient
-		// 	}
-		// })		
-		
+		dispatch(addToCart(ingredient));		
 		setIngredientModal(ingredient);	
 	};
 
@@ -57,7 +33,6 @@ const BurgerIngredients = ({ ingredients }) => {
 		typeRefs.current[value].scrollIntoView({ behavior: 'smooth' });
 		setActiveTab(Object.keys(typeRefs.current).findIndex(el => el === value));
 	}	
-
 
 	const data = useMemo(() => {
 		const arr = {};

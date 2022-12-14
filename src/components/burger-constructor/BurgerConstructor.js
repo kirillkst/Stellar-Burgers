@@ -1,27 +1,19 @@
-import { useState, useContext, useCallback} from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useState, useCallback} from 'react';
+import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import { addToCart, removeFromCart, cartIngredientsSelectors } from '../../store/cart/slice';
+import { removeFromCart, reset } from '../../store/cart/slice';
+import { ingredientPropTypes } from '../../utils/prop-types';
 
-import { reset } from '../../store/cart/slice';
-import store from "../../store";
 import OrderDetails from '../order-details/OrderDetails';
 import Modal from "../modals/Modal";
 import { ConstructorElement, Button, DragIcon, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { CartContext } from '../../services/appContext';
-
 import styles from './b-constructor.module.scss';
 
+
 const BurgerConstructor = ({ bun, ingredients, total }) => {		
-	
-	const { cart, cartDispatch } = useContext(CartContext);
-	
-	
     const dispatch = useDispatch();	
-	
-
-
 	const [orderModal, setOrderModal] = useState(false);
 
 	const createOrder = () => {
@@ -69,7 +61,6 @@ const BurgerConstructor = ({ bun, ingredients, total }) => {
 									price={ingredient.price}
 									thumbnail={ingredient.image}
 									handleClose={() => { 
-										console.log(ingredient.id);
 										dispatch(removeFromCart(ingredient.id)) 
 									}}
 								/>
@@ -108,6 +99,12 @@ const BurgerConstructor = ({ bun, ingredients, total }) => {
 			)}
 		</section>
 	);
+};
+
+BurgerConstructor.propTypes = {
+	bun: ingredientPropTypes,
+	ingredients: PropTypes.arrayOf(ingredientPropTypes),
+	total: PropTypes.number
 };
 
 export default BurgerConstructor;

@@ -1,22 +1,19 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
-import OrderDetailsView from '../order-details-view/OrderDetailsView';
-
+import { cartIngredientsSelectors } from '../../store/cart/slice';
 import useBurgerApi from '../../hooks/useBurgerApi';
-import { CartContext } from '../../services/appContext';
 import { renderContent } from '../../utils/burger-utils';
 import { PROCESS_STATE } from '../../utils/constants';
 
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { addToCart, cartIngredientsSelectors } from '../../store/cart/slice';
+import OrderDetailsView from '../order-details-view/OrderDetailsView';
 
 import styles from './order-details.module.scss';
 
+
 const OrderDetails = () => {    
-    const { cart } = useContext(CartContext);
     const [number, setNumber] = useState(null);
 	const { process, setProcess, createOrder } = useBurgerApi();
-
     
 	const bun = useSelector(store => store.cart.bun);
 	const ingredients = useSelector(cartIngredientsSelectors.selectAll);

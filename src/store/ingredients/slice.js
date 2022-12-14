@@ -1,9 +1,6 @@
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
-
-import { INGREDIENTS_TYPES } from '../../utils/constants';
 import useHttp from "../../hooks/useHttp";
 import { API_URL, PROCESS_STATE } from '../../utils/constants';
-
 
 const ingredientsAdapter = createEntityAdapter({
     selectId: (item) => item._id,
@@ -13,7 +10,6 @@ const initialState = ingredientsAdapter.getInitialState({
     process: PROCESS_STATE.WAITING
 });
 
-
 export const ingredientsRequest = createAsyncThunk(
     'ingredients/request',
     async (thunkAPI) => {
@@ -22,7 +18,6 @@ export const ingredientsRequest = createAsyncThunk(
         return (res.success === true && Array.isArray(res.data)) ? res.data : thunkAPI.rejectWithValue();
     }
 );
-
 
 const ingredientsSlice = createSlice({
     name: 'ingredients',
