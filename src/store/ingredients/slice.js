@@ -1,5 +1,6 @@
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
 
+import { INGREDIENTS_TYPES } from '../../utils/constants';
 import useHttp from "../../hooks/useHttp";
 import { API_URL, PROCESS_STATE } from '../../utils/constants';
 
@@ -27,23 +28,14 @@ const ingredientsSlice = createSlice({
     name: 'ingredients',
     initialState,
     reducers: {        
-        changeCounter: {
-            reducer: (state, action) => {
-                //state.push(action.payload)
-            },
-            prepare: (text) => {
-                //const id = nanoid()
-                //return { payload: { id, text } }
-            },
-        },
     },
     extraReducers: (builder) => {
         builder
             .addCase(ingredientsRequest.pending, state => { 
                 state.process = PROCESS_STATE.LOADING
             })
-            .addCase(ingredientsRequest.fulfilled, (state, action) => {
-                ingredientsAdapter.setAll(state, action.payload);
+            .addCase(ingredientsRequest.fulfilled, (state, { payload }) => {
+                ingredientsAdapter.setAll(state, payload);
                 state.process = PROCESS_STATE.CONFIRMED;			
             })
             .addCase(ingredientsRequest.rejected, state => { 
@@ -57,7 +49,6 @@ const { actions, reducer } = ingredientsSlice;
 
 export const ingredientsSelectors = ingredientsAdapter.getSelectors(store => store.ingredients);
 export const {
-    changeCounter
 } = actions;
 
 export default reducer;

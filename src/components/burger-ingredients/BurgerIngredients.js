@@ -20,7 +20,7 @@ import store from "../../store";
 
 import styles from './b-ingredients.module.scss';
 
-const BurgerIngredients = () => {	
+const BurgerIngredients = ({ ingredients }) => {	
 	const { cartDispatch } = useContext(CartContext);
 
 	const dispatch = useDispatch();	
@@ -31,7 +31,6 @@ const BurgerIngredients = () => {
 
 	const ingredientCats = Object.values(INGREDIENTS_TYPES);
 	
-	const ingredients = useSelector(ingredientsSelectors.selectAll);
 
 	//console.log(store.getState().cart.total);
 	
@@ -104,6 +103,10 @@ const BurgerIngredients = () => {
 			)}			
 		</section>
 	);
+};
+
+BurgerIngredients.propTypes = {
+	ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired)
 };
 
 export default BurgerIngredients;

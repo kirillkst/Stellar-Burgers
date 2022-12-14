@@ -13,11 +13,8 @@ import { CartContext } from '../../services/appContext';
 
 import styles from './b-constructor.module.scss';
 
-const BurgerConstructor = () => {		
+const BurgerConstructor = ({ bun, ingredients, total }) => {		
 	
-	const { bun, total } = useSelector(store => store.cart, shallowEqual);
-	const ingredients = useSelector(cartIngredientsSelectors.selectAll);
-
 	const { cart, cartDispatch } = useContext(CartContext);
 	
 	

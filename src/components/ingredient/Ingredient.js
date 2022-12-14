@@ -14,7 +14,7 @@ const Ingredient = ({ _id, name, price, image, counter, onIngredientClick }) => 
 				<CurrencyIcon type="primary" />
 			</div>
 			<div className={styles.name}>{name}</div>
-			{counter && (
+			{counter > 0 && (
 				<Counter
 					count={counter}
 					size="default"
