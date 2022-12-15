@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useDrop, useDrag } from "react-dnd";
 import PropTypes from 'prop-types';
 
-import { removeFromCart } from '../../store/cart/slice';
+import { removeFromCart } from '../../store/cartSlice';
 
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 

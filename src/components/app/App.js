@@ -1,8 +1,8 @@
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ingredientsRequest } from '../../store/ingredients/slice';
-import { reset } from '../../store/cart/slice';
+import { ingredientsRequest } from '../../store/ingredientsSlice';
+import { reset } from '../../store/cartSlice';
 import { renderContent } from '../../utils/burger-utils';
 import { MODAL } from '../../utils/constants';
 

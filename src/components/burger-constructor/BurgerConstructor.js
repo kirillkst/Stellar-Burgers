@@ -5,9 +5,9 @@ import { useDrop } from "react-dnd";
 import cx from 'classnames';
 
 import store from "../../store";
-import { ingredientsSelectors } from '../../store/ingredients/slice';
-import { addToCart, moveIngredient } from '../../store/cart/slice';
-import { openModal } from '../../store/modal/slice';
+import { ingredientsSelectors } from '../../store/ingredientsSlice';
+import { addToCart, moveIngredient } from '../../store/cartSlice';
+import { openModal } from '../../store/modalSlice';
 import { MODAL } from '../../utils/constants';
 import { ingredientPropTypes } from '../../utils/prop-types';
 

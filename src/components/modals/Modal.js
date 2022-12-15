@@ -2,7 +2,7 @@ import { useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import ReactDOM from 'react-dom';
 
-import { closeModal } from '../../store/modal/slice';
+import { closeModal } from '../../store/modalSlice';
 import { MODAL_ROOT, ESC_KEYCODE } from '../../utils/constants';
 
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';

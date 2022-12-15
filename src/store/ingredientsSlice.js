@@ -1,6 +1,6 @@
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
-import useHttp from "../../hooks/useHttp";
-import { API_URL, PROCESS_STATE } from '../../utils/constants';
+import useHttp from "../hooks/useHttp";
+import { API_URL, PROCESS_STATE } from '../utils/constants';
 
 const ingredientsAdapter = createEntityAdapter({
     selectId: (item) => item._id,

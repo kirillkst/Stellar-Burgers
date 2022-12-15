@@ -3,8 +3,8 @@ import { useSelector, shallowEqual } from 'react-redux';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-import { ingredientsSelectors } from '../../store/ingredients/slice';
-import { cartIngredientsSelectors } from '../../store/cart/slice';
+import { ingredientsSelectors } from '../../store/ingredientsSlice';
+import { cartIngredientsSelectors } from '../../store/cartSlice';
 import { INGREDIENTS_TYPES } from '../../utils/constants';
 
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';

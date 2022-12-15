@@ -4,8 +4,8 @@ import cx from 'classnames';
 import PropTypes from 'prop-types';
 
 import store from "../../store";
-import { ingredientsSelectors } from '../../store/ingredients/slice';
-import { openModal } from '../../store/modal/slice';
+import { ingredientsSelectors } from '../../store/ingredientsSlice';
+import { openModal } from '../../store/modalSlice';
 import { INGREDIENTS_TYPES, MODAL } from '../../utils/constants';
 
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
