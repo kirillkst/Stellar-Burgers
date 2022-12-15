@@ -1,4 +1,4 @@
-import { useState, useCallback} from 'react';
+import { useCallback} from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useDrop } from "react-dnd";
@@ -6,12 +6,12 @@ import cx from 'classnames';
 
 import store from "../../store";
 import { ingredientsSelectors } from '../../store/ingredients/slice';
-import { addToCart, moveIngredient, reset } from '../../store/cart/slice';
+import { addToCart, moveIngredient } from '../../store/cart/slice';
+import { openModal } from '../../store/modal/slice';
+import { MODAL } from '../../utils/constants';
 import { ingredientPropTypes } from '../../utils/prop-types';
 
 import ConstructorItem from "../constructor-item/ConstructorItem";
-import OrderDetails from '../order-details/OrderDetails';
-import Modal from "../modals/Modal";
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './b-constructor.module.scss';
@@ -19,7 +19,6 @@ import styles from './b-constructor.module.scss';
 
 const BurgerConstructor = ({ bun, ingredients, total }) => {		
     const dispatch = useDispatch();	
-	const [orderModal, setOrderModal] = useState(false);
 
 	const [{ dropType }, dropTarget] = useDrop({
         accept: ['bun', 'ingredient'],
@@ -37,14 +36,11 @@ const BurgerConstructor = ({ bun, ingredients, total }) => {
 	};
 
 	const createOrder = () => {
-		setOrderModal(true)
+		dispatch(openModal({
+			modal: MODAL.ORDER_DETAILS
+		}))
 	}
-
-	const onCloseModal = () => {		
-		dispatch(reset());
-		setOrderModal(false)
-	}
-
+	
 	const renderBun = useCallback((type) => {	
 		const suffix = type === 'top' ? ' (верх)' : ' (низ)';
 		return (bun) ? (
@@ -120,11 +116,6 @@ const BurgerConstructor = ({ bun, ingredients, total }) => {
 					</Button>
 				)}	
 			</div>
-			{orderModal && (
-				<Modal onClose={onCloseModal}> 
-					<OrderDetails />
-				</Modal>
-			)}
 		</section>
 	);
 };

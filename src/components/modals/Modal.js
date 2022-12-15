@@ -1,14 +1,24 @@
 import { useEffect, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import ReactDOM from 'react-dom';
+
+import { closeModal } from '../../store/modal/slice';
+import { MODAL_ROOT, ESC_KEYCODE } from '../../utils/constants';
 
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from './ModalOverlay';
 
-import { MODAL_ROOT, ESC_KEYCODE } from '../../utils/constants';
 
 import styles from './styles/modal.module.scss';
 
-const Modal = ({ children, title, onClose }) => {
+const Modal = ({ children, title, onCloseActions }) => {	
+	const dispatch = useDispatch();	
+
+	const onClose = useCallback(() => {
+		onCloseActions?.();
+		dispatch(closeModal());
+	}, [dispatch, onCloseActions]);
+
 	const closeOnEscapeKeyDown = useCallback((e) => {
 		if ((e.charCode || e.keyCode) === ESC_KEYCODE) {
 			onClose();
@@ -26,7 +36,7 @@ const Modal = ({ children, title, onClose }) => {
 	return ReactDOM.createPortal(
 		<>
 			<div className={styles.modal}>
-				<div className={styles.header} onClose={onClose}>
+				<div className={styles.header}>
 					<span className="text text_type_main-large">{title}</span>
 					<CloseIcon type="primary" onClick={onClose} />
 				</div>

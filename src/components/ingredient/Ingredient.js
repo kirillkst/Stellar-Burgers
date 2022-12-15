@@ -1,15 +1,21 @@
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { useDrag } from "react-dnd";
 import cx from 'classnames';
+import PropTypes from 'prop-types';
 
-import { INGREDIENTS_TYPES } from '../../utils/constants';
+import store from "../../store";
+import { ingredientsSelectors } from '../../store/ingredients/slice';
+import { openModal } from '../../store/modal/slice';
+import { INGREDIENTS_TYPES, MODAL } from '../../utils/constants';
 
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './ingredient.module.scss';
 
 
-const Ingredient = ({ _id, type, name, price, image, counter, onIngredientClick }) => {
+const Ingredient = ({ _id, type, name, price, image, counter }) => {	
+	const dispatch = useDispatch();	
+
 	const [{ isDrag }, dragRef] = useDrag({
 		type: type === INGREDIENTS_TYPES.BUN.key ? 'bun' : 'ingredient',
         item: { _id },
@@ -18,11 +24,20 @@ const Ingredient = ({ _id, type, name, price, image, counter, onIngredientClick 
         })
 	});
 
+	const onClick = () => {	
+		const ingredient = ingredientsSelectors.selectById(store.getState(), _id);
+
+		dispatch(openModal({
+			modal: MODAL.INGREDIENTS_DETAILS,
+			data: ingredient
+		}));	
+	}
+
 	return (
 		<div className={cx(styles.wrap, { 
 				[styles['is-dragging']]: isDrag 
 			})} 
-			onClick={() => onIngredientClick(_id)} 
+			onClick={onClick} 
 			ref={dragRef}
 		 >
 			<div className={styles.image}>

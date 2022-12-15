@@ -14,7 +14,7 @@ import BurgerConstructor from '../burger-constructor/BurgerConstructor';
 const AppMain = () => {	
 	 const ingredients = useSelector(ingredientsSelectors.selectAll, shallowEqual);
 	 const cartIngredients = useSelector(cartIngredientsSelectors.selectAll, shallowEqual);
-	 const { bun, total } = useSelector(store => store.cart, shallowEqual);
+	 const { bun, total } = useSelector(store => store.cart, shallowEqual);	 
 
 	const ingredientSelected = useMemo(() => {
 		return structuredClone(ingredients).map(el => {
@@ -33,12 +33,10 @@ const AppMain = () => {
 
 
     return (
-        <>          
-		<DndProvider backend={HTML5Backend}>
+        <DndProvider backend={HTML5Backend}>
 			<BurgerIngredients ingredients={ingredientSelected} />  
             <BurgerConstructor bun={bun} ingredients={cartIngredients} total={total} />
-         </DndProvider>            
-        </>
+        </DndProvider>    
     );
 }
 
