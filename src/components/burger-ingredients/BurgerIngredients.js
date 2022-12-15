@@ -11,13 +11,13 @@ import styles from './b-ingredients.module.scss';
 
 
 const BurgerIngredients = ({ ingredients }) => {	
-	const [activeTab, setActiveTab] = useState(0);
+	const [activeTab, setActiveTab] = useState(null);
+	const componentsRef = useRef();
 	const typeRefs = useRef([]);
 	const ingredientCats = Object.values(INGREDIENTS_TYPES);
 	
-	const onTabClick = (value) => {
+	const onTabClick = (value) => {		
 		typeRefs.current[value].scrollIntoView({ behavior: 'smooth' });
-		setActiveTab(Object.keys(typeRefs.current).findIndex(el => el === value));
 	}	
 
 	const data = useMemo(() => {
@@ -29,6 +29,7 @@ const BurgerIngredients = ({ ingredients }) => {
 		return arr;
 	}, [ingredients, ingredientCats]);
 	
+
 	return (
 		<section className={styles.wrap}>
 			<h1 className="pb-5 text text_type_main-large">Соберите бургер</h1>
@@ -37,21 +38,23 @@ const BurgerIngredients = ({ ingredients }) => {
 					<Tab
 						value={type.key}
 						key={index}
-						active={index === activeTab}
+						active={type.key === activeTab}
 						onClick={onTabClick}
 					>
 						{type.name}
 					</Tab>
 				))}
 			</div>
-			<div className={styles.components}>
+			<div className={styles.components} ref={componentsRef}>				
 				{ingredientCats.map((type, index) => {
 					return (
 						<IngredientCategory
-							innerRef={el => typeRefs.current[type.key] = el}
+							key={index}
+							typeRefs={typeRefs}
+							componentsRef={componentsRef}
 							category={type}
 							ingredients={data[type.key]}
-							key={index}
+							setActiveTab={setActiveTab}
 						/>
 					);
 				})}
