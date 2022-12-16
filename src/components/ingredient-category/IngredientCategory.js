@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import { useInView } from 'react-intersection-observer';
 import PropTypes from 'prop-types';
 
@@ -13,16 +12,15 @@ const IngredientCategory = ({ typeRefs, componentsRef, category, ingredients, se
 		rootMargin: '0px 0px -90%',
 		root: componentsRef.current,
 		onChange: (inView, entry) => {
-			console.log(category.key, entry);
 			if (inView)
 				setActiveTab(category.key);
 		  },
 	});
 
-	const setRefs = useCallback((el) => {
+	const setRefs = (el) => {
 		  typeRefs.current[category.key] = el;
 		  inViewRef(el);
-	}, [inViewRef]);
+	};
 
 	return (
 		<section id={category.key} ref={setRefs}>

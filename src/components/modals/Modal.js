@@ -1,6 +1,7 @@
 import { useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 
 import { closeModal } from '../../store/modalSlice';
 import { MODAL_ROOT, ESC_KEYCODE } from '../../utils/constants';
@@ -11,13 +12,13 @@ import ModalOverlay from './ModalOverlay';
 
 import styles from './styles/modal.module.scss';
 
-const Modal = ({ children, title, onCloseActions }) => {	
+const Modal = ({ children, title, onCloseAction }) => {	
 	const dispatch = useDispatch();	
 
 	const onClose = useCallback(() => {
-		onCloseActions?.();
+		onCloseAction?.();
 		dispatch(closeModal());
-	}, [dispatch, onCloseActions]);
+	}, [dispatch, onCloseAction]);
 
 	const closeOnEscapeKeyDown = useCallback((e) => {
 		if ((e.charCode || e.keyCode) === ESC_KEYCODE) {
@@ -47,5 +48,11 @@ const Modal = ({ children, title, onCloseActions }) => {
 		MODAL_ROOT
 	);
 };
+
+Modal.propTypes = {
+    children: PropTypes.element.isRequired,
+    title: PropTypes.string,
+    onCloseAction: PropTypes.func
+}
 
 export default Modal;
