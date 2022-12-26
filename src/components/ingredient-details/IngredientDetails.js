@@ -1,9 +1,10 @@
-import { ingredientPropTypes } from '../../utils/prop-types';
+import { useSelector } from 'react-redux';
 
 import styles from './ingredient-details.module.scss';
 
-const IngredientDetails = (props) => {
-    const { image_large, name, fat, carbohydrates, calories, proteins } = props.ingredient;
+
+const IngredientDetails = () => {
+    const { image_large, name, fat, carbohydrates, calories, proteins } = useSelector(store => store.modal.data);
 
     return (
         <div className={styles.wrap}>
@@ -33,10 +34,6 @@ const IngredientDetails = (props) => {
             </ul>
         </div>
     );
-};
-
-IngredientDetails.propTypes = {    
-	ingredient: ingredientPropTypes.isRequired
 };
 
 export default IngredientDetails;

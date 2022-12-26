@@ -1,47 +1,28 @@
-import { useState, useRef, useContext, useMemo } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { useState, useRef, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { INGREDIENTS_TYPES, MODAL } from '../../utils/constants';
+import { ingredientPropTypes } from '../../utils/prop-types';
+
+import Modal from "../modals/Modal";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientCategory from '../ingredient-category/IngredientCategory';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
-import Modal from "../modals/Modal";
-
-import { CartContext } from '../../services/appContext';
-import { INGREDIENTS_TYPES } from '../../utils/constants';
-import { ingredientPropTypes } from '../../utils/prop-types';
 
 import styles from './b-ingredients.module.scss';
 
+
 const BurgerIngredients = ({ ingredients }) => {	
-	const { cartDispatch } = useContext(CartContext);
-
-	const [ingredientModal, setIngredientModal] = useState(null);
-	const [activeTab, setActiveTab] = useState(0);
+	const [activeTab, setActiveTab] = useState(null);
+	const componentsRef = useRef();
 	const typeRefs = useRef([]);
-
 	const ingredientCats = Object.values(INGREDIENTS_TYPES);
+	const activeModal = useSelector(store => store.modal.modal);
 	
-	const handleIngredientOpen = (id) => {
-		const ingredient = ingredients.find(el => el._id === id);
-		ingredient.uuid = uuidv4();	
-		
-		cartDispatch({
-			type: 'add',
-			payload: {
-				type: ingredient.type,
-				data: ingredient
-			}
-		})		
-		
-		setIngredientModal(ingredient);	
-	};
-
-	const onTabClick = (value) => {
+	const onTabClick = (value) => {		
 		typeRefs.current[value].scrollIntoView({ behavior: 'smooth' });
-		setActiveTab(Object.keys(typeRefs.current).findIndex(el => el === value));
 	}	
-
 
 	const data = useMemo(() => {
 		const arr = {};
@@ -52,6 +33,7 @@ const BurgerIngredients = ({ ingredients }) => {
 		return arr;
 	}, [ingredients, ingredientCats]);
 	
+
 	return (
 		<section className={styles.wrap}>
 			<h1 className="pb-5 text text_type_main-large">Соберите бургер</h1>
@@ -60,31 +42,34 @@ const BurgerIngredients = ({ ingredients }) => {
 					<Tab
 						value={type.key}
 						key={index}
-						active={index === activeTab}
+						active={type.key === activeTab}
 						onClick={onTabClick}
 					>
 						{type.name}
 					</Tab>
 				))}
 			</div>
-			<div className={styles.components}>
+			<div className={styles.components} ref={componentsRef}>				
 				{ingredientCats.map((type, index) => {
 					return (
 						<IngredientCategory
-							innerRef={el => typeRefs.current[type.key] = el}
+							key={index}
+							typeRefs={typeRefs}
+							componentsRef={componentsRef}
 							category={type}
 							ingredients={data[type.key]}
-							key={index}
-							onIngredientClick={handleIngredientOpen}
+							setActiveTab={setActiveTab}
 						/>
 					);
 				})}
-			</div>			
-			{ingredientModal && (
-				<Modal title="Детали ингредиента" onClose={() => setIngredientModal(null)}> 
-					<IngredientDetails ingredient={ingredientModal} />
+			</div>		
+
+			{activeModal === MODAL.INGREDIENTS_DETAILS && (
+				<Modal title="Детали ингредиента"> 
+					<IngredientDetails />
 				</Modal>
-			)}			
+			)}		
+							
 		</section>
 	);
 };

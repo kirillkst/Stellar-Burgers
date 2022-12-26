@@ -31,3 +31,8 @@ export const INITIAL_CART = {
 export const ESC_KEYCODE = 27;
 
 export const MODAL_ROOT = document.getElementById('react-modals');
+
+export const MODAL = {
+    INGREDIENTS_DETAILS: 'ingredients details',
+    ORDER_DETAILS: 'order details'
+}

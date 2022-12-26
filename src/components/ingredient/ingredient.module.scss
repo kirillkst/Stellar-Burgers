@@ -1,6 +1,7 @@
 .wrap {
     position: relative;
     text-align: center;
+    transition: transform 0.23s ease;
 
     .counter {
         position: absolute;
@@ -18,6 +19,11 @@
         .name {
             color: var(--colors-interface-accent);
         }
+    }
+
+    &.is-dragging {
+        opacity: 0.4;
+        transform: scale(0.9);
     }
 }
 
