@@ -25,18 +25,3 @@ export const renderContent = (process, Component, data) => {
 export const checkResponse = (res) => {
 	return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
-
-export const setUser = (dispatch) => {
-	dispatch(getUserRequest(getCookie('token')))
-		.unwrap()
-		.catch((res) => {
-			if (res.message === 'jwt expired') {
-				dispatch(updateTokenRequest({ token: getCookie('refreshToken') }))
-					.unwrap()
-					.then((res) => {
-						saveToken(res);
-						dispatch(getUserRequest(getCookie('token')));
-					});
-			}
-		});
-};

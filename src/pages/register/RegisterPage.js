@@ -1,38 +1,39 @@
 import { Link, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
+import { useAuthUserMutation } from "../../services/userAPI";
+import { setUser } from "../../store/userSlice";
 import useForm from "../../hooks/useForm";
-import { registerRequest } from "../../store/userSlice";
 import { saveToken } from '../../services/token';
-import { PROCESS_STATE } from '../../utils/constants';
 
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-
 
 import formStyles from '../../styles/form.module.scss';
 
 
 const RegisterPage = () => {    
     const dispatch = useDispatch();	
-	const auth = useSelector(store => store.user.auth);
-	const process = useSelector(store => store.user.process);
+	const isAuth = useSelector(store => store.user.auth);
     const form = useForm({ name: '', email: '', password: '' });
+    const [auth, { isLoading, isError }] = useAuthUserMutation();
 
-    const register = (e) => {
+    const registerHandler = (e) => {
         e.preventDefault();
-        dispatch(registerRequest(form.inputs))
+        auth({ type: 'register', payload: form.inputs })
             .unwrap()
-            .then(res => saveToken(res))
-            .catch(() => {});
+            .then(res => {
+                dispatch(setUser(res.user));
+                saveToken(res);
+            })
     }
     
-    if ( auth )
+    if ( isAuth )
         return <Redirect to='/' />
 
     return (
         <div className={formStyles.wrap}>
             <h1 className={formStyles.title}>Регистрация</h1>
-            <form className={formStyles.form} onSubmit={register}>
+            <form className={formStyles.form} onSubmit={registerHandler}>
                 <Input
 					type="text"
 					placeholder="Имя"
@@ -63,10 +64,10 @@ const RegisterPage = () => {
                     onIconClick={form.changePasswordVisibility}
                     extraClass="pb-6"
                 />
-				<Button htmlType="submit" type="primary" size="medium" disabled={process === PROCESS_STATE.LOADING}>
-                    {process === PROCESS_STATE.LOADING ? 'Регистрация...' : 'Зарегистрироваться'}
+				<Button htmlType="submit" type="primary" size="medium" disabled={isLoading}>
+                    {isLoading ? 'Регистрация...' : 'Зарегистрироваться'}
                 </Button>
-                {process === PROCESS_STATE.ERROR && (
+                {isError && (
                     <div className="text text_type_main-default text_color_error mt-5">Ошибка</div>
                 )}
 			</form>
