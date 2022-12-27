@@ -12,7 +12,7 @@ export const userAPI = createApi({
                 url: '/auth/user',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': (token) ? 'Bearer ' + token : ''
+                    'Authorization': 'Bearer ' + token
                 },
                 mode: 'cors',
                 cache: 'no-cache',

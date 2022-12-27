@@ -9,6 +9,7 @@ import { saveToken } from "../../services/token";
 
 import { HomePage, LoginPage, RegisterPage, ForgotPassword, ResetPassword } from '../../pages';
 import AppHeader from '../app-header/AppHeader';
+import Spinner from "../spinner/Spinner";
 
 import styles from './app.module.scss';
 
@@ -17,22 +18,22 @@ const App = () => {
 	const dispatch = useDispatch();
 	const token = getCookie('token');
 	const refreshToken = getCookie('refreshToken');
-	
-	const user = useGetUserQuery(token);	
+	const user = useGetUserQuery(token, {skip: !token});
     const [userUpdateToken] = useUserUpdateTokenMutation();
-	
-	
+
+		
 	useEffect(() => {	
-		if (user?.success === true) {	
-			dispatch(setUser(user.user));
-		} else if (user?.error && user.error.data.message === 'jwt expired' && refreshToken) {	
+		if (user.isSuccess) {
+			dispatch(setUser(user.data.user));
+		} else if (user.isError && user.error.data.message === 'jwt expired' && refreshToken) {
 			userUpdateToken({ token: refreshToken })
 				.unwrap()
 				.then((res) => {
 					saveToken(res);
 				});		
-		}			
-	}, [user, dispatch]);
+		}		
+	}, [user, userUpdateToken, refreshToken, dispatch]);
+
 
 	return (
 		<div className={styles.wrapper}>
