@@ -1,12 +1,22 @@
+import { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
 import { HomePage, LoginPage, RegisterPage, ForgotPassword, ResetPassword } from '../../pages';
+import { setUser } from "../../utils/burger-utils";
 
 import AppHeader from '../app-header/AppHeader';
 
 import styles from './app.module.scss';
 
 
-const App = () => {	
+const App = () => {		
+	const dispatch = useDispatch();
+	
+	useEffect(() => {
+		setUser(dispatch);
+	}, [dispatch])
+
 	return (
 		<div className={styles.wrapper}>
 			<AppHeader />

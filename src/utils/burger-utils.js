@@ -1,3 +1,7 @@
+import { getUserRequest, updateTokenRequest } from '../store/userSlice';
+import { getCookie } from '../services/cookie';
+import { saveToken } from "../services/token";
+
 import Spinner from '../components/spinner/Spinner';
 import ErrorMessage from '../components/errors/ErrorMessage';
 
@@ -20,4 +24,19 @@ export const renderContent = (process, Component, data) => {
 
 export const checkResponse = (res) => {
 	return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+};
+
+export const setUser = (dispatch) => {
+	dispatch(getUserRequest(getCookie('token')))
+		.unwrap()
+		.catch((res) => {
+			if (res.message === 'jwt expired') {
+				dispatch(updateTokenRequest({ token: getCookie('refreshToken') }))
+					.unwrap()
+					.then((res) => {
+						saveToken(res);
+						dispatch(getUserRequest(getCookie('token')));
+					});
+			}
+		});
 };

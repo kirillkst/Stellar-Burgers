@@ -20,7 +20,7 @@ const ResetPassword = () => {
                     icon={form.passwordVisible ? 'HideIcon' : 'ShowIcon'}
                     value={form.inputs.password}
                     name='password'
-                    onIconClick={form.onChangePasswordVisibility}
+                    onIconClick={form.changePasswordVisibility}
                     size='default'
                     extraClass="pb-6"
                 />

@@ -1,18 +1,18 @@
 import { useState } from 'react';
 
 const useForm = (initialData) => {
-    const [inputs, setInput] = useState(initialData);
+	const [inputs, setInput] = useState(initialData);
 	const [passwordVisible, setPasswordVisible] = useState(false);
 
 	const onChange = (e) => {
 		setInput({ ...inputs, [e.target.name]: e.target.value });
 	};
 
-    const onChangePasswordVisibility = () => {
-        setPasswordVisible(!passwordVisible);
-    }
+	const changePasswordVisibility = () => {
+		setPasswordVisible(!passwordVisible);
+	};
 
-    return { inputs, onChange, passwordVisible, onChangePasswordVisibility };
+	return { inputs, onChange, passwordVisible, changePasswordVisibility };
 };
 
 export default useForm;
