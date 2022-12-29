@@ -1,0 +1,40 @@
+.wrap {
+	display: flex;
+	gap: calc(var(--offset-base-size) * 15);
+
+	> * {
+		flex: 1;
+	}
+}
+
+.nav {
+	flex: 0 0 320px;
+
+	ul {
+		padding: 0;
+		margin: 0;
+		list-style: none;
+
+		li {
+			display: flex;
+			align-items: center;
+			height: 64px;
+		}
+	}
+
+	p {
+		opacity: 0.4;
+	}
+}
+
+.link {
+	composes: text text_type_main-medium text_color_inactive from global;
+	text-decoration: none;
+
+	&:hover {
+		color: var(--colors-interface-accent);
+	}
+	&:global(.active) {
+		color: var(--text-primary-color);
+	}
+}

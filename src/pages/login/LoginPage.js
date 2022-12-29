@@ -27,9 +27,8 @@ const LoginPage = () => {
             })
     }
 
-    //console.log(isAuth);
-    // if ( isAuth )
-    //     return <Redirect to='/' />
+    if ( isAuth )
+        return <Redirect to='/' />
 
 	return (
 		<div className={formStyles.wrap}>

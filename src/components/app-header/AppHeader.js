@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router-dom';
+
 import { Logo, ListIcon, BurgerIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './app-header.module.scss';
@@ -10,15 +12,15 @@ const AppHeader = () => {
 				<nav className={styles.navbar}>
 					<ul>
 						<li>
-							<a
-								href="/"
-								className={cx(styles.link, { 
-                                    [styles['link--active']]: true 
-                                })}
+							<NavLink 
+								to='/'
+								exact={true}
+								className={styles.link}
+								activeClassName={styles['link--active']}
 							>
 								<BurgerIcon type="secondary" />
 								Конструктор
-							</a>
+							</NavLink>
 						</li>
 						<li>
 							<a
@@ -40,15 +42,14 @@ const AppHeader = () => {
 					<Logo />
 				</a>
 				<div className={styles.profile}>
-					<a
-						href="/"
-						className={cx(styles.link, { 
-                            [styles['link--active']]: false 
-                        })}
+					<NavLink 
+						to='/profile'
+						className={styles.link}
+						activeClassName={styles['link--active']}
 					>
 						<ProfileIcon type="secondary" />
 						Личный кабинет
-					</a>
+					</NavLink>
 				</div>
 			</div>
 		</header>

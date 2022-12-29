@@ -30,6 +30,22 @@ export const userAPI = createApi({
             }),
             invalidatesTags: ['userGet']
         }),
+        userUpdate: builder.mutation({
+			query: ({ token, payload }) => ({
+				url: `/auth/user`,
+				method: 'PATCH',
+                body: payload,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer'
+			}),
+		}),
 		authUser: builder.mutation({
 			query: ({ type, payload }) => ({
 				url: `/auth/${type}`,
@@ -37,7 +53,21 @@ export const userAPI = createApi({
                 body: payload
 			}),
 		}),
+        frogotPassword: builder.mutation({
+			query: (payload) => ({
+				url: '/password-reset',
+				method: 'POST',
+                body: payload
+			}),
+		}),
+        resetPassword: builder.mutation({
+			query: (payload) => ({
+				url: '/password-reset/reset',
+				method: 'POST',
+                body: payload
+			}),
+		}),
 	}),
 });
 
-export const { useGetUserQuery, useUserUpdateTokenMutation, useAuthUserMutation } = userAPI;
+export const { useGetUserQuery, useUserUpdateTokenMutation, useUserUpdateMutation, useAuthUserMutation, useFrogotPasswordMutation, useResetPasswordMutation } = userAPI;

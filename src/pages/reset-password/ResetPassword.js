@@ -1,18 +1,31 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory  } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import useForm from "../../hooks/useForm";
+import { useResetPasswordMutation } from "../../services/userAPI";
 
 import formStyles from '../../styles/form.module.scss';
 
 
 const ResetPassword = () => {    
-    const form = useForm({ password: '', code: '' });
+    const form = useForm({ password: '', token: '' });
+    const history = useHistory(); 
+    const [reset, { isLoading, isError }] = useResetPasswordMutation();
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+        reset(form.inputs)
+            .unwrap()
+            .then(res => {
+                if (res.success)       
+                    history.push('/login');    
+            })
+    }
 
     return (
         <div className={formStyles.wrap}>
             <h1 className={formStyles.title}>Восстановление пароля</h1>
-            <form className={formStyles.form}>
+            <form className={formStyles.form} onSubmit={submitHandler}>
                 <Input
                     type={form.passwordVisible ? 'text' : 'password'}
                     placeholder='Введите новый пароль'
@@ -28,14 +41,17 @@ const ResetPassword = () => {
 					type="text"
 					placeholder="Введите код из письма"
                     onChange={form.onChange}
-					value={form.inputs.code}
-					name='code'
+					value={form.inputs.token}
+					name='token'
 					size='default'
 					extraClass="pb-6"
 				/>
-				<Button htmlType="button" type="primary" size="medium">
+				<Button htmlType="submit" type="primary" size="medium" disabled={isLoading}>
                     Сохранить
                 </Button>
+                {isError && (
+                    <div className="text text_type_main-default text_color_error mt-5">Ошибка</div>
+                )}
 			</form>
             
             <p className="text text_type_main-default text_color_inactive">

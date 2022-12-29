@@ -12,7 +12,7 @@ const useForm = (initialData) => {
 		setPasswordVisible(!passwordVisible);
 	};
 
-	return { inputs, onChange, passwordVisible, changePasswordVisibility };
+	return { inputs, onChange, setInput, passwordVisible, changePasswordVisibility };
 };
 
 export default useForm;
