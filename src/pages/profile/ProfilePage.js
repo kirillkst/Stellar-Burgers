@@ -1,11 +1,41 @@
-import { Switch, Route, NavLink, useRouteMatch } from 'react-router-dom';
+import { Switch, Route, NavLink, useRouteMatch, useHistory, Redirect } from 'react-router-dom';
+import { useDispatch, useSelector} from 'react-redux';
+
+import { getCookie, deleteCookie } from "../../services/cookie";
+import { resetUser } from "../../store/userSlice";
+import { useAuthUserMutation } from "../../services/userAPI";
 
 import Profile from "../../components/profile/Profile";
 
 import styles from './profile.module.scss';
 
 const ProfilePage = () => {    
-  let { path, url } = useRouteMatch();
+    let { path, url } = useRouteMatch();
+	const isAuth = useSelector(store => store.user.auth);
+    const history = useHistory(); 
+    const dispatch = useDispatch();	
+    const [auth, { isLoading, isError }] = useAuthUserMutation();
+
+    const logout = (e) => {
+        e.preventDefault();        
+        auth({ type: 'logout', payload: {
+            token: getCookie('refreshToken')
+        } })
+            .unwrap()
+            .then(res => {
+                if (res.success) {                 
+                    dispatch(resetUser());            
+                    deleteCookie('token');
+                    deleteCookie('refreshToken'); 
+                    history.push('/login');
+                }
+            })
+    }
+
+    
+    if (!isAuth)
+        return <Redirect to='/login' />
+  
   
     return (
         <div className={styles.wrap}>
@@ -18,7 +48,7 @@ const ProfilePage = () => {
                         <NavLink className={styles.link} to={`${url}/orders`} exact={true}>История заказов</NavLink>
                     </li>
                     <li>
-                        <a href="/" className={styles.link}>Выход</a>
+                        <a href="/login" onClick={logout} className={styles.link}>Выход</a>
                     </li>
                 </ul>
                 <p className="mt-20 text text_type_main-small text_color_inactive">В этом разделе вы можете изменить свои персональные данные</p>

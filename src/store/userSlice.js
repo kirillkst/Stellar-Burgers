@@ -14,14 +14,16 @@ const userSlice = createSlice({
             state.auth = true;                
             state.name = payload.name;                
             state.email = payload.email;
-        }    
+        },
+        resetUser: () => initialState
     }
 });
 
 const { actions, reducer } = userSlice;
 
 export const {
-    setUser
+    setUser,
+    resetUser
 } = actions;
 
 export default reducer;

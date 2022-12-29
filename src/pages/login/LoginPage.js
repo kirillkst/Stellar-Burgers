@@ -1,4 +1,4 @@
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import useForm from "../../hooks/useForm";
@@ -14,6 +14,7 @@ import formStyles from '../../styles/form.module.scss';
 const LoginPage = () => {
     const dispatch = useDispatch();	
 	const isAuth = useSelector(store => store.user.auth);
+    const history = useHistory(); 
     const form = useForm({ email: '', password: '' });
     const [auth, { isLoading, isError }] = useAuthUserMutation();
 
@@ -23,11 +24,12 @@ const LoginPage = () => {
             .unwrap()
             .then(res => {
                 dispatch(setUser(res.user));
-                saveToken(res);
+                saveToken(res);               
+                history.push('/');  
             })
     }
 
-    if ( isAuth )
+    if (isAuth)
         return <Redirect to='/' />
 
 	return (
