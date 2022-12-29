@@ -10,6 +10,7 @@ import { saveToken } from "../../services/token";
 import { HomePage, LoginPage, RegisterPage, ForgotPassword, ResetPassword, ProfilePage } from '../../pages';
 import AppHeader from '../app-header/AppHeader';
 import Spinner from "../spinner/Spinner";
+import ProtectedRoute from "../protected-route/ProtectedRoute";
 
 import styles from './app.module.scss';
 
@@ -54,21 +55,21 @@ const App = () => {
 						<Route path="/" exact={true}>
 							<HomePage />
 						</Route>
-						<Route path="/login" exact={true}>
+						<ProtectedRoute path="/login" forAuth={true} exact={true}>
 							<LoginPage />
-						</Route>	
-						<Route path="/register" exact={true}>
+						</ProtectedRoute>	
+						<ProtectedRoute path="/register" forAuth={true} exact={true}>
 							<RegisterPage />
-						</Route>
-						<Route path="/forgot-password" exact={true}>
+						</ProtectedRoute>
+						<ProtectedRoute path="/forgot-password" forAuth={true} exact={true}>
 							<ForgotPassword />
-						</Route>	
-						<Route path="/reset-password" exact={true}>
+						</ProtectedRoute>	
+						<ProtectedRoute path="/reset-password" forAuth={true} exact={true}>
 							<ResetPassword />
-						</Route>		
-						<Route path="/profile">
+						</ProtectedRoute>		
+						<ProtectedRoute path="/profile" forAuth={false}>
 							<ProfilePage />
-						</Route>																						
+						</ProtectedRoute>																						
 					</Switch>
 			
 				</main>	

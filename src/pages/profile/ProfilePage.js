@@ -11,7 +11,6 @@ import styles from './profile.module.scss';
 
 const ProfilePage = () => {    
     let { path, url } = useRouteMatch();
-	const isAuth = useSelector(store => store.user.auth);
     const history = useHistory(); 
     const dispatch = useDispatch();	
     const [auth, { isLoading, isError }] = useAuthUserMutation();
@@ -30,12 +29,7 @@ const ProfilePage = () => {
                     history.push('/login');
                 }
             })
-    }
-
-    
-    if (!isAuth)
-        return <Redirect to='/login' />
-  
+    } 
   
     return (
         <div className={styles.wrap}>

@@ -13,7 +13,6 @@ import formStyles from '../../styles/form.module.scss';
 
 const LoginPage = () => {
     const dispatch = useDispatch();	
-	const isAuth = useSelector(store => store.user.auth);
     const history = useHistory(); 
     const form = useForm({ email: '', password: '' });
     const [auth, { isLoading, isError }] = useAuthUserMutation();
@@ -28,9 +27,6 @@ const LoginPage = () => {
                 history.push('/');  
             })
     }
-
-    if (isAuth)
-        return <Redirect to='/' />
 
 	return (
 		<div className={formStyles.wrap}>

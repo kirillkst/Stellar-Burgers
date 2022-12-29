@@ -1,13 +1,17 @@
 import { Link, useHistory  } from 'react-router-dom';
-import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector, useDispatch } from 'react-redux';
 
 import useForm from "../../hooks/useForm";
+import { passReset } from "../../store/userSlice";
 import { useFrogotPasswordMutation } from "../../services/userAPI";
+
+import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import formStyles from '../../styles/form.module.scss';
 
 
-const ForgotPassword = () => {    
+const ForgotPassword = () => { 
+    const dispatch = useDispatch();	   
     const form = useForm({ email: '' });   
     const history = useHistory(); 
     const [reset, { isLoading, isError }] = useFrogotPasswordMutation();
@@ -17,8 +21,11 @@ const ForgotPassword = () => {
         reset(form.inputs)
             .unwrap()
             .then(res => {
-                if (res.success)       
-                    history.push('/reset-password');    
+                if (res.success) {
+                    dispatch(passReset());                    
+                    history.push('/reset-password'); 
+                }
+                       
             })
     }
 

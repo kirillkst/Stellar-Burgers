@@ -1,4 +1,5 @@
 import { Link, useHistory  } from 'react-router-dom';
+import { useSelector } from "react-redux";
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import useForm from "../../hooks/useForm";
@@ -8,9 +9,13 @@ import formStyles from '../../styles/form.module.scss';
 
 
 const ResetPassword = () => {    
+	const passReset = useSelector((store) => store.user.passReset);
     const form = useForm({ password: '', token: '' });
     const history = useHistory(); 
     const [reset, { isLoading, isError }] = useResetPasswordMutation();
+
+    if ( ! passReset )
+        history.push('/forgot-password'); 
 
     const submitHandler = (e) => {
         e.preventDefault();
