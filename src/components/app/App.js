@@ -7,7 +7,7 @@ import { getCookie } from "../../services/cookie";
 import { setUser } from "../../store/userSlice";
 import { saveToken } from "../../services/token";
 
-import { HomePage, LoginPage, RegisterPage, ForgotPassword, ResetPassword, ProfilePage } from '../../pages';
+import { HomePage, LoginPage, RegisterPage, ForgotPassword, ResetPassword, ProfilePage, IngredientPage } from '../../pages';
 import AppHeader from '../app-header/AppHeader';
 import Spinner from "../spinner/Spinner";
 import ProtectedRoute from "../protected-route/ProtectedRoute";
@@ -55,23 +55,25 @@ const App = () => {
 						<Route path="/" exact={true}>
 							<HomePage />
 						</Route>
+						<Route path="/ingredients/:id" exact={true}>
+							<IngredientPage />
+						</Route>						
 						<ProtectedRoute path="/login" forAuth={true} exact={true}>
 							<LoginPage />
 						</ProtectedRoute>	
 						<ProtectedRoute path="/register" forAuth={true} exact={true}>
 							<RegisterPage />
-						</ProtectedRoute>
+						</ProtectedRoute>	
+						<ProtectedRoute path="/profile" forAuth={false}>
+							<ProfilePage />
+						</ProtectedRoute>	
 						<ProtectedRoute path="/forgot-password" forAuth={true} exact={true}>
 							<ForgotPassword />
 						</ProtectedRoute>	
 						<ProtectedRoute path="/reset-password" forAuth={true} exact={true}>
 							<ResetPassword />
-						</ProtectedRoute>		
-						<ProtectedRoute path="/profile" forAuth={false}>
-							<ProfilePage />
 						</ProtectedRoute>																						
-					</Switch>
-			
+					</Switch>			
 				</main>	
 			</Router>  			
 		</div>		

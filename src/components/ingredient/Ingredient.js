@@ -29,7 +29,7 @@ const Ingredient = ({ _id, type, name, price, image, counter }) => {
 
 		dispatch(openModal({
 			modal: MODAL.INGREDIENTS_DETAILS,
-			data: ingredient
+			data: ingredient._id
 		}));	
 	}
 

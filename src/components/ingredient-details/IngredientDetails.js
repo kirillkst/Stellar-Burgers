@@ -1,10 +1,12 @@
 import { useSelector } from 'react-redux';
+import store from "../../store";
+import { ingredientsSelectors } from "../../store/ingredientsSlice";
 
 import styles from './ingredient-details.module.scss';
 
 
-const IngredientDetails = () => {
-    const { image_large, name, fat, carbohydrates, calories, proteins } = useSelector(store => store.modal.data);
+const IngredientDetails = ({ _id }) => {  
+	const { image_large, name, fat, carbohydrates, calories, proteins } = ingredientsSelectors.selectById(store.getState(), _id);
 
     return (
         <div className={styles.wrap}>

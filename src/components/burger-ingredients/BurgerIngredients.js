@@ -19,6 +19,7 @@ const BurgerIngredients = ({ ingredients }) => {
 	const typeRefs = useRef([]);
 	const ingredientCats = Object.values(INGREDIENTS_TYPES);
 	const activeModal = useSelector(store => store.modal.modal);
+	const activeIngredient = useSelector(store => store.modal.data);
 	
 	const onTabClick = (value) => {		
 		typeRefs.current[value].scrollIntoView({ behavior: 'smooth' });
@@ -66,7 +67,7 @@ const BurgerIngredients = ({ ingredients }) => {
 
 			{activeModal === MODAL.INGREDIENTS_DETAILS && (
 				<Modal title="Детали ингредиента"> 
-					<IngredientDetails />
+					<IngredientDetails _id={activeIngredient}/>
 				</Modal>
 			)}		
 							

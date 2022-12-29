@@ -1,7 +1,3 @@
-import { getUserRequest, updateTokenRequest } from '../store/userSlice';
-import { getCookie } from '../services/cookie';
-import { saveToken } from "../services/token";
-
 import Spinner from '../components/spinner/Spinner';
 import ErrorMessage from '../components/errors/ErrorMessage';
 
