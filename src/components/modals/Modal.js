@@ -1,5 +1,6 @@
 import { useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
@@ -14,10 +15,12 @@ import styles from './styles/modal.module.scss';
 
 const Modal = ({ children, title, onCloseAction }) => {	
 	const dispatch = useDispatch();	
+	const history = useHistory();
 
 	const onClose = useCallback(() => {
 		onCloseAction?.();
 		dispatch(closeModal());
+		history.goBack();
 	}, [dispatch, onCloseAction]);
 
 	const closeOnEscapeKeyDown = useCallback((e) => {

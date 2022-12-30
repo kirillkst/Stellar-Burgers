@@ -2,13 +2,11 @@ import { useState, useRef, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { INGREDIENTS_TYPES, MODAL } from '../../utils/constants';
+import { INGREDIENTS_TYPES } from '../../utils/constants';
 import { ingredientPropTypes } from '../../utils/prop-types';
 
-import Modal from "../modals/Modal";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientCategory from '../ingredient-category/IngredientCategory';
-import IngredientDetails from '../ingredient-details/IngredientDetails';
 
 import styles from './b-ingredients.module.scss';
 
@@ -18,8 +16,6 @@ const BurgerIngredients = ({ ingredients }) => {
 	const componentsRef = useRef();
 	const typeRefs = useRef([]);
 	const ingredientCats = Object.values(INGREDIENTS_TYPES);
-	const activeModal = useSelector(store => store.modal.modal);
-	const activeIngredient = useSelector(store => store.modal.data);
 	
 	const onTabClick = (value) => {		
 		typeRefs.current[value].scrollIntoView({ behavior: 'smooth' });
@@ -63,13 +59,7 @@ const BurgerIngredients = ({ ingredients }) => {
 						/>
 					);
 				})}
-			</div>		
-
-			{activeModal === MODAL.INGREDIENTS_DETAILS && (
-				<Modal title="Детали ингредиента"> 
-					<IngredientDetails _id={activeIngredient}/>
-				</Modal>
-			)}		
+			</div>				
 							
 		</section>
 	);
