@@ -29,6 +29,7 @@ const ProfilePage = () => {
                     history.push('/login');
                 }
             })
+            .catch(() => {});
     } 
   
     return (

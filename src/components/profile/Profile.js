@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useRef } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getCookie } from "../../services/cookie";
 import useForm from "../../hooks/useForm";
 import { setUser } from "../../store/userSlice";
-import { useUserUpdateMutation } from "../../services/userAPI";
+import { useUserUpdateMutation, useUserUpdateTokenMutation } from "../../services/userAPI";
 
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import formStyles from '../../styles/form.module.scss';
 
 import styles from './profile.module.scss';
+import { saveToken } from "../../services/token";
 
 
 const Profile = () => {    
@@ -19,6 +20,10 @@ const Profile = () => {
 	const email = useSelector(store => store.user.email);
     const form = useForm({ name, email, password: '' });
     const [update, { isLoading, isError }] = useUserUpdateMutation();
+    const token = getCookie('token');
+	const refreshToken = getCookie('refreshToken');
+    const [userUpdateToken] = useUserUpdateTokenMutation();
+    const formRef = useRef();
 
     const cancel = () => {
         form.setInput({ name, email, password: '' })
@@ -26,17 +31,28 @@ const Profile = () => {
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        update({ token: getCookie('token'), payload: form.inputs })
+        update({ token: token, payload: form.inputs })
             .unwrap()
             .then(res => {
                 if (res.success)
                     dispatch(setUser(res.user));
             })
+            .catch(res => {
+                if (res.data.message === 'jwt expired' && refreshToken) {
+                    userUpdateToken({ token: refreshToken })
+                        .unwrap()
+                        .then((res) => {
+                            saveToken(res);
+                            formRef.submit();
+                        })
+                        .catch(() => {});
+                }
+            });
     }
 
     return (
-        <div>
-            <form className={formStyles.form} onSubmit={onSubmitHandler}>
+        <div className={styles.wrap}>
+            <form className={formStyles.form} onSubmit={onSubmitHandler} ref={formRef}>
                 <Input
 					type="text"
 					placeholder="Имя"
@@ -68,12 +84,17 @@ const Profile = () => {
                     icon='EditIcon'
                     extraClass="pb-6"
                 />
-                <Button htmlType="button" type="secondary" size="medium" onClick={cancel}>
-                    Отмена
-                </Button>
-				<Button htmlType="submit" type="primary" size="medium" disabled={isLoading}>
-                    {isLoading ? 'Сохранение...' : 'Сохранить'}
-                </Button>
+                {(form.inputs.name !== name || form.inputs.email !== email || form.inputs.password !== '') && (
+                    <div className={styles.actions}>
+                        <Button htmlType="button" type="secondary" size="medium" onClick={cancel}>
+                            Отмена
+                        </Button>
+                        <Button htmlType="submit" type="primary" size="medium" disabled={isLoading}>
+                            {isLoading ? 'Сохранение...' : 'Сохранить'}
+                        </Button>
+                    </div>
+                )}
+                
                 {isError && (
                     <div className="text text_type_main-default text_color_error mt-5">Ошибка</div>
                 )}

@@ -26,6 +26,7 @@ const LoginPage = () => {
                 saveToken(res);               
                 history.push('/');  
             })
+            .catch(() => {});
     }
 
 	return (

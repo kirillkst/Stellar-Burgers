@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useDrop } from "react-dnd";
 import cx from 'classnames';
+import { useHistory } from 'react-router-dom';
 
 import store from "../../store";
 import { ingredientsSelectors } from '../../store/ingredientsSlice';
@@ -23,6 +24,8 @@ import styles from './b-constructor.module.scss';
 
 const BurgerConstructor = ({ bun, ingredients, total }) => {	
 	const activeModal = useSelector(store => store.modal.modal);
+	const isAuth = useSelector((store) => store.user.auth);
+	const history = useHistory();
 
     const dispatch = useDispatch();	
 
@@ -42,6 +45,11 @@ const BurgerConstructor = ({ bun, ingredients, total }) => {
 	};
 
 	const createOrder = () => {
+		if (!isAuth) {
+			history.push('/login');
+			return;
+		}
+
 		dispatch(createOrderRequest(
 			[bun._id, ...ingredients.map(el => el._id)]
 		));    

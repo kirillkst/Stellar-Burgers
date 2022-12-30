@@ -24,9 +24,9 @@ const ForgotPassword = () => {
                 if (res.success) {
                     dispatch(passReset());                    
                     history.push('/reset-password'); 
-                }
-                       
+                }                       
             })
+            .catch(() => {});
     }
 
     return (

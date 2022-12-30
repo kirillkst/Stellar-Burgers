@@ -51,7 +51,8 @@ const App = () => {
 					.unwrap()
 					.then((res) => {
 						saveToken(res);
-					});		
+					})
+					.catch(() => {});
 			} else {
 				setAuthLoading(false);
 			}	

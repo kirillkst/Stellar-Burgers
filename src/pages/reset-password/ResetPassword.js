@@ -25,6 +25,7 @@ const ResetPassword = () => {
                 if (res.success)       
                     history.push('/login');    
             })
+            .catch(() => {});
     }
 
     return (

@@ -26,6 +26,7 @@ const RegisterPage = () => {
                 saveToken(res);                
                 history.push('/');  
             })
+            .catch(() => {});
     }
     
 
