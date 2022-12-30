@@ -15,7 +15,6 @@ import styles from './styles/modal.module.scss';
 
 const Modal = ({ children, title, onCloseAction }) => {	
 	const dispatch = useDispatch();	
-	const history = useHistory();
 
 	const onClose = useCallback(() => {
 		onCloseAction?.();
