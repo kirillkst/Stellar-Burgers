@@ -20,7 +20,6 @@ const Modal = ({ children, title, onCloseAction }) => {
 	const onClose = useCallback(() => {
 		onCloseAction?.();
 		dispatch(closeModal());
-		history.goBack();
 	}, [dispatch, onCloseAction]);
 
 	const closeOnEscapeKeyDown = useCallback((e) => {

@@ -45,6 +45,7 @@ export const userAPI = createApi({
 				redirect: 'follow',
 				referrerPolicy: 'no-referrer',
 			}),
+			invalidatesTags: ['userGet'],
 		}),
 		authUser: builder.mutation({
 			query: ({ type, payload }) => ({

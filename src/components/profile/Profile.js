@@ -34,8 +34,7 @@ const Profile = () => {
         update({ token: token, payload: form.inputs })
             .unwrap()
             .then(res => {
-                if (res.success)
-                    dispatch(setUser(res.user));
+                //Обновление в App по тегу из userAPI
             })
             .catch(res => {
                 if (res.data.message === 'jwt expired' && refreshToken) {
@@ -43,6 +42,8 @@ const Profile = () => {
                         .unwrap()
                         .then((res) => {
                             saveToken(res);
+                        })
+                        .then(() => {
                             formRef.submit();
                         })
                         .catch(() => {});

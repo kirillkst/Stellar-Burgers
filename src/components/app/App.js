@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Switch, Route, useLocation } from 'react-router-dom';
+import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useGetUserQuery, useUserUpdateTokenMutation } from "../../services/userAPI";
@@ -26,10 +26,9 @@ const App = () => {
 	const token = getCookie('token');
 	const refreshToken = getCookie('refreshToken');
 	const user = useGetUserQuery(token, {skip: !token});
-    const [userUpdateToken] = useUserUpdateTokenMutation();
-	
-    const ingredientsProcess = useSelector(store => store.ingredients.process);
-	
+    const [userUpdateToken] = useUserUpdateTokenMutation();	
+    const ingredientsProcess = useSelector(store => store.ingredients.process);	
+	const history = useHistory();
 	const location = useLocation();
 	const background = location.state && location.state.background;
 
@@ -92,7 +91,7 @@ const App = () => {
 
 				{background && (
 					<Route path="/ingredients/:id" >
-						<Modal title="Детали ингредиента"> 
+						<Modal title="Детали ингредиента" onCloseAction={() => history.goBack()}> 
 							<IngredientDetails />
 						</Modal>
 					</Route>
