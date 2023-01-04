@@ -35,12 +35,12 @@ const AppHeader = () => {
 						</li>
 					</ul>
 				</nav>
-				<a
-					href="/"
+				<Link
+					to="/"
 					className={styles.logo}
 				>
 					<Logo />
-				</a>
+				</Link>
 				<div className={styles.profile}>
 					<NavLink 
 						to='/profile'
