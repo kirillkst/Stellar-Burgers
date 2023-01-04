@@ -72,19 +72,19 @@ const App = () => {
 					<Route path="/ingredients/:id" exact={true}>
 						<IngredientPage />
 					</Route>						
-					<ProtectedRoute path="/login" forAuth={true} exact={true}>
+					<ProtectedRoute path="/login" onlyForAuth={false} exact={true}>
 						<LoginPage />
 					</ProtectedRoute>	
-					<ProtectedRoute path="/register" forAuth={true} exact={true}>
+					<ProtectedRoute path="/register" onlyForAuth={false} exact={true}>
 						<RegisterPage />
 					</ProtectedRoute>	
-					<ProtectedRoute path="/profile" forAuth={false}>
+					<ProtectedRoute path="/profile" onlyForAuth={true}>
 						<ProfilePage />
 					</ProtectedRoute>	
-					<ProtectedRoute path="/forgot-password" forAuth={true} exact={true}>
+					<ProtectedRoute path="/forgot-password" onlyForAuth={false} exact={true}>
 						<ForgotPassword />
 					</ProtectedRoute>	
-					<ProtectedRoute path="/reset-password" forAuth={true} exact={true}>
+					<ProtectedRoute path="/reset-password" onlyForAuth={false} exact={true}>
 						<ResetPassword />
 					</ProtectedRoute>																						
 				</Switch>	

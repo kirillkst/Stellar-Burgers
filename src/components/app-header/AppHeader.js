@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 import { Logo, ListIcon, BurgerIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -23,15 +23,15 @@ const AppHeader = () => {
 							</NavLink>
 						</li>
 						<li>
-							<a
-								href="/"
+							<Link
+								to="/"
 								className={cx(styles.link, { 
                                     [styles['link--active']]: false 
                                 })}
 							>
 								<ListIcon type="secondary" />
 								Лента заказов
-							</a>
+							</Link>
 						</li>
 					</ul>
 				</nav>

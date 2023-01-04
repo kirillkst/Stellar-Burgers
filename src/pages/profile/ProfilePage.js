@@ -2,8 +2,7 @@ import { Switch, Route, NavLink, useRouteMatch, useHistory, Redirect } from 'rea
 import { useDispatch, useSelector} from 'react-redux';
 
 import { getCookie, deleteCookie } from "../../services/cookie";
-import { resetUser } from "../../store/userSlice";
-import { useAuthUserMutation } from "../../services/userAPI";
+import { logoutRequest } from "../../store/userSlice";
 
 import Profile from "../../components/profile/Profile";
 
@@ -13,17 +12,16 @@ const ProfilePage = () => {
     let { path, url } = useRouteMatch();
     const history = useHistory(); 
     const dispatch = useDispatch();	
-    const [auth, { isLoading, isError }] = useAuthUserMutation();
 
     const logout = (e) => {
-        e.preventDefault();        
-        auth({ type: 'logout', payload: {
+        e.preventDefault();
+
+        dispatch(logoutRequest({
             token: getCookie('refreshToken')
-        } })
+        }))
             .unwrap()
             .then(res => {
-                if (res.success) {                 
-                    dispatch(resetUser());            
+                if (res.success) {                       
                     deleteCookie('token');
                     deleteCookie('refreshToken'); 
                     history.push('/login');

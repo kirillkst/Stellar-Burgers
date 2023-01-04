@@ -1,31 +1,32 @@
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { useAuthUserMutation } from "../../services/userAPI";
-import { setUser } from "../../store/userSlice";
+import { registerRequest } from "../../store/userSlice";
 import useForm from "../../hooks/useForm";
 import { saveToken } from '../../services/token';
 
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import formStyles from '../../styles/form.module.scss';
+import { PROCESS_STATE } from "../../utils/constants";
 
 
 const RegisterPage = () => {    
     const dispatch = useDispatch();	
+    const process = useSelector(store => store.user.process);
     const history = useHistory(); 
     const form = useForm({ name: '', email: '', password: '' });
-    const [auth, { isLoading, isError }] = useAuthUserMutation();
+    const isError = process === PROCESS_STATE.ERROR;
+    const isLoading = process === PROCESS_STATE.LOADING;
 
     const registerHandler = (e) => {
         e.preventDefault();
-        auth({ type: 'register', payload: form.inputs })
+        dispatch(registerRequest(form.inputs))
             .unwrap()
             .then(res => {
-                dispatch(setUser(res.user));
                 saveToken(res);                
-                history.push('/');  
-            })
+                history.push('/');
+            } )
             .catch(() => {});
     }
     

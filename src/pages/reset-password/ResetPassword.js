@@ -1,30 +1,40 @@
+import { useEffect } from 'react';
 import { Link, useHistory  } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import useForm from "../../hooks/useForm";
 import { useResetPasswordMutation } from "../../services/userAPI";
 
 import formStyles from '../../styles/form.module.scss';
+import { PROCESS_STATE } from "../../utils/constants";
+import { resetPasswordRequest } from "../../store/userSlice";
 
 
 const ResetPassword = () => {    
+    const dispatch = useDispatch();	   
+    const process = useSelector(store => store.user.process);
 	const passReset = useSelector((store) => store.user.passReset);
     const form = useForm({ password: '', token: '' });
     const history = useHistory(); 
-    const [reset, { isLoading, isError }] = useResetPasswordMutation();
+    const isError = process === PROCESS_STATE.ERROR;
+    const isLoading = process === PROCESS_STATE.LOADING;
 
-    if ( ! passReset )
-        history.push('/forgot-password'); 
+    useEffect(() => {
+        if ( ! passReset )
+            history.push('/forgot-password'); 
+    }, [history, passReset]);   
 
     const submitHandler = (e) => {
         e.preventDefault();
-        reset(form.inputs)
+
+        dispatch(resetPasswordRequest(form.inputs))
             .unwrap()
             .then(res => {
-                if (res.success)       
+                if (res.success) {
                     history.push('/login');    
-            })
+                } 
+            } )
             .catch(() => {});
     }
 
