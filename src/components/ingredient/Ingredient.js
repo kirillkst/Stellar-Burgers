@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useDrag } from "react-dnd";
 import cx from 'classnames';
 import PropTypes from 'prop-types';
+import { Link, useLocation } from 'react-router-dom';
 
 import store from "../../store";
 import { ingredientsSelectors } from '../../store/ingredientsSlice';
@@ -15,6 +16,7 @@ import styles from './ingredient.module.scss';
 
 const Ingredient = ({ _id, type, name, price, image, counter }) => {	
 	const dispatch = useDispatch();	
+	let location = useLocation();
 
 	const [{ isDrag }, dragRef] = useDrag({
 		type: type === INGREDIENTS_TYPES.BUN.key ? 'bun' : 'ingredient',
@@ -29,7 +31,7 @@ const Ingredient = ({ _id, type, name, price, image, counter }) => {
 
 		dispatch(openModal({
 			modal: MODAL.INGREDIENTS_DETAILS,
-			data: ingredient
+			data: ingredient._id
 		}));	
 	}
 
@@ -55,6 +57,15 @@ const Ingredient = ({ _id, type, name, price, image, counter }) => {
 					extraClass="m-1"
 				/>
 			)}
+			
+			<Link
+				to={{
+					pathname: `/ingredients/${_id}`,
+					state: { background: location }
+				}}
+				className={styles.link}
+			>
+			</Link>
 		</div>
 	);
 };

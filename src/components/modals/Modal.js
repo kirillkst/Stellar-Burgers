@@ -1,5 +1,6 @@
 import { useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
