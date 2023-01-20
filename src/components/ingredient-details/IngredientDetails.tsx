@@ -7,7 +7,7 @@ import styles from './ingredient-details.module.scss';
 
 
 const IngredientDetails = () => {      
-    const { id } = useParams<{id: any}>();
+    const { id } = useParams<{id: string}>();
     
 	const { image_large, name, fat, carbohydrates, calories, proteins } = ingredientsSelectors.selectById(store.getState(), id);
 

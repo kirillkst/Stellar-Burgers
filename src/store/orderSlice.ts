@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import useHttp from "../hooks/useHttp";
 import { API_URL, PROCESS_STATE } from '../utils/constants';
-import { TIngredientId } from '../utils/types';
 
 const initialState = {
     number: null,
@@ -10,7 +9,7 @@ const initialState = {
 
 export const createOrderRequest = createAsyncThunk(
     'order/request',
-    async (ingredientsID: Array<any>) => {
+    async (ingredientsID: Array<string>) => {
         const { request } = useHttp();
         return await request({
             url: `${API_URL}/orders`,
