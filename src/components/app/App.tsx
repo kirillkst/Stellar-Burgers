@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { useGetUserQuery, useUserUpdateTokenMutation } from "../../services/userAPI";
 import { getCookie } from "../../services/cookie";
@@ -18,18 +17,18 @@ import Modal from "../modals/Modal";
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 
 import styles from './app.module.scss';
-import { useAppDispatch, useAppSelector } from "../../store";
+import { useDispatch, useSelector } from "../../store";
 import { TLocation } from "../../utils/types";
 
 
 const App = () => {		
-	const dispatch = useAppDispatch();
+	const dispatch = useDispatch();
 	const [authLoading, setAuthLoading] = useState(true);
 	const token = getCookie('token');
 	const refreshToken = getCookie('refreshToken');
 	const user = useGetUserQuery<any>(token, {skip: !token});
     const [userUpdateToken] = useUserUpdateTokenMutation();	
-    const ingredientsProcess = useAppSelector<typeof PROCESS_STATE[keyof typeof PROCESS_STATE]>(store => store.ingredients.process);	
+    const ingredientsProcess = useSelector<typeof PROCESS_STATE[keyof typeof PROCESS_STATE]>(store => store.ingredients.process);	
 	const history = useHistory();
 	const location = useLocation<TLocation | any>();
 	const background = location.state && location.state.background;

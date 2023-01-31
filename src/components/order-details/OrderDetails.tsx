@@ -1,5 +1,4 @@
-import { useSelector } from 'react-redux';
-import { useAppSelector } from '../../store';
+import { useSelector } from '../../store';
 
 import { PROCESS_STATE } from '../../utils/constants';
 import ErrorMessage from '../errors/ErrorMessage';
@@ -11,8 +10,8 @@ import styles from './order-details.module.scss';
 
 
 const OrderDetails = () => {    	
-    const process = useAppSelector<typeof PROCESS_STATE[keyof typeof PROCESS_STATE]>(store => store.order.process);
-	const number = useAppSelector<any>(store => store.order.number);	
+    const process = useSelector<typeof PROCESS_STATE[keyof typeof PROCESS_STATE]>(store => store.order.process);
+	const number = useSelector<any>(store => store.order.number);	
 
     let content = <Spinner />;
 

@@ -1,10 +1,9 @@
 import { Route, Redirect, useLocation, RouteProps  } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { TLocation, TProtectedRoute } from '../../utils/types';
-import { useAppSelector } from '../../store';
+import { useSelector } from '../../store';
 
 const ProtectedRoute = ({ onlyForAuth, children, ...rest } : TProtectedRoute & RouteProps) => {
-	const isAuth = useAppSelector((store) => store.user.auth);
+	const isAuth = useSelector((store) => store.user.auth);
 	const location = useLocation<TLocation>();
 
 	if (!onlyForAuth && isAuth) {

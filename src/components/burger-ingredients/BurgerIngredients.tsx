@@ -1,9 +1,6 @@
 import { useState, useRef, useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import { INGREDIENTS_TYPES } from '../../utils/constants';
-import { ingredientPropTypes } from '../../utils/prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientCategory from '../ingredient-category/IngredientCategory';

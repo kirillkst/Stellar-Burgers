@@ -1,9 +1,6 @@
 import { useRef } from "react";
-import { useSelector, useDispatch } from 'react-redux';
-
 import { getCookie } from "../../services/cookie";
 import useForm from "../../hooks/useForm";
-import { setUser } from "../../store/userSlice";
 import { useUserUpdateMutation, useUserUpdateTokenMutation } from "../../services/userAPI";
 
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -12,13 +9,13 @@ import formStyles from '../../styles/form.module.scss';
 
 import styles from './profile.module.scss';
 import { saveToken } from "../../services/token";
-import { useAppDispatch, useAppSelector } from "../../store";
+import { useDispatch, useSelector } from "../../store";
 
 
 const Profile = () => {    
-    const dispatch = useAppDispatch();	
-	const name = useAppSelector(store => store.user.name);
-	const email = useAppSelector(store => store.user.email);
+    const dispatch = useDispatch();	
+	const name = useSelector(store => store.user.name);
+	const email = useSelector(store => store.user.email);
     const form = useForm({ name, email, password: '' });
     const [update, { isLoading, isError }] = useUserUpdateMutation();
     const token = getCookie('token');

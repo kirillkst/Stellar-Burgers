@@ -1,18 +1,16 @@
 import { Switch, Route, NavLink, useRouteMatch, useHistory, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector} from 'react-redux';
-
 import { getCookie, deleteCookie } from "../../services/cookie";
 import { logoutRequest } from "../../store/userSlice";
 
 import Profile from "../../components/profile/Profile";
 
 import styles from './profile.module.scss';
-import { useAppDispatch } from '../../store';
+import { useDispatch } from '../../store';
 
 const ProfilePage = () => {    
     let { path, url } = useRouteMatch();
     const history = useHistory(); 
-    const dispatch = useAppDispatch();	
+    const dispatch = useDispatch();	
 
     const logout = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();

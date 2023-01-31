@@ -1,5 +1,4 @@
 import { Link, useHistory  } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 
 import useForm from "../../hooks/useForm";
 import { frogotPasswordRequest } from "../../store/userSlice";
@@ -8,12 +7,12 @@ import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-comp
 
 import formStyles from '../../styles/form.module.scss';
 import { PROCESS_STATE } from "../../utils/constants";
-import { useAppDispatch, useAppSelector } from "../../store";
+import { useDispatch, useSelector } from "../../store";
 
 
 const ForgotPassword = () => { 
-    const dispatch = useAppDispatch();	   
-    const process = useAppSelector<typeof PROCESS_STATE[keyof typeof PROCESS_STATE]>(store => store.user.process);
+    const dispatch = useDispatch();	   
+    const process = useSelector<typeof PROCESS_STATE[keyof typeof PROCESS_STATE]>(store => store.user.process);
     const form = useForm({ email: '' });   
     const history = useHistory(); 
     const isError = process === PROCESS_STATE.ERROR;

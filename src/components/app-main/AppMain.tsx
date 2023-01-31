@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
+import { shallowEqual } from 'react-redux';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
@@ -9,14 +9,14 @@ import { INGREDIENTS_TYPES } from '../../utils/constants';
 
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../burger-constructor/BurgerConstructor';
-import { useAppSelector } from '../../store';
+import { useSelector } from '../../store';
 import { TIngredient } from '../../utils/types'
 
 
 const AppMain = () => {	
 	 const ingredients = useSelector(ingredientsSelectors.selectAll, shallowEqual);
-	 const cartIngredients = useAppSelector(cartIngredientsSelectors.selectAll, shallowEqual);
-	 const { bun, total } = useAppSelector<any>(store => store.cart, shallowEqual);	 
+	 const cartIngredients = useSelector(cartIngredientsSelectors.selectAll, shallowEqual);
+	 const { bun, total } = useSelector<any>(store => store.cart, shallowEqual);	 
 
 	const ingredientSelected = useMemo(() => {
 		return structuredClone(ingredients).map((el: TIngredient) => {

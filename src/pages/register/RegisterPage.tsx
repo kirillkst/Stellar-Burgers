@@ -1,5 +1,4 @@
 import { Link, useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 
 import { registerRequest } from "../../store/userSlice";
 import useForm from "../../hooks/useForm";
@@ -9,12 +8,12 @@ import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-de
 
 import formStyles from '../../styles/form.module.scss';
 import { PROCESS_STATE } from "../../utils/constants";
-import { useAppDispatch, useAppSelector } from '../../store';
+import { useDispatch, useSelector } from '../../store';
 
 
 const RegisterPage = () => {    
-    const dispatch = useAppDispatch();	
-    const process = useAppSelector<typeof PROCESS_STATE[keyof typeof PROCESS_STATE]>(store => store.user.process);
+    const dispatch = useDispatch();	
+    const process = useSelector<typeof PROCESS_STATE[keyof typeof PROCESS_STATE]>(store => store.user.process);
     const history = useHistory(); 
     const form = useForm({ name: '', email: '', password: '' });
     const isError = process === PROCESS_STATE.ERROR;

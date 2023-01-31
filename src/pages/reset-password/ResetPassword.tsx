@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { Link, useHistory  } from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux";
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import useForm from "../../hooks/useForm";
@@ -8,13 +7,13 @@ import useForm from "../../hooks/useForm";
 import formStyles from '../../styles/form.module.scss';
 import { PROCESS_STATE } from "../../utils/constants";
 import { resetPasswordRequest } from "../../store/userSlice";
-import { useAppDispatch, useAppSelector } from '../../store';
+import { useDispatch, useSelector } from '../../store';
 
 
 const ResetPassword = () => {    
-    const dispatch = useAppDispatch();	   
-    const process = useAppSelector<typeof PROCESS_STATE[keyof typeof PROCESS_STATE]>(store => store.user.process);
-	const passReset = useAppSelector((store) => store.user.passReset);
+    const dispatch = useDispatch();	   
+    const process = useSelector<typeof PROCESS_STATE[keyof typeof PROCESS_STATE]>(store => store.user.process);
+	const passReset = useSelector((store) => store.user.passReset);
     const form = useForm({ password: '', token: '' });
     const history = useHistory(); 
     const isError = process === PROCESS_STATE.ERROR;

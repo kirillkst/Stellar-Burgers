@@ -1,17 +1,14 @@
 import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { useDrop } from "react-dnd";
 import cx from 'classnames';
 import { useHistory } from 'react-router-dom';
 
-import store, { useAppDispatch, useAppSelector } from "../../store";
+import store, { useDispatch, useSelector } from "../../store";
 import { ingredientsSelectors } from '../../store/ingredientsSlice';
 import { addToCart, moveIngredient, reset } from '../../store/cartSlice';
 import { createOrderRequest } from "../../store/orderSlice";
 import { openModal } from '../../store/modalSlice';
 import { MODAL } from '../../utils/constants';
-import { ingredientPropTypes } from '../../utils/prop-types';
 import { TBurgerConstructor, TIngredientId } from '../../utils/types';
 
 import ConstructorBun from "../constructor-bun/ConstructorBun";
@@ -24,11 +21,11 @@ import styles from './b-constructor.module.scss';
 
 
 const BurgerConstructor = ({ bun, ingredients, total } : TBurgerConstructor) => {	
-	const activeModal = useAppSelector((store) => store.modal.modal);
-	const isAuth = useAppSelector((store) => store.user.auth);
+	const activeModal = useSelector((store) => store.modal.modal);
+	const isAuth = useSelector((store) => store.user.auth);
 	const history = useHistory();
 
-    const dispatch = useAppDispatch();	
+    const dispatch = useDispatch();	
 
 	const [{ dropType }, dropTarget] = useDrop({
         accept: ['bun', 'ingredient'],
