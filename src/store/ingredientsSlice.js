@@ -14,7 +14,9 @@ export const ingredientsRequest = createAsyncThunk(
     'ingredients/request',
     async (thunkAPI) => {
         const { request } = useHttp();
-        const res = await request(`${API_URL}/ingredients`);
+        const res = await request({
+            url: `${API_URL}/ingredients`
+        });
         return (res.success === true && Array.isArray(res.data)) ? res.data : thunkAPI.rejectWithValue();
     }
 );
