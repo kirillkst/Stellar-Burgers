@@ -6,6 +6,7 @@ import Profile from "../../components/profile/Profile";
 
 import styles from './profile.module.scss';
 import { useDispatch } from '../../store';
+import OrdersList from '../../components/orders-list/OrdersList';
 
 const ProfilePage = () => {    
     let { path, url } = useRouteMatch();
@@ -43,17 +44,23 @@ const ProfilePage = () => {
                         <a href="/login" onClick={logout} className={styles.link}>Выход</a>
                     </li>
                 </ul>
-                <p className="mt-20 text text_type_main-small text_color_inactive">В этом разделе вы можете изменить свои персональные данные</p>
+                <p className="mt-20 text text_type_main-small text_color_inactive">
+                    <Switch>
+                        <Route path={path} exact={true}>
+                            В этом разделе вы можете изменить свои персональные данные
+                        </Route>
+                        <Route path={`${path}/orders`} exact={true}>
+                            В этом разделе вы можете просмотреть свою историю заказов
+                        </Route>
+                    </Switch>                   
+                </p>
             </nav>
             <Switch>
                 <Route path={path} exact={true}>
                     <Profile />
                 </Route>
                 <Route path={`${path}/orders`} exact={true}>
-                    История заказов
-                </Route>
-                <Route path={`${path}/orders/:id`} exact={true}>
-                    
+                    <OrdersList />
                 </Route>
             </Switch>
         </div>

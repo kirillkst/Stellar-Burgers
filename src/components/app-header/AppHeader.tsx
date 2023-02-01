@@ -23,15 +23,14 @@ const AppHeader = () => {
 							</NavLink>
 						</li>
 						<li>
-							<Link
-								to="/"
-								className={cx(styles.link, { 
-                                    [styles['link--active']]: false 
-                                })}
+							<NavLink
+								to="/feed"
+								className={styles.link}
+								activeClassName={styles['link--active']}
 							>
 								<ListIcon type="secondary" />
 								Лента заказов
-							</Link>
+							</NavLink>
 						</li>
 					</ul>
 				</nav>
