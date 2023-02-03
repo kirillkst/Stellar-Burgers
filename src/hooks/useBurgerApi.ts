@@ -20,9 +20,15 @@ const useBurgerApi = () => {
                 "ingredients": ingredientsID
             })
         });
+    };   
+    
+    const getOrder = async (orderNumber: number)  => {
+        return await sendRequest({
+            url: `${API_URL}/orders/${orderNumber}`
+        });
     };    
 
-    return { getIngredients, createOrder, process, setProcess }
+    return { getIngredients, createOrder, getOrder, process, setProcess }
 }
 
 export default useBurgerApi;
