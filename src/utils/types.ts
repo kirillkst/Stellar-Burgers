@@ -1,3 +1,5 @@
+import { ActionCreatorWithoutPayload, ActionCreatorWithPayload } from '@reduxjs/toolkit';
+
 export enum PROCESS_STATE {
     WAITING = 'waiting',
     LOADING = 'loading',
@@ -73,3 +75,18 @@ export type TRequest = {
 	headers?: any;
 	additional?:any;
 }
+
+export enum WebsocketStatus {
+    CONNECTING = 'CONNECTING...',
+    ONLINE = 'ONLINE',
+    OFFLINE = 'OFFLINE'
+}
+
+export type TwsActionTypes = {
+	connection: ActionCreatorWithPayload<any>;
+	disconnection: ActionCreatorWithoutPayload;
+	onOpen: ActionCreatorWithoutPayload;
+	onClose: ActionCreatorWithoutPayload;
+	onError: ActionCreatorWithPayload<string>;
+	onMessage: ActionCreatorWithPayload<any>;
+};

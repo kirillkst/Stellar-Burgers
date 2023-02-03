@@ -60,7 +60,7 @@ const ProfilePage = () => {
                     <Profile />
                 </Route>
                 <Route path={`${path}/orders`} exact={true}>
-                    <OrdersList />
+                    {/* <OrdersList /> */}
                 </Route>
             </Switch>
         </div>

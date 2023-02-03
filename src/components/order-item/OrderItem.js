@@ -1,57 +1,73 @@
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useMemo } from "react";
+import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { shallowEqual } from "react-redux";
 import { Link, useLocation, useRouteMatch } from "react-router-dom";
 import { useSelector } from "../../store";
 import { ingredientsSelectors } from "../../store/ingredientsSlice";
 import styles from './order-item.module.scss';
 
-const OrderItem = () => {
+const OrderItem = ( props ) => {
+    const {_id, number, name, ingredients, status, createdAt } = props;
+
     let location = useLocation();
     const { path, url } = useRouteMatch();
-    const ingredients = useSelector(ingredientsSelectors.selectAll, shallowEqual);
-    const composition = ingredients.filter(item => (
-        [
-            '60d3b41abdacab0026a733c6',
-            '60d3b41abdacab0026a733c7',
-            '60d3b41abdacab0026a733c8',
-            '60d3b41abdacab0026a733cb',
-        ].includes(item._id)
-    ));
+    const allIngredients = useSelector(ingredientsSelectors.selectAll, shallowEqual);
+
+    const composition = useMemo(() => {
+		return ingredients.map(el => {
+            return ( el ) ? allIngredients.find(item => item._id === el) : false;
+        })
+	}, [ingredients, allIngredients]);	
+
+    const totalPrice = useMemo(() => (
+        composition.reduce((a, b) => a + b.price, 0)
+    ), [composition]);
+
     
 	return (
 		<div className={styles.wrap}>
 			<div className={styles.header}>
 				<div className="text text_type_digits-default">
-                    #034535
+                    #{number}
                 </div>
 				<div className="text text_type_main-default text_color_inactive">
-					Сегодня, 16:20
+                    <FormattedDate date={new Date(createdAt)} />
 				</div>
 			</div>
 			<div className="text text_type_main-medium pb-2">
-                Death Star Starship Main бургер
+                {name}
             </div>
 			<div className="text text_type_main-default pb-6">
-                Создан
+                {status === 'done' ? 'Готов' : 'В работе'}
             </div>
             <div className={styles.meta}>
                 <ul className={styles.ingredients}>
-                    {composition.map((item, index) => {                        
-                        let zIndex = composition.length - index;
+                    {composition.map((item, index) => {    
+                        if (index > 5)
+                            return false;
+
+                        const rest = composition.length - 6;
+                        const zIndex = composition.length - index;
                         return (
-                            <li style={{'zIndex': zIndex}} key={item._id}><img src={item.image} alt={item.name}/></li>
+                            <li style={{'zIndex': zIndex}} key={index}>
+                                <img src={item.image} alt={item.name}/>
+                                {index === 5 && rest > 0 && <span>+{rest}</span>}
+                            </li>
                         )
                     })}
                 </ul>
                 <div className={styles.price}>
-                    480
+                    {totalPrice}
                     <CurrencyIcon type="primary" />
                 </div>
             </div>
             <Link
 				to={{
-					pathname: `${path}/11`,
-					state: { background: location }
+					pathname: `${path}/${number}`,
+					state: { 
+                        background: location, 
+                        orderInfo: props
+                    }
 				}}
 				className={styles.link}
 			>

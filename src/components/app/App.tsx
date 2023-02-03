@@ -33,6 +33,7 @@ const App = () => {
 	const history = useHistory();
 	const location = useLocation<TLocation | any>();
 	const background = location.state && location.state.background;
+	const orderInfo = location.state && location.state.orderInfo;
 
 	
 	useEffect(() => {
@@ -115,7 +116,7 @@ const App = () => {
 				{background && (
 					<Route path="/profile/orders/:id" >
 						<Modal onCloseAction={() => history.goBack()}> 
-							<OrderCard />
+							<OrderCard {...orderInfo}/>
 						</Modal>
 					</Route>
 				)}
@@ -123,7 +124,7 @@ const App = () => {
 				{background && (
 					<Route path="/feed/:id" >
 						<Modal onCloseAction={() => history.goBack()}> 
-							<OrderCard />
+							<OrderCard  {...orderInfo}/>
 						</Modal>
 					</Route>
 				)}
