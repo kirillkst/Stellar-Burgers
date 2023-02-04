@@ -10,7 +10,7 @@ import user from './userSlice';
 import websocket from './socketSlice';
 import { userAPI } from "../services/userAPI";
 import { socketMiddleware } from './middleware/socket-middleware';
-import { stringMiddleware } from './middleware/stringMiddleware';
+import { stringMiddleware } from './middleware/string-middleware';
 
 import {     
     wsConnection,

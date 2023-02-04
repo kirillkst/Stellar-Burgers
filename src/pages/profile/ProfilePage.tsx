@@ -1,12 +1,11 @@
 import { Switch, Route, NavLink, useRouteMatch, useHistory, Redirect } from 'react-router-dom';
 import { getCookie, deleteCookie } from "../../services/cookie";
 import { logoutRequest } from "../../store/userSlice";
-
 import Profile from "../../components/profile/Profile";
+import ProfileOrders from "../../components/profile-orders/ProfileOrders";
 
 import styles from './profile.module.scss';
 import { useDispatch } from '../../store';
-import OrdersList from '../../components/orders-list/OrdersList';
 
 const ProfilePage = () => {    
     let { path, url } = useRouteMatch();
@@ -60,7 +59,7 @@ const ProfilePage = () => {
                     <Profile />
                 </Route>
                 <Route path={`${path}/orders`} exact={true}>
-                    {/* <OrdersList /> */}
+                    <ProfileOrders />
                 </Route>
             </Switch>
         </div>

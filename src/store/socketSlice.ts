@@ -26,14 +26,12 @@ const socketSlice = createSlice({
 	initialState,
 	reducers: {
 		wsConnection(state, action) {},
-		wsDisconnection(state, action) {},
+		wsDisconnection() {},
 		wsOpen: (state) => {
 			state.status = WebsocketStatus.ONLINE;
 			state.connectionError = '';
 		},
-		wsClose: (state) => {
-			state.status = WebsocketStatus.OFFLINE;
-		},
+		wsClose: () => initialState,
 		wsMessage: (state, action) => {
 			const { orders, total, totalToday } = action.payload;
 			state.ordersInfo.orders = orders;

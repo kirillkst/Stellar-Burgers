@@ -32,7 +32,7 @@ const Ingredient = ({ _id, type, name, price, image, counter } : TIngredient) =>
 
 		dispatch(openModal({
 			modal: MODAL.INGREDIENTS_DETAILS,
-			data: ingredient._id
+			data: ingredient?._id
 		}));	
 	}
 

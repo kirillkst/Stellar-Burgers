@@ -5,33 +5,37 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from '../../store';
 import { ingredientsSelectors } from '../../store/ingredientsSlice';
 import styles from './order-card.module.scss';
+import { TIngredient, TOrder } from "../../utils/types";
 
-const OrderCard = ( {id, number, name, ingredients, status, createdAt} ) => {
+const OrderCard = ( {_id, number, name, ingredients, status, createdAt} : TOrder ) => {
 	const allIngredients = useSelector(ingredientsSelectors.selectAll, shallowEqual);
 
 	const composition = useMemo(() => {
 		return ingredients.map(el => {
-            return ( el ) ? allIngredients.find(item => item._id === el) : false;
-        })
+			return allIngredients.find(item => item._id === el);
+		}).filter(el => el !== null) as TIngredient[];
 	}, [ingredients, allIngredients]);	
 
     const totalPrice = useMemo(() => (
         composition.reduce((a, b) => a + b.price, 0)
     ), [composition]);
 
-	const statusDict = {
-        done: 'Выполнен',
-        pending: 'Готовится',
-        created: 'Готов'
+	enum StatusDict {
+        DONE = 'Выполнен',
+        PENDING = 'Готовится',
+        CREATED = 'Готов'
     }
 
-	const countItems = (obj) => {
-		var tempResult = {};
-		for ( let element of obj )
-			tempResult[element._id] = { 
-				...element, 
-				count: tempResult[element._id] ? tempResult[element._id].count + 1 : 1
-			}     
+	const countItems = (obj: Array<TIngredient | false | undefined>): Array<TIngredient> => {
+		const tempResult: { [key:string]: TIngredient & { count: number } } = {};
+		for ( let element of obj ) {
+			if (typeof element != 'undefined' && typeof element != 'boolean')
+				tempResult[element._id] = { 
+					...element, 
+					count: tempResult[element._id] ? tempResult[element._id].count + 1 : 1
+				}   
+		}
+			  
 
 		return Object.values(tempResult);
 	}
@@ -40,7 +44,7 @@ const OrderCard = ( {id, number, name, ingredients, status, createdAt} ) => {
 		<div className={styles.wrap}>
 			<div className={`${styles.center} text text_type_digits-default pb-10`}>#{number}</div>
 			<div className="text text_type_main-medium pb-3">{name}</div>
-			<div className="text text_type_main-default pb-15">{statusDict[status]}</div>
+			<div className="text text_type_main-default pb-15">{StatusDict[status.toUpperCase() as keyof typeof StatusDict] }</div>
 			<div className="text text_type_main-medium pb-6">Состав:</div>
 			<ul className={styles.composition}>
 				{countItems(composition).map((item) => {

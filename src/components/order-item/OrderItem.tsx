@@ -5,8 +5,9 @@ import { Link, useLocation, useRouteMatch } from "react-router-dom";
 import { useSelector } from "../../store";
 import { ingredientsSelectors } from "../../store/ingredientsSlice";
 import styles from './order-item.module.scss';
+import { TIngredient, TOrder } from "../../utils/types";
 
-const OrderItem = ( props ) => {
+const OrderItem = ( props: TOrder ) => {
     const {_id, number, name, ingredients, status, createdAt } = props;
 
     let location = useLocation();
@@ -15,8 +16,8 @@ const OrderItem = ( props ) => {
 
     const composition = useMemo(() => {
 		return ingredients.map(el => {
-            return ( el ) ? allIngredients.find(item => item._id === el) : false;
-        })
+			return allIngredients.find(item => item._id === el);
+		}).filter(el => el !== null) as TIngredient[];
 	}, [ingredients, allIngredients]);	
 
     const totalPrice = useMemo(() => (
@@ -50,7 +51,7 @@ const OrderItem = ( props ) => {
                         const zIndex = composition.length - index;
                         return (
                             <li style={{'zIndex': zIndex}} key={index}>
-                                <img src={item.image} alt={item.name}/>
+                                <img src={item?.image} alt={item?.name}/>
                                 {index === 5 && rest > 0 && <span>+{rest}</span>}
                             </li>
                         )

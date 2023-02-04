@@ -14,7 +14,7 @@ const FeedPage = () => {
 
     useEffect(() => {
         dispatch(wsConnection({
-            url: `${WS_URL}/all`
+            url: `${WS_URL}/orders/all`
         }))
 
         return () => {          

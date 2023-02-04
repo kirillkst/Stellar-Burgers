@@ -34,10 +34,9 @@ const App = () => {
 	const location = useLocation<TLocation | any>();
 	const background = location.state && location.state.background;
 	const orderInfo = location.state && location.state.orderInfo;
-
 	
 	useEffect(() => {
-        dispatch(ingredientsRequest());    ;
+        dispatch(ingredientsRequest());
     }, []);
 
 	useEffect(() => {	

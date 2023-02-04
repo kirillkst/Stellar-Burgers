@@ -22,7 +22,7 @@ const useBurgerApi = () => {
         });
     };   
     
-    const getOrder = async (orderNumber: number)  => {
+    const getOrder = async (orderNumber: string)  => {
         return await sendRequest({
             url: `${API_URL}/orders/${orderNumber}`
         });

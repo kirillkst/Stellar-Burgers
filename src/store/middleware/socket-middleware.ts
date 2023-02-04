@@ -18,7 +18,7 @@ export const socketMiddleware =	(wsActions: TwsActionTypes): Middleware =>
 			if (connection.match(action)) {
 				url = action.payload.url;
 				socket = new WebSocket(url);
-				isConnected = true;
+				isConnected = true;			
 			}
 
 			if (socket) {

@@ -49,7 +49,7 @@ const BurgerConstructor = ({ bun, ingredients, total } : TBurgerConstructor) => 
 		}
 
 		dispatch(createOrderRequest(
-			[bun._id, ...ingredients.map(el => el._id)]
+			[bun._id, ...ingredients.map(el => el._id), bun._id]
 		));    
 
 		//В мод. окне реакция на нажатие (спиннер загрузки) -> номер заказа, если успешно -> вывод ошибки, если заказ не создан
@@ -117,7 +117,7 @@ const BurgerConstructor = ({ bun, ingredients, total } : TBurgerConstructor) => 
 			</div>
 
 			{activeModal === MODAL.ORDER_DETAILS && (
-				<Modal onCloseAction={() => dispatch(reset(null))}> 
+				<Modal onCloseAction={() => dispatch(reset())}> 
 					<OrderDetails />
 				</Modal>
 			)}

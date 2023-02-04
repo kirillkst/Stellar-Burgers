@@ -22,6 +22,7 @@ export type TIngredient = {
 	_id: string;
 	id: string;
 	counter?:any;
+	count?:number;
 };
 
 export type TIngredientId = Pick<TIngredient, '_id'>;
@@ -90,3 +91,13 @@ export type TwsActionTypes = {
 	onError: ActionCreatorWithPayload<string>;
 	onMessage: ActionCreatorWithPayload<any>;
 };
+
+
+export type TOrder = {
+	_id: string;
+	number: number;
+	name: string;
+	ingredients: Array<string>;
+	status: string;
+	createdAt: string;
+}
