@@ -8,11 +8,17 @@ const initialState = {
     process: PROCESS_STATE.WAITING
 }
 
-export const createOrderRequest = createAsyncThunk(
+type TCreatedOrder = {
+    order: {
+        number: number;
+    }
+}
+
+export const createOrderRequest = createAsyncThunk<TCreatedOrder, Array<string>>(
     'order/request',
-    async (ingredientsID: Array<string>) => {
+    async (ingredientsID) => {
         const { request } = useHttp();
-        return await request({
+        const res = await request({
             url: `${API_URL}/orders`,
             headers: {
                 "Content-Type": "application/json",
@@ -21,8 +27,10 @@ export const createOrderRequest = createAsyncThunk(
             method: 'POST',
             body: JSON.stringify({ 
                 "ingredients": ingredientsID
-            })
-        })
+            }) 
+        }) as Promise<any> as any; 
+
+        return res;
     }
 );
 

@@ -9,6 +9,7 @@ import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-de
 import formStyles from '../../styles/form.module.scss';
 import { PROCESS_STATE } from "../../utils/constants";
 import { useDispatch, useSelector } from '../../store';
+import { TUserReg } from '../../utils/types';
 
 
 const RegisterPage = () => {    
@@ -21,7 +22,7 @@ const RegisterPage = () => {
 
     const registerHandler = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(registerRequest(form.inputs))
+        dispatch(registerRequest(form.inputs as TUserReg))
             .unwrap()
             .then(res => {
                 saveToken(res);                

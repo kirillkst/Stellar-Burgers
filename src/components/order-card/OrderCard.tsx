@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { shallowEqual } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import { useSelector } from '../../store';
 import { ingredientsSelectors } from '../../store/ingredientsSlice';
 import styles from './order-card.module.scss';

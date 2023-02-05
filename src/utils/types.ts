@@ -101,3 +101,53 @@ export type TOrder = {
 	status: string;
 	createdAt: string;
 }
+
+
+export type TUserEmail = {
+	email: string;
+}
+
+export type TUserToken = {
+	token: string;
+}
+
+export type TUserLogin = {
+	email: string;
+    password: string
+}
+
+export type TUserReg = TUserLogin & {
+	name: string;
+}
+
+export type TUserResetPassword = {
+	password: string;
+	token: string;
+}
+
+
+export type TThunkAPI = { 
+    rejectValue: {
+        message: string
+    } 
+}
+
+export type TSuccessLogin = {
+    accessToken: string;
+    refreshToken: string;
+    success: boolean;
+    user: {        
+        email: string;
+        name: string;
+    }
+}
+
+export type TSuccessReset = {
+    success: boolean;
+    message: string;
+}
+
+export type TSuccessIngredients = {	
+    success: boolean;
+	data: Array<any>
+}

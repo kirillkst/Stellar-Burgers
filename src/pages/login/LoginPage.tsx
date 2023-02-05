@@ -9,6 +9,7 @@ import { EmailInput, Input, Button } from '@ya.praktikum/react-developer-burger-
 import formStyles from '../../styles/form.module.scss';
 import { PROCESS_STATE } from "../../utils/constants";
 import { useDispatch, useSelector } from '../../store';
+import { TUserLogin } from '../../utils/types';
 
 
 const LoginPage = () => {
@@ -21,7 +22,7 @@ const LoginPage = () => {
 
     const loginHandler = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(loginRequest(form.inputs))
+        dispatch(loginRequest(form.inputs as TUserLogin))
             .unwrap()
             .then(res => {
                 saveToken(res);

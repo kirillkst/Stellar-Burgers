@@ -8,6 +8,7 @@ import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-comp
 import formStyles from '../../styles/form.module.scss';
 import { PROCESS_STATE } from "../../utils/constants";
 import { useDispatch, useSelector } from "../../store";
+import { TUserEmail } from '../../utils/types';
 
 
 const ForgotPassword = () => { 
@@ -21,7 +22,7 @@ const ForgotPassword = () => {
     const submitHandler = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        dispatch(frogotPasswordRequest(form.inputs))
+        dispatch(frogotPasswordRequest(form.inputs as TUserEmail))
             .unwrap()
             .then(res => {
                 if (res.success) {                

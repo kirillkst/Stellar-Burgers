@@ -1,7 +1,5 @@
 import { useRef } from "react";
-import { useDispatch } from 'react-redux';
 import { useDrop, useDrag } from "react-dnd";
-import PropTypes from 'prop-types';
 
 import { removeFromCart } from '../../store/cartSlice';
 
@@ -9,6 +7,7 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 
 import styles from './constructor-item.module.scss';
 import { TConstructorItem } from "../../utils/types";
+import { useDispatch } from "../../store";
 
 
 const ConstructorItem = ({ id, name, price, thumbnail, index, moveCard }: TConstructorItem) => {

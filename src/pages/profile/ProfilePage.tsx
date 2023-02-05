@@ -6,6 +6,7 @@ import ProfileOrders from "../../components/profile-orders/ProfileOrders";
 
 import styles from './profile.module.scss';
 import { useDispatch } from '../../store';
+import { TUserToken } from '../../utils/types';
 
 const ProfilePage = () => {    
     let { path, url } = useRouteMatch();
@@ -17,7 +18,7 @@ const ProfilePage = () => {
 
         dispatch(logoutRequest({
             token: getCookie('refreshToken')
-        }))
+        } as TUserToken ))
             .unwrap()
             .then(res => {
                 if (res.success) {                       

@@ -1,7 +1,7 @@
 import { createSlice, createEntityAdapter, createAsyncThunk, EntityState } from '@reduxjs/toolkit';
 import useHttp from "../hooks/useHttp";
 import { API_URL, PROCESS_STATE } from '../utils/constants';
-import { TIngredient } from '../utils/types';
+import { TIngredient, TSuccessIngredients, TThunkAPI } from '../utils/types';
 
 const ingredientsAdapter = createEntityAdapter<TIngredient>({
     selectId: (item:TIngredient) => item._id,
@@ -11,14 +11,13 @@ const initialState = ingredientsAdapter.getInitialState({
     process: PROCESS_STATE.WAITING
 });
 
-export const ingredientsRequest = createAsyncThunk(
+export const ingredientsRequest = createAsyncThunk<TSuccessIngredients, void, TThunkAPI>(
     'ingredients/request',
-    async (_: void, thunkAPI) => {
+    async (_, thunkAPI) => {
         const { request } = useHttp();
         const res = await request({
             url: `${API_URL}/ingredients`
         }) as Promise<any> as any;
-
         return (res.success === true && Array.isArray(res.data)) ? res.data : thunkAPI.rejectWithValue(res);        
     }
 );
@@ -33,7 +32,7 @@ const ingredientsSlice = createSlice({
             .addCase(ingredientsRequest.pending, (state:any) => { 
                 state.process = PROCESS_STATE.LOADING
             })
-            .addCase(ingredientsRequest.fulfilled, (state:any, { payload }) => {
+            .addCase(ingredientsRequest.fulfilled, (state:any, { payload }: any ) => {
                 ingredientsAdapter.setAll(state, payload);
                 state.process = PROCESS_STATE.CONFIRMED;			
             })

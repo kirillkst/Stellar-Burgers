@@ -1,10 +1,8 @@
-import { useDispatch } from 'react-redux';
 import { useDrag } from "react-dnd";
 import cx from 'classnames';
-import PropTypes from 'prop-types';
 import { Link, useLocation } from 'react-router-dom';
 
-import store from "../../store";
+import store, { useDispatch } from "../../store";
 import { ingredientsSelectors } from '../../store/ingredientsSlice';
 import { openModal } from '../../store/modalSlice';
 import { INGREDIENTS_TYPES, MODAL } from '../../utils/constants';

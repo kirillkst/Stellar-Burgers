@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import useHttp from "../hooks/useHttp";
 import { API_URL, PROCESS_STATE } from "../utils/constants";
+import { TSuccessLogin, TSuccessReset, TThunkAPI, TUserEmail, TUserLogin, TUserReg, TUserResetPassword, TUserToken } from '../utils/types';
+
 
 const initialState = {
     process: PROCESS_STATE.WAITING,
@@ -10,49 +12,56 @@ const initialState = {
     passReset: false
 }
 
-export const loginRequest = createAsyncThunk(
+
+export const loginRequest = createAsyncThunk<TSuccessLogin, TUserLogin, TThunkAPI>(
     'user/login',
-    async (data:any, thunkAPI) => {
+    async (data, thunkAPI ) => {
         const { request } = useHttp();
         const res = await request({
             url: `${API_URL}/auth/login`,
             method: 'POST',
             body: JSON.stringify(data)
         }) as Promise<any> as any;  
+
         return (res.success === true) ? res : thunkAPI.rejectWithValue(res);
     }
 );
 
-export const registerRequest = createAsyncThunk(
+export const registerRequest = createAsyncThunk<TSuccessLogin, TUserReg, TThunkAPI>(
     'user/register',
-    async (data:any, thunkAPI) => {
+    async (data, thunkAPI) => {
         const { request } = useHttp();
         const res = await request({
             url: `${API_URL}/auth/register`,
             method: 'POST',
             body: JSON.stringify(data)
         }) as Promise<any> as any;  
+
+        console.log(res);
         return (res.success === true) ? res : thunkAPI.rejectWithValue(res);
     }
 );
 
-export const frogotPasswordRequest = createAsyncThunk(
+export const frogotPasswordRequest = createAsyncThunk<TSuccessReset, TUserEmail, TThunkAPI>(
     'user/frogotPassword',
-    async (data:any, thunkAPI) => {
+    async (data, thunkAPI) => {
         const { request } = useHttp();
         const res = await request({
             url: `${API_URL}/auth/password-reset`,
             method: 'POST',
             body: JSON.stringify(data)
         }) as Promise<any> as any;  
+
+        console.log(res);
+
         return (res.success === true) ? res : thunkAPI.rejectWithValue(res);
     }
 );
 
 
-export const resetPasswordRequest = createAsyncThunk(
+export const resetPasswordRequest = createAsyncThunk<TSuccessReset, TUserResetPassword, TThunkAPI>(
     'user/resetPassword',
-    async (data:any, thunkAPI) => {
+    async (data, thunkAPI) => {
         const { request } = useHttp();
         const res = await request({
             url: `${API_URL}/password-reset/reset`,
@@ -63,9 +72,9 @@ export const resetPasswordRequest = createAsyncThunk(
     }
 );
 
-export const logoutRequest = createAsyncThunk(
+export const logoutRequest = createAsyncThunk<TSuccessReset, TUserToken, TThunkAPI>(
     'user/logout',
-    async (data:any, thunkAPI) => {
+    async (data, thunkAPI) => {
         const { request } = useHttp();
         const res = await request({
             url: `${API_URL}/auth/logout`,
