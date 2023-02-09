@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import useHttp from "../hooks/useHttp";
+import { getCookie } from '../services/cookie';
 import { API_URL, PROCESS_STATE } from '../utils/constants';
 
 const initialState = {
@@ -7,17 +8,29 @@ const initialState = {
     process: PROCESS_STATE.WAITING
 }
 
-export const createOrderRequest = createAsyncThunk(
+type TCreatedOrder = {
+    order: {
+        number: number;
+    }
+}
+
+export const createOrderRequest = createAsyncThunk<TCreatedOrder, Array<string>>(
     'order/request',
-    async (ingredientsID: Array<string>) => {
+    async (ingredientsID) => {
         const { request } = useHttp();
-        return await request({
+        const res = await request({
             url: `${API_URL}/orders`,
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + getCookie('token'),
+            },
             method: 'POST',
             body: JSON.stringify({ 
                 "ingredients": ingredientsID
-            })
-        })
+            }) 
+        }) as Promise<any> as any; 
+
+        return res;
     }
 );
 

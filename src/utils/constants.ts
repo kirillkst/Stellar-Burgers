@@ -14,6 +14,7 @@ export const INGREDIENTS_TYPES = Object.freeze({
 });
 
 export const API_URL = 'https://norma.nomoreparties.space/api';
+export const WS_URL = 'wss://norma.nomoreparties.space';
 
 export const PROCESS_STATE = Object.freeze({
     WAITING: 'waiting',

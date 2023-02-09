@@ -1,3 +1,5 @@
+import { ActionCreatorWithoutPayload, ActionCreatorWithPayload } from '@reduxjs/toolkit';
+
 export enum PROCESS_STATE {
     WAITING = 'waiting',
     LOADING = 'loading',
@@ -20,6 +22,7 @@ export type TIngredient = {
 	_id: string;
 	id: string;
 	counter?:any;
+	count?:number;
 };
 
 export type TIngredientId = Pick<TIngredient, '_id'>;
@@ -72,4 +75,79 @@ export type TRequest = {
 	body?:string | null;
 	headers?: any;
 	additional?:any;
+}
+
+export enum WebsocketStatus {
+    CONNECTING = 'CONNECTING...',
+    ONLINE = 'ONLINE',
+    OFFLINE = 'OFFLINE'
+}
+
+export type TwsActionTypes = {
+	connection: ActionCreatorWithPayload<any>;
+	disconnection: ActionCreatorWithoutPayload;
+	onOpen: ActionCreatorWithoutPayload;
+	onClose: ActionCreatorWithoutPayload;
+	onError: ActionCreatorWithPayload<string>;
+	onMessage: ActionCreatorWithPayload<any>;
+};
+
+
+export type TOrder = {
+	_id: string;
+	number: number;
+	name: string;
+	ingredients: Array<string>;
+	status: string;
+	createdAt: string;
+}
+
+
+export type TUserEmail = {
+	email: string;
+}
+
+export type TUserToken = {
+	token: string;
+}
+
+export type TUserLogin = {
+	email: string;
+    password: string
+}
+
+export type TUserReg = TUserLogin & {
+	name: string;
+}
+
+export type TUserResetPassword = {
+	password: string;
+	token: string;
+}
+
+
+export type TThunkAPI = { 
+    rejectValue: {
+        message: string
+    } 
+}
+
+export type TSuccessLogin = {
+    accessToken: string;
+    refreshToken: string;
+    success: boolean;
+    user: {        
+        email: string;
+        name: string;
+    }
+}
+
+export type TSuccessReset = {
+    success: boolean;
+    message: string;
+}
+
+export type TSuccessIngredients = {	
+    success: boolean;
+	data: Array<any>
 }

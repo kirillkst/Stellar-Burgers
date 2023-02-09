@@ -1,0 +1,14 @@
+.wrap {
+    composes: custom-scroll from global;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    
+    position: relative;
+    max-width: 100%;
+    overflow-y: auto;
+    overflow-x: unset;
+}

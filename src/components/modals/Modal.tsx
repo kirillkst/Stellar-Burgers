@@ -1,8 +1,5 @@
 import { useEffect, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 
 import { closeModal } from '../../store/modalSlice';
 import { MODAL_ROOT, ESC_KEYCODE } from '../../utils/constants';
@@ -13,6 +10,7 @@ import ModalOverlay from './ModalOverlay';
 
 import styles from './styles/modal.module.scss';
 import { TModal } from '../../utils/types';
+import { useDispatch } from '../../store';
 
 const Modal = ({ children, title, onCloseAction }: TModal) => {	
 	const dispatch = useDispatch();	

@@ -7,21 +7,34 @@ import cart from './cartSlice';
 import order from './orderSlice';
 import modal from './modalSlice';
 import user from './userSlice';
+import websocket from './socketSlice';
 import { userAPI } from "../services/userAPI";
+import { socketMiddleware } from './middleware/socket-middleware';
+import { stringMiddleware } from './middleware/string-middleware';
 
-const stringMiddleware = () => (next:any) => (action:any) => {
-    if (typeof action === 'string') {
-        return next({
-            type: action
-        });
-    }
-    
-    return next(action);
-};
+import {     
+    wsConnection,
+    wsDisconnection,
+    wsOpen,
+    wsClose,
+    wsMessage,
+    wsError 
+} from  './socketSlice';
 
 const store = configureStore({
-    reducer: { ingredients, cart, order, modal, user, [userAPI.reducerPath]: userAPI.reducer },
-    middleware: getDefaultMiddleware => getDefaultMiddleware().concat([stringMiddleware, userAPI.middleware]),
+    reducer: { ingredients, cart, order, modal, user, websocket, [userAPI.reducerPath]: userAPI.reducer },
+    middleware: getDefaultMiddleware => getDefaultMiddleware().concat([
+        stringMiddleware, 
+        userAPI.middleware, 
+        socketMiddleware({       
+            connection: wsConnection,  
+            disconnection: wsDisconnection,
+            onOpen: wsOpen,
+            onClose: wsClose,
+            onError: wsError,
+            onMessage: wsMessage,
+        })
+    ]),
     devTools: process.env.NODE_ENV !== 'production',
 })
 

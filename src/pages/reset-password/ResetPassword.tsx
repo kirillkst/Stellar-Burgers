@@ -8,6 +8,7 @@ import formStyles from '../../styles/form.module.scss';
 import { PROCESS_STATE } from "../../utils/constants";
 import { resetPasswordRequest } from "../../store/userSlice";
 import { useDispatch, useSelector } from '../../store';
+import { TUserResetPassword } from '../../utils/types';
 
 
 const ResetPassword = () => {    
@@ -27,7 +28,7 @@ const ResetPassword = () => {
     const submitHandler = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        dispatch(resetPasswordRequest(form.inputs))
+        dispatch(resetPasswordRequest(form.inputs as TUserResetPassword))
             .unwrap()
             .then(res => {
                 if (res.success) {

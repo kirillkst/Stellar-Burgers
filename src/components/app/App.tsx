@@ -9,7 +9,7 @@ import { saveToken } from "../../services/token";
 import { ingredientsRequest } from '../../store/ingredientsSlice';
 import { PROCESS_STATE } from "../../utils/constants";
 
-import { HomePage, LoginPage, RegisterPage, ForgotPassword, ResetPassword, ProfilePage, IngredientPage, NotFound } from '../../pages';
+import { HomePage, LoginPage, RegisterPage, ForgotPassword, ResetPassword, ProfilePage, OrderPage, IngredientPage, NotFound, FeedPage } from '../../pages';
 import AppHeader from '../app-header/AppHeader';
 import Spinner from "../spinner/Spinner";
 import ProtectedRoute from "../protected-route/ProtectedRoute";
@@ -19,6 +19,7 @@ import IngredientDetails from '../ingredient-details/IngredientDetails';
 import styles from './app.module.scss';
 import { useDispatch, useSelector } from "../../store";
 import { TLocation } from "../../utils/types";
+import OrderCard from "../order-card/OrderCard";
 
 
 const App = () => {		
@@ -32,10 +33,10 @@ const App = () => {
 	const history = useHistory();
 	const location = useLocation<TLocation | any>();
 	const background = location.state && location.state.background;
-
+	const orderInfo = location.state && location.state.orderInfo;
 	
 	useEffect(() => {
-        dispatch(ingredientsRequest());    ;
+        dispatch(ingredientsRequest());
     }, []);
 
 	useEffect(() => {	
@@ -73,12 +74,21 @@ const App = () => {
 					</Route>
 					<Route path="/ingredients/:id" exact={true}>
 						<IngredientPage />
-					</Route>						
+					</Route>	
+					<Route path="/feed/:number" exact={true}>
+						<OrderPage />
+					</Route>	
+					<Route path="/feed" exact={true}>
+						<FeedPage />
+					</Route>		
 					<ProtectedRoute path="/login" onlyForAuth={false} exact={true}>
 						<LoginPage />
 					</ProtectedRoute>	
 					<ProtectedRoute path="/register" onlyForAuth={false} exact={true}>
 						<RegisterPage />
+					</ProtectedRoute>	
+					<ProtectedRoute path="/profile/orders/:number" onlyForAuth={true} exact={true}>
+						<OrderPage />
 					</ProtectedRoute>	
 					<ProtectedRoute path="/profile" onlyForAuth={true}>
 						<ProfilePage />
@@ -98,6 +108,22 @@ const App = () => {
 					<Route path="/ingredients/:id" >
 						<Modal title="Детали ингредиента" onCloseAction={() => history.goBack()}> 
 							<IngredientDetails />
+						</Modal>
+					</Route>
+				)}
+
+				{background && (
+					<Route path="/profile/orders/:id" >
+						<Modal onCloseAction={() => history.goBack()}> 
+							<OrderCard {...orderInfo}/>
+						</Modal>
+					</Route>
+				)}
+
+				{background && (
+					<Route path="/feed/:id" >
+						<Modal onCloseAction={() => history.goBack()}> 
+							<OrderCard  {...orderInfo}/>
 						</Modal>
 					</Route>
 				)}
