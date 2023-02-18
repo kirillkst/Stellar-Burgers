@@ -3,7 +3,7 @@ import useHttp from "../hooks/useHttp";
 import { getCookie } from '../services/cookie';
 import { API_URL, PROCESS_STATE } from '../utils/constants';
 
-const initialState = {
+export const initialState = {
     number: null,
     process: PROCESS_STATE.WAITING
 }
@@ -34,7 +34,7 @@ export const createOrderRequest = createAsyncThunk<TCreatedOrder, Array<string>>
     }
 );
 
-const orderSlice = createSlice({
+export const orderSlice = createSlice({
     name: 'order',
     initialState,
     reducers: {        

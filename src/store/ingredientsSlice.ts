@@ -7,7 +7,7 @@ const ingredientsAdapter = createEntityAdapter<TIngredient>({
     selectId: (item:TIngredient) => item._id,
 });
 
-const initialState = ingredientsAdapter.getInitialState({
+export const initialState = ingredientsAdapter.getInitialState({
     process: PROCESS_STATE.WAITING
 });
 
@@ -22,7 +22,7 @@ export const ingredientsRequest = createAsyncThunk<TSuccessIngredients, void, TT
     }
 );
 
-const ingredientsSlice = createSlice({
+export const ingredientsSlice = createSlice({
     name: 'ingredients',
     initialState,
     reducers: {        
