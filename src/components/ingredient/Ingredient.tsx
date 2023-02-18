@@ -40,6 +40,7 @@ const Ingredient = ({ _id, type, name, price, image, counter } : TIngredient) =>
 			})} 
 			onClick={onClick} 
 			ref={dragRef}
+			data-testid="ingredient"
 		 >
 			<div className={styles.image}>
 				<img src={image} alt={name}/>
