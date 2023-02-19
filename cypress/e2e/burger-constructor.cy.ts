@@ -1,7 +1,7 @@
 describe('burger constructor.', () => {
 
   beforeEach(() => {
-    cy.visit('http://localhost:3000/')
+    cy.visit(Cypress.env('host'))
   });  
 
   it('should open homepage', function () {
@@ -34,7 +34,6 @@ describe('burger constructor.', () => {
       });
     cy.get('.constructor-element_pos_top').should('not.be.empty');
     cy.get('.constructor-element_pos_bottom').should('not.be.empty');
-
     cy.get('[data-testid="ingredient"][draggable]:eq(3)').trigger('mousedown', {
         which: 1
       })
@@ -46,12 +45,26 @@ describe('burger constructor.', () => {
       .trigger('mouseup', {
         which: 1
       });;
-    cy.get('[data-testid="constructor-list"]').children('li');
-    
+    cy.get('[data-testid="constructor-list"]').children('li');    
     cy.get('[data-testid="send-order"]').should("exist").click();    
     cy.get('input[name="email"]').type(`${email}`);
     cy.get('input[name="password"]').type(`${password}{enter}`);    
     cy.get('[data-testid="send-order"]').should("exist").click();
+    cy.intercept({
+        url: `https://norma.nomoreparties.space/api/orders`,
+        method: 'POST',
+      },{
+        fixture: 'create-order'
+    }).as('createOrder');
+    cy.wait('@createOrder');
     cy.get('#react-modals').should('not.be.empty');
+    cy.get('#react-modals').contains('41283');
+    cy.get('[data-testid="close-modal"]').click({
+      force: true
+    });
+    cy.get('#react-modals').should('be.empty');
+    cy.get('.constructor-element_pos_top').should('have.text', 'Выберите булку');
+    cy.get('.constructor-element_pos_bottom').should('have.text', 'Выберите булку');
+    cy.get('[data-testid="constructor-list"]').children('div');
   });
 })

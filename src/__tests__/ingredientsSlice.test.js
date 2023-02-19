@@ -13,11 +13,9 @@ describe('ingredientsSlice', () => {
     test('should handle ingredientsRequest', () => {
         const nextState = ingredientsSlice.reducer(initialState, {
             type: 'ingredients/request/fulfilled',
-            payload: {
-                ingredients: [ingredient]
-            }
+            payload: [ingredient]
         });
-        expect(nextState).toEqual({"entities": { "undefined": [ingredient] }, "ids": [undefined], "process": "confirmed"});
+        expect(nextState).toEqual({"entities": {"1": {"_id": "1"}}, "ids": ["1"], "process": "confirmed"});
     });   
 
 });
