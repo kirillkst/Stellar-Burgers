@@ -4,7 +4,7 @@ import { API_URL, PROCESS_STATE } from "../utils/constants";
 import { TSuccessLogin, TSuccessReset, TThunkAPI, TUserEmail, TUserLogin, TUserReg, TUserResetPassword, TUserToken } from '../utils/types';
 
 
-const initialState = {
+export const initialState = {
     process: PROCESS_STATE.WAITING,
     auth: false,
     name: '',
@@ -85,7 +85,7 @@ export const logoutRequest = createAsyncThunk<TSuccessReset, TUserToken, TThunkA
     }
 );
 
-const userSlice = createSlice({
+export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {    

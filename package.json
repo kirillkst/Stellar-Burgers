@@ -29,7 +29,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress:open": "cypress open",
+    "deploy-script": "npm run build && scp -r ./build/* stellarburger@130.193.49.66:/home/stellarburger/frontend" 
   },
   "eslintConfig": {
     "extends": [
@@ -51,6 +53,7 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.3.3",
+    "cypress": "^12.6.0",
     "sass": "^1.56.1"
   }
 }

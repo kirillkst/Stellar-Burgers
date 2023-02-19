@@ -73,9 +73,10 @@ const BurgerConstructor = ({ bun, ingredients, total } : TBurgerConstructor) => 
 				[styles.dropIngredient]: dropType === 'ingredient' 
 			})} 
 			ref={dropTarget}
+			data-testid="constructor"
 		>
 			<ConstructorBun bun={bun} type='top' />
-			<ul className={cx(styles.list, styles.ingredients)}>
+			<ul className={cx(styles.list, styles.ingredients)} data-testid="constructor-list">
 				{ingredients.length > 0 ? (
 					ingredients.map((ingredient, index) => {
 						return (
@@ -110,6 +111,7 @@ const BurgerConstructor = ({ bun, ingredients, total } : TBurgerConstructor) => 
 						size="large"
 						extraClass="ml-10"
 						onClick={createOrder}
+						data-testid="send-order"
 					>
 						Оформить заказ
 					</Button>

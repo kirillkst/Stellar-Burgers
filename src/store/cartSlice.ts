@@ -4,7 +4,7 @@ import { TIngredient } from '../utils/types';
 
 const cartIngredientsAdapter = createEntityAdapter<TIngredient>();
 
-const initialState: {
+export const initialState: {
     bun: TIngredient | null;
     ingredients: EntityState<TIngredient>;
     total: number
@@ -14,7 +14,7 @@ const initialState: {
     total: 0
 };
 
-const cartSlice = createSlice({
+export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {        
