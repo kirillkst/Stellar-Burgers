@@ -51,7 +51,7 @@ describe('burger constructor.', () => {
     cy.get('input[name="password"]').type(`${password}{enter}`);    
     cy.get('[data-testid="send-order"]').should("exist").click();
     cy.intercept({
-        url: `https://norma.nomoreparties.space/api/orders`,
+        url: `${Cypress.env('host_API')}/orders`,
         method: 'POST',
       },{
         fixture: 'create-order'
