@@ -1,3 +1,5 @@
+# Stellar Burgers
+
 Разработка SPA на React с использованием хуков, Redux Toolkit, RTK Query, TypeScript, WebSocket и тестированием на Jest и Cypress
 
 - Сборка бургера посредством Drag'n'Drop;
